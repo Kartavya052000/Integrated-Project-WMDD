@@ -1,9 +1,10 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
 
+const apiKey = process.env.GOOGLE_API_KEY;
 
 const firebaseConfig = {
-    apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
+    apiKey: apiKey,
     authDomain: "test-8e125.firebaseapp.com",
     projectId: "test-8e125",
     storageBucket: "test-8e125.appspot.com",
