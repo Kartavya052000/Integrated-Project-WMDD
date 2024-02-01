@@ -11,39 +11,68 @@
     </header>
 
     <main>
-      <section>
-        <h2>Personal Info</h2>
-        <hr />
-        <p>First Name</p>
+      <form action="#" method="POST">
+        <section>
+          <h2>Personal Info</h2>
+          <label for="firstName">First Name:</label><br />
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            required
+          /><br /><br />
 
-        <hr />
-        <p>Last Name</p>
-        <hr />
-        <p>Gender</p>
-        <hr />
-        <p>Date of Birth</p>
-        <hr />
-        <p>Phone Number</p>
-        <hr />
-        <p>Email</p>
-        <hr />
-        <p>Address</p>
-        <hr />
-        <p>Password</p>
-      </section>
+          <label for="lastName">Last Name:</label><br />
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            required
+          /><br /><br />
+
+          <label for="gender">Gender:</label><br />
+          <input type="text" id="gender" name="gender" /><br /><br />
+
+          <label for="dob">Date of Birth:</label><br />
+          <input type="date" id="dob" name="dob" /><br /><br />
+
+          <label for="phoneNumber">Phone Number:</label><br />
+          <input type="tel" id="phoneNumber" name="phoneNumber" /><br /><br />
+
+          <label for="email">Email:</label><br />
+          <input type="email" id="email" name="email" required /><br /><br />
+
+          <label for="address">Address:</label><br />
+          <input type="text" id="address" name="address" /><br /><br />
+
+          <label for="password">Password:</label><br />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+          /><br /><br />
+        </section>
+        <button type="submit">Submit</button>
+      </form>
+
       <section>
         <h2>Interests</h2>
-
-        <p>Edit your interested</p>
-        <p>Edit your interested</p>
-        <p>Edit your interested</p>
-        <p>Edit your interested</p>
-        <p>Edit your interested</p>
-        <p>Edit your interested</p>
+        <label for="interests">Select Your Interests:</label>
+        <select id="interests" name="interests">
+          <option value="Cricket">Cricket</option>
+          <option value="Football">Football</option>
+          <option value="Hockey">Hockey</option>
+          <option value="Volleyball">Volleyball</option>
+          <option value="Basketball">Basketball</option>
+          <option value="Badminton">Badminton</option>
+          <option value="Tennis">Tennis</option>
+        </select>
       </section>
-      <button>Sign Out</button>
 
-      <p>About Us</p>
+      <button>Sign Out</button><br />
+
+      <a href="#">About Us</a>
     </main>
   </body>
 </html>
