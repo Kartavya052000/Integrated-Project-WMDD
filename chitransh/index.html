@@ -5,7 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Club</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    
+    
+
     <!-- <script type="module" src="/js/index.js"></script> -->
     <!-- Add these scripts before your bundle.js script -->
 
@@ -25,23 +28,42 @@
             <label for="country">Country<input type="text" id="country"></label>
             <label for="postalcode">Postal/Zip Code<input type="text" id="postalcode"></label>
             <label for="uploadImage">Upload Image<input type="file" id="uploadImage"></label>
+            <label for="location">Location<input type="text" id="location"/></label>
             <input type="submit" id="submit">
         </form>
         <button id="getData">Get Data</button>
-    </div>
-             <script type="module">
+    </div>  
+    <script>
+
+    // Initialize the Google Places Autocomplete
+    var autocomplete;
+    function initAutocomplete() {
+        console.log('Autocomplete initialized');
+        autocomplete = new google.maps.places.Autocomplete(document.getElementById('location'),{types:['geocode'],})
+        autocomplete.addListener('place_changed', onPlaceChanged);
+    }
+
+    function onPlaceChanged() {
+        var place = autocomplete.getPlace();
+        console.log('Selected Place:', place);
+
+        // You can access various details of the selected place here and use them as needed.
+        // For example, place.formatted_address, place.geometry.location.lat(), place.geometry.location.lng(), etc.
+    }
+
+
+    </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-Q7mYO3nAs-IhehNcm3QGQT4sCNwR37c&libraries=places&callback=initAutocomplete"></script>
+    <script>
+        // Manual initialization after the script has loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            initAutocomplete();
+        });
+    </script>
+    <script type="module">
             import { initializeApp} from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
             import { getDatabase,ref,set} from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js";
     
-
-
-    // import firebase from 'firebase/app';
-    // import 'firebase/firestore';
-        // TODO: Replace the following with your app's Firebase project configuration
-        // See: https://firebase.google.com/docs/web/learn-more#config-object
-        
-        // ...
-        // The value of `databaseURL` depends on the location of the database
         const firebaseConfig = {
           apiKey: "AIzaSyD-Q7mYO3nAs-IhehNcm3QGQT4sCNwR37c",
           authDomain: "create-club.firebaseapp.com",
@@ -59,6 +81,19 @@
 
         // Initialize Realtime Database and get a reference to the service
         const database = getDatabase(app);
+
+        const locationInput = document.getElementById("location");
+
+        locationInput.addEventListener("input", function () {
+            const inputText = this.value;
+            console.log('Input changed:', inputText);
+            if (inputText.length >= 3) {
+                
+            }
+        });
+
+        
+
         let data={};
         document.getElementById('submit').addEventListener('click',(event)=>{
             event.preventDefault();
@@ -81,6 +116,7 @@
                 "address": address,
                 "country": country,
                 "postalcode": postalcode,
+                "location":locationInput.value,
                 // Add other fields if needed
             };
         
@@ -99,7 +135,7 @@
                     console.error("Error writing data: ", error);
                 });
         }
-        
+     
              </script>
         
 </body>
