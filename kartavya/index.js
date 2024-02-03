@@ -10,13 +10,12 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig); // Initialize Firebase
-const db = firebase.firestore(); // Access Firestore
 
 // Function to create a club
 async function createClub(userId, clubName, clubDescription) {
     try {
         // Add club document to "clubs" collection
-        const clubRef = await db.collection("clubs").add({
+        const clubRef = await firebase.firestore().collection("clubs").add({
             name: clubName,
             description: clubDescription,
             admin: userId,

@@ -27,7 +27,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js"></script>
-    <script type="module" src="index.js"></script> <!-- Move the script to initialize Firebase here -->
 
   </head>
   <body>
@@ -35,6 +34,8 @@
       // Import the functions you need from the SDKs you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
       import { getDatabase } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
+      import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
+
       import {
         getAuth,
         createUserWithEmailAndPassword,
@@ -56,8 +57,10 @@
 
       // Initialize Firebase
       const app = initializeApp(firebaseConfig);
-      const database = getDatabase(app);
-      const auth = getAuth();
+      // const database = getDatabase(app);
+      // const auth = getAuth();
+      const db = getFirestore(app);
+
       function callauth() {
         let email = "test1@gmail.com";
         let password = "123dasd2113AS213";
@@ -76,7 +79,27 @@
             // ..
           });
       }
-      
+      async function createClub(userId, clubName, clubDescription) {
+            try {
+                // Get a reference to the "clubs" collection
+                const clubsCollectionRef = collection(db, "clubs");
+
+                // Add club document to "clubs" collection
+                const clubDocRef = await addDoc(clubsCollectionRef, {
+                  CLub_details: clubName,
+                  Club_location: clubDescription,
+                  club_name: userId,
+                });
+
+                console.log("Club created successfully with ID: ", clubDocRef.id);
+            } catch (error) {
+                console.error("Error creating club: ", error);
+                alert(error)
+            }
+        }
+
+        // Call the createClub function
+        createClub("zAuTYTmuOcgGFjI0daHLLCXjZPX2", "My Club", "Club Description");
       //  callauth()
     </script>
     <h2>Login</h2>
