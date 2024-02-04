@@ -1,67 +1,37 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
-
-const apiKey = process.env.GOOGLE_API_KEY;
-
+// Initialize Firebase
 const firebaseConfig = {
-    apiKey: apiKey,
+    apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
     authDomain: "test-8e125.firebaseapp.com",
+    databaseURL: "https://test-8e125-default-rtdb.firebaseio.com",
     projectId: "test-8e125",
     storageBucket: "test-8e125.appspot.com",
     messagingSenderId: "675271753145",
-    appId: "1:675271753145:web:0f2070f6b149b210608a68"
-  };
+    appId: "1:675271753145:web:0f2070f6b149b210608a68",
+};
 
-  // Initialize Firebase
-//   const firebase = initializeApp(firebaseConfig);
-//   const auth= firebase.auth()
-//   const db = firebase.database()
-// firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig); // Initialize Firebase
 
+// Function to create a club
+async function createClub(userId, clubName, clubDescription) {
+    try {
+        // Add club document to "clubs" collection
+        const clubRef = await firebase.firestore().collection("clubs").add({
+            name: clubName,
+            description: clubDescription,
+            admin: userId,
+        });
 
-//   //register functionfunction register() {
-//             var email = "test@gmail.com";
-//             var password = "Test@123";
-//             firebase.auth().createUserWithEmailAndPassword(email, password)
-//                 .then((userCredential) => {
-//                     var user = userCredential.user;
-//                     console.log("User registered:", user.uid);
-//                     // Add user data to Firebase Database
-//                     var user_data = {
-//                         email: email,
-//                         password: password
-//                     };
-//                     firebase.database().ref("users/" + user.uid).set(user_data)
-//                         .then(() => {
-//                             console.log("User data added to database");
-//                         })
-//                         .catch((error) => {
-//                             console.error("Error adding user data to database:", error);
-//                         });
-//                 })
-//                 .catch((error) => {
-//                     console.error("Error creating user:", error);
-//                 });
-        
+        // Add user as admin in the "members" subcollection of the club
+        await clubRef.collection("members").doc(userId).set({
+            userId: userId,
+            role: "admin",
+        });
 
-//         register();
-// Get elements
-const app = initializeApp(firebaseConfig);
+        console.log("Club created successfully!");
+    } catch (error) {
+        console.error("Error creating club: ", error);
+    }
+}
 
-// Get the Auth instance
-const auth = getAuth(app);
-
-// Example usage: Sign in with email and password
-const email = "user@example.com";
-const password = "password123";
-
-signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-        // Signed in successfully
-        const user = userCredential.user;
-        console.log("User signed in:", user.uid);
-    })
-    .catch((error) => {
-        // Handle errors
-        console.error("Error:", error.message);
-    });
+// Call the createClub function
+createClub("zAuTYTmuOcgGFjI0daHLLCXjZPX2", "My Club", "Club Description");
