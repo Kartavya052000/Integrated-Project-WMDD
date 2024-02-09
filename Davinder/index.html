@@ -69,19 +69,30 @@
         GoogleAuthProvider,
         getRedirectResult,
         signInWithPopup,
-        signInWithRedirect 
+        signInWithRedirect ,
+        
     } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
-  
+    import { getFirestore, collection, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js"; // Import Firestore functions
+
     // Your web app's Firebase configuration
+    // const firebaseConfig = {
+    //   apiKey: "AIzaSyAGLcybmjB3QBZ5Bdk02nIkqb0F3pJKf1E",
+    //   authDomain: "fir-sports-93164.firebaseapp.com",
+    //   databaseURL: "https://fir-sports-93164-default-rtdb.firebaseio.com",
+    //   projectId: "fir-sports-93164",
+    //   storageBucket: "fir-sports-93164.appspot.com",
+    //   messagingSenderId: "48172665362",
+    //   appId: "1:48172665362:web:1a401f43ed83b3faaba6cb"
+    // };
     const firebaseConfig = {
-      apiKey: "AIzaSyAGLcybmjB3QBZ5Bdk02nIkqb0F3pJKf1E",
-      authDomain: "fir-sports-93164.firebaseapp.com",
-      databaseURL: "https://fir-sports-93164-default-rtdb.firebaseio.com",
-      projectId: "fir-sports-93164",
-      storageBucket: "fir-sports-93164.appspot.com",
-      messagingSenderId: "48172665362",
-      appId: "1:48172665362:web:1a401f43ed83b3faaba6cb"
-    };
+    apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
+    authDomain: "test-8e125.firebaseapp.com",
+    databaseURL: "https://test-8e125-default-rtdb.firebaseio.com",
+    projectId: "test-8e125",
+    storageBucket: "test-8e125.appspot.com",
+    messagingSenderId: "675271753145",
+    appId: "1:675271753145:web:0f2070f6b149b210608a68",
+};
   
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
@@ -91,7 +102,7 @@
     
     // SignUp
     document.getElementById("signUp").addEventListener("click", function () {
-    var email = document.getElementById('email').value;
+        var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;
 
     createUserWithEmailAndPassword(auth, email, password)
@@ -99,8 +110,28 @@
             const user = userCredential.user;
             console.log("signup", user);
             alert('User created!');
+
+            // Save user information in Firestore collection
+            const userInfo = {
+                uid: user.uid,
+                email: user.email,
+                // Add other user information as needed
+            };
+
+            // Firestore collection reference
+            const usersCollection = collection(firestore, 'users');
+
+            // Add user document to the collection
+            setDoc(doc(usersCollection, user.uid), userInfo)
+                .then(() => {
+                    console.log('User information saved successfully');
+                })
+                .catch((error) => {
+                    console.error('Error saving user information:', error);
+                });
         })
         .catch((error) => {
+            console.error('Error creating user:', error);
             alert(error.code, error.message);
         });
     });
