@@ -6,127 +6,143 @@
     <title>Document</title>
     <!-- <script src="index.js"></script> -->
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
+      body {
+          font-family: 'Arial', sans-serif;
+          background-color: #f5f5f5;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+      }
 
-        div {
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+      div {
+          background-color: #fff;
+          border-radius: 8px;
+          padding: 20px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
 
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
+      input {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 10px;
+          box-sizing: border-box;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+      }
 
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4caf50;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+      button {
+          width: 100%;
+          padding: 10px;
+          background-color: #4caf50;
+          color: #fff;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 16px;
+      }
 
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+      button:hover {
+          background-color: #45a049;
+      }
+  </style>
 </head>
 
 <body>
     <div>
         <input type="text" id="email" name="email" placeholder="Enter email">
         <input type="password" id="password" name="password" placeholder="Enter password">
-        <button id="signUp">Sign Up</button>
+        <button id="signUp">SignUp</button>
         <button id="login">Login</button>
-        <button id="googleSignIn">Google Sign In</button>
+        <button id="googleSignIn">google Sign In</button>
+        <button id="logout">Logout</button>
     </div>
 </body>
-
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
     import { getDatabase } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, getRedirectResult, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
-
+    import { getAuth,
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
+        GoogleAuthProvider,
+        getRedirectResult,
+        signInWithPopup,
+        signInWithRedirect 
+    } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
+  
     // Your web app's Firebase configuration
     const firebaseConfig = {
-        apiKey: "your-api-key",
-        authDomain: "your-auth-domain",
-        databaseURL: "your-database-url",
-        projectId: "your-project-id",
-        storageBucket: "your-storage-bucket",
-        messagingSenderId: "your-messaging-sender-id",
-        appId: "your-app-id"
+      apiKey: "AIzaSyAGLcybmjB3QBZ5Bdk02nIkqb0F3pJKf1E",
+      authDomain: "fir-sports-93164.firebaseapp.com",
+      databaseURL: "https://fir-sports-93164-default-rtdb.firebaseio.com",
+      projectId: "fir-sports-93164",
+      storageBucket: "fir-sports-93164.appspot.com",
+      messagingSenderId: "48172665362",
+      appId: "1:48172665362:web:1a401f43ed83b3faaba6cb"
     };
-
+  
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     let auth = getAuth();
     let database = getDatabase(app);
-
+    let provider = new GoogleAuthProvider(app);
+    
     // SignUp
     document.getElementById("signUp").addEventListener("click", function () {
-        var email = document.getElementById('email').value;
-        var password = document.getElementById('password').value;
-        console.log(email, password);
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
 
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                console.log("signup", user);
-            })
-            .catch((error) => {
-                alert(error.code, error.message);
-            });
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            console.log("signup", user);
+            alert('User created!');
+        })
+        .catch((error) => {
+            alert(error.code, error.message);
+        });
     });
 
     // Login
     document.getElementById("login").addEventListener("click", function () {
-        var email = document.getElementById('email').value;
-        var password = document.getElementById('password').value;
-        console.log(email, password);
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                console.log("login", user);
-            })
-            .catch((error) => {
-                alert(error.code, error.message);
-            });
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    console.log(email, password);
+
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            console.log("login", user);
+            alert('Success Login!');
+        })
+        .catch((error) => {
+            alert(error.code, error.message);
+        });
     });
 
-    // Google SignIn
+
+    // GoogleSignIn
     document.getElementById("googleSignIn").addEventListener("click", function () {
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                const user = result.user;
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                const email = error.customData.email;
-                const credential = GoogleAuthProvider.credentialFromError(error);
-            });
+    // signInWithRedirect(auth, provider);
+
+    signInWithPopup(auth, provider)
+        .then((result) => {
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            const user = result.user;
+            alert(user.displayName);
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            const email = error.customData ? error.customData.email : null;
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            alert(errorMessage);
+        });
     });
 </script>
+
 
 </html>
