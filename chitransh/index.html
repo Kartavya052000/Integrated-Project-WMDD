@@ -24,9 +24,9 @@
             <label for="sport">Sport<input type="text" id="sport"></label>
             <label for="clubdescription">Club Description</label>
             <textarea name="" id="clubdescription" cols="10" rows="10"></textarea>
-            <label for="address">Address<input type="text" id="address"></label>
+            <!-- <label for="address">Address<input type="text" id="address"></label>
             <label for="country">Country<input type="text" id="country"></label>
-            <label for="postalcode">Postal/Zip Code<input type="text" id="postalcode"></label>
+            <label for="postalcode">Postal/Zip Code<input type="text" id="postalcode"></label> -->
             <label for="uploadImage">Upload Image<input type="file" id="uploadImage"></label>
             <label for="location">Location<input type="text" id="location"/></label>
             <input type="submit" id="submit">
@@ -37,6 +37,7 @@
 
     // Initialize the Google Places Autocomplete
     var autocomplete;
+    let clubLocation;
     function initAutocomplete() {
         console.log('Autocomplete initialized');
         autocomplete = new google.maps.places.Autocomplete(document.getElementById('location'),{types:['geocode'],})
@@ -47,6 +48,25 @@
         var place = autocomplete.getPlace();
         console.log('Selected Place:', place);
 
+        // Assuming your object is named 'locationObject'
+
+// Accessing the geometry object
+const geometry = place.geometry;
+
+// Accessing the location object within geometry
+const location = geometry.location;
+
+// Extracting latitude and longitude
+const latitude = location.lat(); // lat() function retrieves the latitude
+const longitude = location.lng(); // lng() function retrieves the longitude
+
+console.log("Latitude:", latitude);
+console.log("Longitude:", longitude);
+
+clubLocation={"Latitude":latitude,
+                  "Longitude":longitude,
+                };
+                //   console.log(clubLocation)
         // You can access various details of the selected place here and use them as needed.
         // For example, place.formatted_address, place.geometry.location.lat(), place.geometry.location.lng(), etc.
     }
@@ -104,22 +124,36 @@
             let clubName = document.getElementById("clubname").value;
             let sport = document.getElementById("sport").value;
             let clubDescription = document.getElementById("clubdescription").value;
-            let address = document.getElementById("address").value;
-            let country = document.getElementById("country").value;
-            let postalcode = document.getElementById("postalcode").value;
-        
+            // let address = document.getElementById("address").value;
+            // let country = document.getElementById("country").value;
+            // let postalcode = document.getElementById("postalcode").value;
+            console.log(clubLocation);
             // Create the data object
+            // data = {
+            //     "clubName": clubName,
+            //     "Sport": sport,
+            //     "clubDescription": clubDescription,
+            //     "address": address,
+            //     "country": country,
+            //     "postalcode": postalcode,
+            //     "location":locationInput.value,
+            //     "clubLocation":clubLocation,
+            //     // Add other fields if needed
+            // };
+            let clubDetails={
+lat:clubLocation.Latitude,
+long:clubLocation.Longitude,
+address:locationInput.value
+            }
             data = {
                 "clubName": clubName,
                 "Sport": sport,
                 "clubDescription": clubDescription,
-                "address": address,
-                "country": country,
-                "postalcode": postalcode,
-                "location":locationInput.value,
+                // "location":locationInput.value,
+                "clubDetails":clubDetails,
                 // Add other fields if needed
             };
-        
+            console.log(data);
             // Call the writeUserData function
             writeUserData(data);
         };
