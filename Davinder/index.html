@@ -150,6 +150,7 @@
             const user = userCredential.user;
             console.log("login", user);
             alert('Success Login!');
+            localStorage.setItem('user', JSON.stringify(user))
         })
         .catch((error) => {
             alert(error.code, error.message);
@@ -176,6 +177,7 @@
             alert(errorMessage);
         });
     });
+    
 </script>
 
 

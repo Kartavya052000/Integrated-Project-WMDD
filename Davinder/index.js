@@ -46,6 +46,8 @@ document.getElementById("login").addEventListener("click",function(){
         // Signed in 
         const user = userCredential.user;
         console.log("login",user);
+        localStorage.setItem("userInfo", JSON.stringify(user));
+
         // ...
       })
       .catch((error) => {
@@ -54,4 +56,3 @@ document.getElementById("login").addEventListener("click",function(){
         alert(errorMessage);
       });
 });
- 
