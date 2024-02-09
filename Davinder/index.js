@@ -20,14 +20,11 @@
     const database = getDatabase(app);
 
     var email=document.getElementById('email').value;
-        var password=document.getElementById('password').value;
+    var password=document.getElementById('password').value;
 
     
     // SignUp
     document.getElementById("signUp").addEventListener("click",function(){
-
-        
-
         createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed up 

@@ -51,6 +51,8 @@
 </head>
 
 <body>
+    <s-header></s-header>
+
     <div>
         <input type="text" id="email" name="email" placeholder="Enter email">
         <input type="password" id="password" name="password" placeholder="Enter password">
@@ -99,7 +101,7 @@
     let auth = getAuth();
     let database = getDatabase(app);
     let provider = new GoogleAuthProvider(app);
-    
+    let firestore = getFirestore()
     // SignUp
     document.getElementById("signUp").addEventListener("click", function () {
         var email = document.getElementById('email').value;
