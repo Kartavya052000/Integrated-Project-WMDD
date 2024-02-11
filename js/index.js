@@ -15,10 +15,10 @@ class sHeader extends HTMLElement{
                 <a class="nav-link" href="map.html">Map</a>
               </li>
               <li class="nav-item">
-              <a class="nav-link" href="../chitransh/index.html">Create Club</a>
+              <a class="nav-link" href="create_club.html">Create Club</a>
               </li>
               <li class="nav-item">
-              <a class="nav-link" href="../Davinder/index.html">Login</a>
+              <a class="nav-link" href="login.html">Login</a>
               </li>
             </ul>
             <form class="d-flex" role="search">
@@ -68,4 +68,4 @@ async function createClub(userId, clubName, clubDescription) {
 }
 
 // Call the createClub function
-createClub("zAuTYTmuOcgGFjI0daHLLCXjZPX2", "My Club", "Club Description");
+// createClub("zAuTYTmuOcgGFjI0daHLLCXjZPX2", "My Club", "Club Description");
