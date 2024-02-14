@@ -94,13 +94,13 @@ let clubDetails=[]
           //   content: 'You are here'
           // });
 
-          userMarker.addListener('mouseover', function() {
-            infowindow.open(map, userMarker);
-          });
+          // userMarker.addListener('mouseover', function() {
+          //   infowindow.open(map, userMarker);
+          // });
 
-          userMarker.addListener('mouseout', function() {
-            infowindow.close();
-          });
+          // userMarker.addListener('mouseout', function() {
+          //   infowindow.close();
+          // });
         const val = await getClubMapData()
           // console.log(val,"CCCLLLL")
           // Add other markers here
@@ -124,7 +124,7 @@ let clubDetails=[]
             });
 
             const contentString = `
-              <div style="width:200px">
+              <div style="width:200px"  id="infoWindowContent">
               <img src="../kartavya/test.jpeg" alt="${location.title}" style="width: 100%;height:100px">
               <div style="font-size:1rem;font-weight:400">${location.data.clubName}</div>
                 <p>${location.data.clubDescription}</p>
@@ -133,16 +133,36 @@ let clubDetails=[]
             `;
 
             const infowindow = new google.maps.InfoWindow({
-              content: contentString
-            });
+              content: contentString,
+              pixelOffset: new google.maps.Size(0, 10) // Adjust the offset as needed
 
+            });
+const inWindow = document.getElementById("infoWindowContent")
             marker.addListener('mouseover', function() {
               infowindow.open(map, marker);
             });
 
-            marker.addListener('mouseout', function() {
-              infowindow.close();
-            });
+            google.maps.event.addListener(infowindow, 'domready', function() {
+              const infoWindowContent = document.getElementById('infoWindowContent');
+      
+              // Mouseover event listener for content
+              infoWindowContent.addEventListener('mouseover', function() {
+                  infowindow.open(map, marker);
+              });
+      
+              // Mouseout event listener for content
+              infoWindowContent.addEventListener('mouseout', function() {
+                  // Delay closing the infowindow to prevent it from closing when moving between marker and content
+                  setTimeout(function() {
+                      if (!infoWindowContent.matches(':hover')) {
+                          infowindow.close();
+                      }
+                  }, 300); // Adjust the delay as needed
+              });
+          }); 
+            // marker.addListener('mouseout', function() {
+            //   infowindow.close();
+            // });
           });
           }
         
