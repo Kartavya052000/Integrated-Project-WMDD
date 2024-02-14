@@ -30,21 +30,21 @@
     <script src="/js/index.js"></script>
     <s-header></s-header>
 
-    <div class="col-md-6 Login offset-md-3 mt-3">
+    <div class="col-md-6 login-container offset-md-4 mt-3 mb-3">
       <h1>Create Club</h1>
     </div>
     <div id="container ">
       <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-6 col-sm-3 offset-md-4">
           <form class="row g-3">
-            <div class="col-md-6">
-              <label for="clubname" class="form-label"
+            <div class="col-12">
+              <label for="clubname" class="form-label col-9"
                 >Club Name
                 <input type="text" id="clubname" class="form-control" />
               </label>
             </div>
-            <div class="col-md-6">
-              <label for="sport" class="form-label"
+            <div class="col-12">
+              <label for="sport" class="form-label col-9"
                 >Sport<input type="text" id="sport" class="form-control"
               /></label>
             </div>
@@ -63,30 +63,30 @@
             <!-- <label for="address">Address<input type="text" id="address"></label>
                 <label for="country">Country<input type="text" id="country"></label>
                 <label for="postalcode">Postal/Zip Code<input type="text" id="postalcode"></label> -->
-            <div class="col-md-6">
-              <label for="uploadImage" class="form-label"
+            <div class="col-12">
+              <label for="uploadImage" class="form-label col-9"
                 >Upload Image<input
                   type="file"
                   class="form-control"
                   id="uploadImage"
               /></label>
             </div>
-            <div class="col-md-6">
-              <label for="location" class="form-label"
+            <div class="col-12">
+              <label for="location" class="form-label col-9"
                 >Location<input type="text" id="location" class="form-control"
               /></label>
             </div>
-            <div class="col-12 d-flex justify-content-start">
+            <div class="col-9 d-grid">
               <input type="submit" id="submit" class="btn btn-success" />
             </div>
           </form>
         </div>
       </div>
-      <div class="col-12">
+      <!-- <div class="col-6 d-grid justify-content">
         <button id="getData" class="btn btn-warning offset-md-3 mt-3">
           Get Data
         </button>
-      </div>
+      </div> -->
     </div>
     <script>
       // Initialize the Google Places Autocomplete
