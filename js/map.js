@@ -48,7 +48,7 @@ let clubDetails=[]
         //  Add other markers here
          getClubMapData().then((clubData) => {
       // console.log("Club data:", clubData);
-    clubDetails=clubData
+        clubDetails=clubData
 
       
       // Process the retrieved club data here
@@ -90,9 +90,9 @@ let clubDetails=[]
         }
           });
 
-          const infowindow = new google.maps.InfoWindow({
-            content: 'You are here'
-          });
+          // const infowindow = new google.maps.InfoWindow({
+          //   content: 'You are here'
+          // });
 
           userMarker.addListener('mouseover', function() {
             infowindow.open(map, userMarker);
@@ -120,21 +120,21 @@ let clubDetails=[]
                 lng:location.data.clubDetails.long,
               },
               map: map,
-              title: location.title
+              title: location.data.clubName
             });
 
-            // const contentString = `
-            //   <div>
-            //     <h3>${location.title}</h3>
-            //     <img src="test.jpeg" alt="${location.title}" style="width: 100px;">
-            //     <p>${location.details}</p>
-            //     <a href="${location.detailsUrl}">View Details</a>
-            //   </div>
-            // `;
+            const contentString = `
+              <div style="width:200px">
+              <img src="../kartavya/test.jpeg" alt="${location.title}" style="width: 100%;height:100px">
+              <div style="font-size:1rem;font-weight:400">${location.data.clubName}</div>
+                <p>${location.data.clubDescription}</p>
+                <a href="${location.detailsUrl}">View Details</a>
+              </div>
+            `;
 
-            // const infowindow = new google.maps.InfoWindow({
-            //   content: contentString
-            // });
+            const infowindow = new google.maps.InfoWindow({
+              content: contentString
+            });
 
             marker.addListener('mouseover', function() {
               infowindow.open(map, marker);
