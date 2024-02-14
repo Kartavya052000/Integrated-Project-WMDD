@@ -11,38 +11,82 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js"></script> -->
     <!-- <script type="module" src="/js/index.js"></script> -->
     <!-- Add these scripts before your bundle.js script -->
-      <!-- --------------bootstrap------- -->
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- --------------bootstrap------- -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
 
-      <!-- ----- script-------- -->
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <!-- ----- script-------- -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <script src="/js/index.js"></script>
     <s-header></s-header>
 
-    <h1>Create Club</h1>
-    <div id="container">
-      <form>
-        <label for="clubname"
-          >Club Name
-          <input type="text" id="clubname" />
-        </label>
-        <label for="sport">Sport<input type="text" id="sport" /></label>
-        <label for="clubdescription">Club Description</label>
-        <textarea name="" id="clubdescription" cols="10" rows="10"></textarea>
-        <!-- <label for="address">Address<input type="text" id="address"></label>
-            <label for="country">Country<input type="text" id="country"></label>
-            <label for="postalcode">Postal/Zip Code<input type="text" id="postalcode"></label> -->
-        <label for="uploadImage"
-          >Upload Image<input type="file" id="uploadImage"
-        /></label>
-        <label for="location"
-          >Location<input type="text" id="location"
-        /></label>
-        <input type="submit" id="submit" />
-      </form>
-      <button id="getData">Get Data</button>
+    <div class="col-md-6 Login offset-md-3 mt-3">
+      <h1>Create Club</h1>
+    </div>
+    <div id="container ">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <form class="row g-3">
+            <div class="col-md-6">
+              <label for="clubname" class="form-label"
+                >Club Name
+                <input type="text" id="clubname" class="form-control" />
+              </label>
+            </div>
+            <div class="col-md-6">
+              <label for="sport" class="form-label"
+                >Sport<input type="text" id="sport" class="form-control"
+              /></label>
+            </div>
+            <div class="col-9">
+              <label for="clubdescription" class="form-label"
+                >Club Description</label
+              >
+              <textarea
+                name=""
+                id="clubdescription"
+                cols="4"
+                rows="4"
+                class="form-control"
+              ></textarea>
+            </div>
+            <!-- <label for="address">Address<input type="text" id="address"></label>
+                <label for="country">Country<input type="text" id="country"></label>
+                <label for="postalcode">Postal/Zip Code<input type="text" id="postalcode"></label> -->
+            <div class="col-md-6">
+              <label for="uploadImage" class="form-label"
+                >Upload Image<input
+                  type="file"
+                  class="form-control"
+                  id="uploadImage"
+              /></label>
+            </div>
+            <div class="col-md-6">
+              <label for="location" class="form-label"
+                >Location<input type="text" id="location" class="form-control"
+              /></label>
+            </div>
+            <div class="col-12 d-flex justify-content-start">
+              <input type="submit" id="submit" class="btn btn-success" />
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-12">
+        <button id="getData" class="btn btn-warning offset-md-3 mt-3">
+          Get Data
+        </button>
+      </div>
     </div>
     <script>
       // Initialize the Google Places Autocomplete
@@ -105,7 +149,6 @@
         addDoc,
       } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
 
-   
       // Your web app's Firebase configuration
       const firebaseConfig = {
         apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
@@ -123,7 +166,7 @@
       const db = getFirestore(app);
 
       // Initialize Realtime Database and get a reference to the service
-    //   const database = getDatabase(app);
+      //   const database = getDatabase(app);
 
       const locationInput = document.getElementById("location");
 
@@ -143,7 +186,7 @@
         let clubName = document.getElementById("clubname").value;
         let sport = document.getElementById("sport").value;
         let clubDescription = document.getElementById("clubdescription").value;
-       
+
         console.log(clubLocation);
         let clubDetails = {
           lat: clubLocation.Latitude,
@@ -151,7 +194,7 @@
           address: locationInput.value,
         };
         let user = JSON.parse(localStorage.getItem("user"));
-        console.log(user.uid,"USERRRRR");
+        console.log(user.uid, "USERRRRR");
         data = {
           clubName: clubName,
           Sport: sport,
@@ -168,7 +211,7 @@
       };
       async function createClub(data) {
         try {
-            console.log(data);
+          console.log(data);
           // Get a reference to the "clubs" collection
           const clubsCollectionRef = collection(db, "clubs");
 
