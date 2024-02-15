@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club Details</title>
+      <!-- --------------bootstrap------- -->
+      <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../styles/club_details.css">
+    <script type="module" defer src="../js/index.js"></script>
+    <script type="module" defer src="../js/club_details.js"></script>
+</head>
+<body>
+    <script>
+        function showTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.style.display = 'none';
+            });
+    
+            // Show the selected tab content
+            document.getElementById(tabId).style.display = 'block';
+    
+            // Remove 'active' class from all nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+    
+            // Add 'active' class to the clicked nav link
+            const clickedLink = document.querySelector(`a[href="#${tabId}"]`);
+            clickedLink.classList.add('active');
+        }
+    </script>
+    
+    <div style="text-align:center">
+    <h1 >Club_Deatils</h1>
+<button type="button" class="btn btn-success">Join</button>
+<button type="button" class="btn btn-warning">Pending</button>
+<div id="clubDetails"></div>
+<ul class="nav nav-pills club_tabs">
+    <li class="nav-item">
+        <a class="nav-link active" href="#" onclick="showTab('schedule')">Schedule</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#" onclick="showTab('members')">Members</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#" onclick="showTab('admin-request')">Request for Admin</a>
+    </li>
+</ul>
+
+<div id="schedule" class="tab-content" style="display: block;">
+    <h3>Schedule Content</h3>
+    <!-- Schedule content goes here -->
+</div>
+<div id="members" class="tab-content" style="display: none;">
+    <h3>Members Content</h3>
+    <!-- Members content goes here -->
+</div>
+<div id="admin-request" class="tab-content" style="display: none;">
+    <h3>Request for Admin Content</h3>
+    <!-- Admin request content goes here -->
+</div>
+
+
+
+</div>
+    
+</body>
+</html>
