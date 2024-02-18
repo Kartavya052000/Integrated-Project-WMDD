@@ -117,18 +117,18 @@ let clubDetails=[]
           val.forEach(location => {
             const marker = new google.maps.Marker({
               position: {
-                lat:location.data.clubDetails.lat,
-                lng:location.data.clubDetails.long,
+                lat:location.clubDetails.lat,
+                lng:location.clubDetails.long,
               },
               map: map,
-              title: location.data.clubName
+              title: location.clubName
             });
 
             const contentString = `
               <div style="width:200px"  id="infoWindowContent">
               <img src="../kartavya/test.jpeg" alt="${location.title}" style="width: 100%;height:100px">
-              <div style="font-size:1rem;font-weight:400">${location.data.clubName}</div>
-                <p>${location.data.clubDescription}</p>
+              <div style="font-size:1rem;font-weight:400">${location.clubName}</div>
+                <p>${location.clubDescription}</p>
                 <a href="./club_details.html?id=${location.id}">View Details</a>
               </div>
             `;
