@@ -149,7 +149,7 @@
         addDoc,
       } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
 
-      // Your web app's Firebase configuration
+      //Kartavya Firebase
       const firebaseConfig = {
         apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
         authDomain: "test-8e125.firebaseapp.com",
@@ -182,7 +182,7 @@
         event.preventDefault();
         submitForm();
       });
-      let submitForm = () => {
+      const submitForm = async() => {
         let clubName = document.getElementById("clubname").value;
         let sport = document.getElementById("sport").value;
         let clubDescription = document.getElementById("clubdescription").value;
@@ -192,6 +192,7 @@
           lat: clubLocation.Latitude,
           long: clubLocation.Longitude,
           address: locationInput.value,
+         
         };
         let user = JSON.parse(localStorage.getItem("user"));
         console.log(user.uid, "USERRRRR");
@@ -201,16 +202,21 @@
           clubDescription: clubDescription,
           // "location":locationInput.value,
           clubDetails: clubDetails,
-          uuid: user.uid,
+          admin_id: user.uid,
+          club_requests:{
+            pending_requests:[],
+            approved_requests:[],
+            declined_requests:[],
+          }
 
           // Add other fields if needed
         };
         console.log(data);
         // Call the writeUserData function
         // writeUserData(data);
-        createClub(data);
-      };
-      async function createClub(data) {
+        // createClub(data);
+      // };
+      // async function createClub(data) {
         try {
           console.log(data);
           // Get a reference to the "clubs" collection
@@ -218,7 +224,19 @@
 
           // Add club document to "clubs" collection
           const clubDocRef = await addDoc(clubsCollectionRef, {
-            data,
+            
+          clubName: clubName,
+          Sport: sport,
+          clubDescription: clubDescription,
+          // "location":locationInput.value,
+          clubDetails: clubDetails,
+          admin_id: user.uid,
+          
+          // club_requests:{
+          //   pending_requests:[],
+          //   approved_requests:[],
+          //   declined_requests:[],
+          // }
           });
           alert("Club Store Successfully Added");
           console.log("Club created successfully with ID: ", clubDocRef.id);

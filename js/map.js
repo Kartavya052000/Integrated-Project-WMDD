@@ -31,8 +31,9 @@ let clubDetails=[]
         querySnapshot.forEach((doc) => {
           // Extract data from each document
           const club = doc.data();
-          // Add additional processing here if needed
-          clubData.push(club);
+          const clubId = doc.id; // Accessing the unique ID of the document
+            // Add additional processing here if needed
+            clubData.push({ id: clubId, ...club });
         });
     
         // Return the array of club data
@@ -102,7 +103,7 @@ let clubDetails=[]
           //   infowindow.close();
           // });
         const val = await getClubMapData()
-          // console.log(val,"CCCLLLL")
+          console.log(val,"CCCLLLL")
           // Add other markers here
           if(val){
           // console.log(val,"CCCLLLL22 2")
@@ -116,19 +117,19 @@ let clubDetails=[]
           val.forEach(location => {
             const marker = new google.maps.Marker({
               position: {
-                lat:location.data.clubDetails.lat,
-                lng:location.data.clubDetails.long,
+                lat:location.clubDetails.lat,
+                lng:location.clubDetails.long,
               },
               map: map,
-              title: location.data.clubName
+              title: location.clubName
             });
 
             const contentString = `
               <div style="width:200px"  id="infoWindowContent">
               <img src="../kartavya/test.jpeg" alt="${location.title}" style="width: 100%;height:100px">
-              <div style="font-size:1rem;font-weight:400">${location.data.clubName}</div>
-                <p>${location.data.clubDescription}</p>
-                <a href="${location.detailsUrl}">View Details</a>
+              <div style="font-size:1rem;font-weight:400">${location.clubName}</div>
+                <p>${location.clubDescription}</p>
+                <a href="./club_details.html?id=${location.id}">View Details</a>
               </div>
             `;
 

@@ -52,6 +52,11 @@
             const userInfo = {
                 uid: user.uid,
                 email: user.email,
+                club_requests:{
+                    pending_requests:[],
+                    approved_requests:[],
+                    declined_requests:[],
+                  }
                 // Add other user information as needed
             };
 
@@ -102,6 +107,9 @@
             const token = credential.accessToken;
             const user = result.user;
             alert(user.displayName);
+
+
+            
         })
         .catch((error) => {
             const errorCode = error.code;
