@@ -126,9 +126,10 @@
         // For example, place.formatted_address, place.geometry.location.lat(), place.geometry.location.lng(), etc.
       }
     </script>
+    
     <script
       type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-Q7mYO3nAs-IhehNcm3QGQT4sCNwR37c&libraries=places&callback=initAutocomplete"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpN1dFF_d3RhD-ndBd3dGpapZqFAPS7O0&libraries=places&callback=initAutocomplete"
     ></script>
     <script>
       // Manual initialization after the script has loaded
@@ -148,9 +149,17 @@
         collection,
         addDoc,
       } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
-
-      //Kartavya Firebase
+      //Chitransh Firebase     
       const firebaseConfig = {
+      apiKey: "AIzaSyDpN1dFF_d3RhD-ndBd3dGpapZqFAPS7O0",
+      authDomain: "test-7d410.firebaseapp.com",
+      projectId: "test-7d410",
+      storageBucket: "test-7d410.appspot.com",
+      messagingSenderId: "1090057594905",
+      appId: "1:1090057594905:web:ca3f2b2bef00bbb86a2288"
+      };
+      //Kartavya Firebase
+      /*const firebaseConfig = {
         apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
         authDomain: "test-8e125.firebaseapp.com",
         databaseURL: "https://test-8e125-default-rtdb.firebaseio.com",
@@ -159,7 +168,7 @@
         messagingSenderId: "675271753145",
         appId: "1:675271753145:web:0f2070f6b149b210608a68",
       };
-
+    */
       // Initialize Firebase
       const app = initializeApp(firebaseConfig);
 
@@ -170,11 +179,28 @@
 
       const locationInput = document.getElementById("location");
 
+      // locationInput.addEventListener("input", function () {
+      //   const inputText = this.value;
+      //   console.log("Input changed:", inputText);
+      //   if (inputText.length >= 3) {
+      //   }
+      // });
+      let autocompleteEnabled = true; // Flag to track whether autocomplete is enabled
+
       locationInput.addEventListener("input", function () {
-        const inputText = this.value;
-        console.log("Input changed:", inputText);
-        if (inputText.length >= 3) {
+        if (autocompleteEnabled) {
+          const inputText = this.value;
+          console.log("Input changed:", inputText);
+          if (inputText.length >= 3) {
+            // Perform autocomplete suggestions
+          }
         }
+      });
+      locationInput.addEventListener("keydown", function () {
+      autocompleteEnabled = false;
+      });
+      locationInput.addEventListener("blur", function () {
+        autocompleteEnabled = true;
       });
 
       let data = {};
@@ -192,7 +218,6 @@
           lat: clubLocation.Latitude,
           long: clubLocation.Longitude,
           address: locationInput.value,
-         
         };
         let user = JSON.parse(localStorage.getItem("user"));
         console.log(user.uid, "USERRRRR");
@@ -223,6 +248,7 @@
           const clubsCollectionRef = collection(db, "clubs");
 
           // Add club document to "clubs" collection
+          
           const clubDocRef = await addDoc(clubsCollectionRef, {
             
           clubName: clubName,
@@ -245,6 +271,7 @@
           alert(error);
         }
       }
+      
     </script>
   </body>
 </html>
