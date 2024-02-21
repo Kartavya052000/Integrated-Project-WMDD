@@ -1,122 +1,205 @@
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
-    import { getDatabase } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
-    import { getAuth,
-        createUserWithEmailAndPassword,
-        signInWithEmailAndPassword,
-        GoogleAuthProvider,
-        getRedirectResult,
-        signInWithPopup,
-        signInWithRedirect ,
-        
-    } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
-    import { getFirestore, collection, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js"; // Import Firestore functions
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  set,
+} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  getRedirectResult,
+  signInWithPopup,
+  signInWithRedirect,
+} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
+import {
+  getFirestore,
+  collection,
+  doc,
+  setDoc,
+} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js"; // Import Firestore functions
 
-    // Your web app's Firebase configuration
-    // const firebaseConfig = {
-    //   apiKey: "AIzaSyAGLcybmjB3QBZ5Bdk02nIkqb0F3pJKf1E",
-    //   authDomain: "fir-sports-93164.firebaseapp.com",
-    //   databaseURL: "https://fir-sports-93164-default-rtdb.firebaseio.com",
-    //   projectId: "fir-sports-93164",
-    //   storageBucket: "fir-sports-93164.appspot.com",
-    //   messagingSenderId: "48172665362",
-    //   appId: "1:48172665362:web:1a401f43ed83b3faaba6cb"
-    // };
-    const firebaseConfig = {
-    apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
-    authDomain: "test-8e125.firebaseapp.com",
-    databaseURL: "https://test-8e125-default-rtdb.firebaseio.com",
-    projectId: "test-8e125",
-    storageBucket: "test-8e125.appspot.com",
-    messagingSenderId: "675271753145",
-    appId: "1:675271753145:web:0f2070f6b149b210608a68",
+// Your web app's Firebase configuration
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAGLcybmjB3QBZ5Bdk02nIkqb0F3pJKf1E",
+//   authDomain: "fir-sports-93164.firebaseapp.com",
+//   databaseURL: "https://fir-sports-93164-default-rtdb.firebaseio.com",
+//   projectId: "fir-sports-93164",
+//   storageBucket: "fir-sports-93164.appspot.com",
+//   messagingSenderId: "48172665362",
+//   appId: "1:48172665362:web:1a401f43ed83b3faaba6cb"
+// };
+
+//
+// Import the functions you need from the SDKs you need
+// import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+// import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyD0815flbjkOuw-q3yvqwAhC3th2Ot6bKU",
+  authDomain: "sportscrush-a2c22.firebaseapp.com",
+  databaseURL: "https://sportscrush-a2c22-default-rtdb.firebaseio.com",
+  projectId: "sportscrush-a2c22",
+  storageBucket: "sportscrush-a2c22.appspot.com",
+  messagingSenderId: "207698821549",
+  appId: "1:207698821549:web:603d14dd42309de0e4e124",
+  measurementId: "G-Q57DD6FLFZ",
 };
-  
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    let auth = getAuth();
-    let database = getDatabase(app);
-    let provider = new GoogleAuthProvider(app);
-    let firestore = getFirestore()
-    // SignUp
-    document.getElementById("signUp").addEventListener("click", function () {
-        var email = document.getElementById('email').value;
-    var password = document.getElementById('password').value;
 
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            console.log("signup", user);
-            alert('User created!');
+// Initialize Firebase
+// const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
+// //
 
-            // Save user information in Firestore collection
-            const userInfo = {
-                uid: user.uid,
-                email: user.email,
-                club_requests:{
-                    pending_requests:[],
-                    approved_requests:[],
-                    declined_requests:[],
-                  }
-                // Add other user information as needed
-            };
+// const firebaseConfig = {
+//   apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
+//   authDomain: "test-8e125.firebaseapp.com",
+//   databaseURL: "https://test-8e125-default-rtdb.firebaseio.com",
+//   projectId: "test-8e125",
+//   storageBucket: "test-8e125.appspot.com",
+//   messagingSenderId: "675271753145",
+//   appId: "1:675271753145:web:0f2070f6b149b210608a68",
+// };
 
-            // Firestore collection reference
-            const usersCollection = collection(firestore, 'users');
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+let auth = getAuth();
+let database = getDatabase(app);
+let provider = new GoogleAuthProvider(app);
+let firestore = getFirestore();
+// SignUp
+document.getElementById("signUp").addEventListener("click", function () {
+  var email = document.getElementById("email").value;
+  var password = document.getElementById("password").value;
 
-            // Add user document to the collection
-            setDoc(doc(usersCollection, user.uid), userInfo)
-                .then(() => {
-                    console.log('User information saved successfully');
-                })
-                .catch((error) => {
-                    console.error('Error saving user information:', error);
-                });
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      console.log("signup", user);
+      alert("User created!");
+
+      // Save user information in Firestore collection
+      const userInfo = {
+        uid: user.uid,
+        email: user.email,
+        club_requests: {
+          pending_requests: [],
+          approved_requests: [],
+          declined_requests: [],
+        },
+        // Add other user information as needed
+      };
+
+      // Firestore collection reference
+      const usersCollection = collection(firestore, "users");
+
+      // Add user document to the collection
+      setDoc(doc(usersCollection, user.uid), userInfo)
+        .then(() => {
+          console.log("User information saved successfully");
         })
         .catch((error) => {
-            console.error('Error creating user:', error);
-            alert(error.code, error.message);
+          console.error("Error saving user information:", error);
         });
+    })
+    .catch((error) => {
+      console.error("Error creating user:", error);
+      alert(error.code, error.message);
     });
+});
 
-    // Login
-    document.getElementById("login").addEventListener("click", function () {
-    var email = document.getElementById('email').value;
-    var password = document.getElementById('password').value;
-    console.log(email, password);
+// Login
+document.getElementById("login").addEventListener("click", function () {
+  var email = document.getElementById("email").value;
+  var password = document.getElementById("password").value;
+  console.log(email, password);
 
-    signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            console.log("login", user);
-            alert('Success Login!');
-            localStorage.setItem('user', JSON.stringify(user))
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      console.log("login", user);
+      alert("Success Login!");
+      localStorage.setItem("user", JSON.stringify(user));
+    })
+    .catch((error) => {
+      alert(error.code, error.message);
+    });
+});
+// // SignUp
+// document.getElementById("signUp").addEventListener("click", function () {
+//   var email = document.getElementById("email").value;
+//   var password = document.getElementById("password").value;
+
+//   createUserWithEmailAndPassword(auth, email, password)
+//     .then((userCredential) => {
+//       const user = userCredential.user;
+//       console.log("signup", user);
+//       alert("User created!");
+
+//       // Save user information in Firestore collection
+//       const userInfo = {
+//         uid: user.uid,
+//         email: user.email,
+//         club_requests: {
+//           pending_requests: [],
+//           approved_requests: [],
+//           declined_requests: [],
+//         },
+//         // Add other user information as needed
+//       };
+
+//       // Firestore collection reference
+//       const usersCollection = collection(firestore, "users");
+
+//       // Add user document to the collection
+//       setDoc(doc(usersCollection, user.uid), userInfo)
+//         .then(() => {
+//           console.log("User information saved successfully");
+//         })
+//         .catch((error) => {
+//           console.error("Error saving user information:", error);
+//         });
+//     })
+//     .catch((error) => {
+//       console.error("Error creating user:", error);
+//       alert(error.code, error.message);
+//     });
+// });
+
+//
+// GoogleSignIn
+// GoogleSignIn
+document.getElementById("googleSignIn").addEventListener("click", function () {
+  signInWithPopup(auth, provider)
+    .then((userCredential) => {
+      const user = userCredential.user;
+
+      const userInfo = {
+        uid: user.uid,
+        email: user.email,
+        // Add other user information as needed
+      };
+
+      // Firestore collection reference
+      const usersCollection = collection(firestore, "users");
+
+      setDoc(doc(usersCollection, user.uid), userInfo)
+        .then(() => {
+          console.log("User information saved successfully");
+          alert("User information saved successfully");
         })
         .catch((error) => {
-            alert(error.code, error.message);
+          console.error("Error saving user information:", error);
+          alert("Error saving user information: " + error.message);
         });
+    })
+    .catch((error) => {
+      console.error("Google sign-in error:", error);
+      alert("Google sign-in error: " + error.message);
     });
-
-
-    // GoogleSignIn
-    document.getElementById("googleSignIn").addEventListener("click", function () {
-    // signInWithRedirect(auth, provider);
-
-    signInWithPopup(auth, provider)
-        .then((result) => {
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            const token = credential.accessToken;
-            const user = result.user;
-            alert(user.displayName);
-
-
-            
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            const email = error.customData ? error.customData.email : null;
-            const credential = GoogleAuthProvider.credentialFromError(error);
-            alert(errorMessage);
-        });
-    });
-    
+});
