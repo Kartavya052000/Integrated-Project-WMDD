@@ -126,7 +126,7 @@
         // For example, place.formatted_address, place.geometry.location.lat(), place.geometry.location.lng(), etc.
       }
     </script>
-    
+
     <script
       type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpN1dFF_d3RhD-ndBd3dGpapZqFAPS7O0&libraries=places&callback=initAutocomplete"
@@ -149,14 +149,15 @@
         collection,
         addDoc,
       } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
-      //Chitransh Firebase     
+
+      //Chitransh Firebase
       // const firebaseConfig = {
-      // apiKey: "AIzaSyDpN1dFF_d3RhD-ndBd3dGpapZqFAPS7O0",
-      // authDomain: "test-7d410.firebaseapp.com",
-      // projectId: "test-7d410",
-      // storageBucket: "test-7d410.appspot.com",
-      // messagingSenderId: "1090057594905",
-      // appId: "1:1090057594905:web:ca3f2b2bef00bbb86a2288"
+      //   apiKey: "AIzaSyDpN1dFF_d3RhD-ndBd3dGpapZqFAPS7O0",
+      //   authDomain: "test-7d410.firebaseapp.com",
+      //   projectId: "test-7d410",
+      //   storageBucket: "test-7d410.appspot.com",
+      //   messagingSenderId: "1090057594905",
+      //   appId: "1:1090057594905:web:ca3f2b2bef00bbb86a2288",
       // };
       //Kartavya Firebase
       const firebaseConfig = {
@@ -197,7 +198,7 @@
         }
       });
       locationInput.addEventListener("keydown", function () {
-      autocompleteEnabled = false;
+        autocompleteEnabled = false;
       });
       locationInput.addEventListener("blur", function () {
         autocompleteEnabled = true;
@@ -208,16 +209,48 @@
         event.preventDefault();
         submitForm();
       });
-      const submitForm = async() => {
+      const submitForm = async () => {
         let clubName = document.getElementById("clubname").value;
         let sport = document.getElementById("sport").value;
         let clubDescription = document.getElementById("clubdescription").value;
+        let clubImage = document.querySelector("#uploadImage").files[0];
+        let storageRef = firebase.storage().ref("images/" + clubImage.name);
 
+        var uploadTask = storageRef.put(clubImage);
+
+        uploadTask.on(
+          "state_changed",
+          function (snapshot) {
+            // Progress monitoring
+            var progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+          },
+          function (error) {
+            // Error handling
+            console.error("Upload failed:", error);
+          },
+          function () {
+            // Upload successful
+            uploadTask.snapshot.ref
+              .getDownloadURL()
+              .then(function (downloadURL) {
+                // Save image URL to database (optional)
+                firebase.database().ref("images").push({
+                  url: downloadURL,
+                });
+                console.log("File available at", downloadURL);
+              });
+          }
+        );
+
+        console.log(clubImage);
         console.log(clubLocation);
         let clubDetails = {
           lat: clubLocation.Latitude,
           long: clubLocation.Longitude,
           address: locationInput.value,
+          image: clubImage,
         };
         let user = JSON.parse(localStorage.getItem("user"));
         console.log(user.uid, "USERRRRR");
@@ -228,41 +261,41 @@
           // "location":locationInput.value,
           clubDetails: clubDetails,
           admin_id: user.uid,
-          club_requests:{
-            pending_requests:[],
-            approved_requests:[],
-            declined_requests:[],
-          }
-
+          club_requests: {
+            pending_requests: [],
+            approved_requests: [],
+            declined_requests: [],
+          },
+          image: clubImage,
           // Add other fields if needed
         };
         console.log(data);
         // Call the writeUserData function
         // writeUserData(data);
         // createClub(data);
-      // };
-      // async function createClub(data) {
+        // };
+        // async function createClub(data) {
         try {
           console.log(data);
           // Get a reference to the "clubs" collection
           const clubsCollectionRef = collection(db, "clubs");
 
           // Add club document to "clubs" collection
-          
+
           const clubDocRef = await addDoc(clubsCollectionRef, {
-            
-          clubName: clubName,
-          Sport: sport,
-          clubDescription: clubDescription,
-          // "location":locationInput.value,
-          clubDetails: clubDetails,
-          admin_id: user.uid,
-          
-          // club_requests:{
-          //   pending_requests:[],
-          //   approved_requests:[],
-          //   declined_requests:[],
-          // }
+            clubName: clubName,
+            Sport: sport,
+            clubDescription: clubDescription,
+            // "location":locationInput.value,
+            clubDetails: clubDetails,
+            admin_id: user.uid,
+            image: clubImage,
+
+            // club_requests:{
+            //   pending_requests:[],
+            //   approved_requests:[],
+            //   declined_requests:[],
+            // }
           });
           alert("Club Store Successfully Added");
           console.log("Club created successfully with ID: ", clubDocRef.id);
@@ -270,8 +303,7 @@
           console.error("Error creating club: ", error);
           alert(error);
         }
-      }
-      
+      };
     </script>
   </body>
 </html>
