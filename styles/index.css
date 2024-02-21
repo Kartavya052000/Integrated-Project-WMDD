@@ -46,3 +46,12 @@ p{
     width: 50%;
     margin: 0 auto;
 }
+.dropdown-menu {
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.dropdown-menu.show {
+    display: block;
+}   

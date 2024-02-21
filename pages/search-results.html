@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="../styles/search-results.css">
+</head>
+<body>
+    <h1>Search Results</h1>
+    <div id="searchQuery"></div>
+    <div id="result"></div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+  // Retrieve search results from localStorage
+  const searchResults = JSON.parse(localStorage.getItem("searchResults"));
+  if (searchResults) {
+    // Display search results on the page
+    showSearchResults(searchResults);
+  }
+});
+
+function showSearchResults(res) {
+    console.log("in showSearchResults", res);
+    let rest = document.getElementById("result");
+    
+    if (res.length > 0) {
+        let htmlcontent=``;    
+        res.forEach((ele)=>{
+            htmlcontent +=`<div>
+            <img src="${ele.image}"><p>Category: ${ele.Sport}</p><p>Club Name: ${ele.clubName}</p><p>Location: ${JSON.stringify(ele.clubDetails)}</p><p>Members</p>
+            </div>`; 
+        })
+        console.log(htmlcontent);
+        rest.innerHTML=htmlcontent;
+          } else {
+      rest.innerHTML = "No results found";
+    }
+}
+    </script>
+</body>
+</html>

@@ -64,7 +64,11 @@
     <div class="search-container">
       <h2>Search Results</h2>
     <form id="searchForm">
-      <label for="search">Search club or sports<input type="text" id="search"></label>  
+      <div class="dropdown">
+          <!-- <label for="search">Search club or sports<input type="text" id="search"></label>  -->
+          <input class="form-control me-2" type="search" id="search" placeholder="Search club or sports" aria-label="Search" autocomplete="off">
+          <ul id="suggestions" class="dropdown-menu" aria-labelledby="dropdownMenuButton"></ul>
+      </div> 
       <button id="submit" type="submit">Search</button>
     </form>
     <div id="result"></div>
