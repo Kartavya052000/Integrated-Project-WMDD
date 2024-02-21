@@ -21,6 +21,8 @@
     //   messagingSenderId: "48172665362",
     //   appId: "1:48172665362:web:1a401f43ed83b3faaba6cb"
     // };
+
+    //KARTAVYA CREDS
     const firebaseConfig = {
     apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
     authDomain: "test-8e125.firebaseapp.com",
