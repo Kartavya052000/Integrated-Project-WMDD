@@ -8,28 +8,18 @@ import {
   child,
 } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js";
 
-// // ARUN'S Firebase CDN //
-const firebaseConfig = {
-  apiKey: "AIzaSyD0815flbjkOuw-q3yvqwAhC3th2Ot6bKU",
-  authDomain: "sportscrush-a2c22.firebaseapp.com",
-  databaseURL: "https://sportscrush-a2c22-default-rtdb.firebaseio.com/",
-  projectId: "sportscrush-a2c22",
-  storageBucket: "sportscrush-a2c22.appspot.com",
-  messagingSenderId: "207698821549",
-  appId: "1:207698821549:web:603d14dd42309de0e4e124",
-  measurementId: "G-Q57DD6FLFZ",
-};
+  //global
+  const firebaseConfig = {
+    apiKey: "AIzaSyD2wZz5FE67IV7278ezzTiQfm0tP8Okmus",
+    authDomain: "sportscrush-b20bd.firebaseapp.com",
+    projectId: "sportscrush-b20bd",
+    storageBucket: "sportscrush-b20bd.appspot.com",
+    messagingSenderId: "188829017619",
+    appId: "1:188829017619:web:f0bbbe5f64d432a2a3c1e6",
+    measurementId: "G-9CS7TKRD9H"
+  };
 
-// Common Firebase
-// // const firebaseConfig = {
-//   apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
-//   authDomain: "test-8e125.firebaseapp.com",
-//   databaseURL: "https://test-8e125-default-rtdb.firebaseio.com",
-//   projectId: "test-8e125",
-//   storageBucket: "test-8e125.appspot.com",
-//   messagingSenderId: "675271753145",
-//   appId: "1:675271753145:web:0f2070f6b149b210608a68",
-// };
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
