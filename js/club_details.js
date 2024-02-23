@@ -32,6 +32,15 @@ const firebaseConfig = {
 //   messagingSenderId: "1053444109448",
 //   appId: "1:1053444109448:web:dc8693364d3128a2e75b3d",
 // };
+// Davinder Firebase
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAAKBahfdbR25SHn1F2IDejzjpd2mC8R5g",
+//   authDomain: "new-sports-8df77.firebaseapp.com",
+//   projectId: "new-sports-8df77",
+//   storageBucket: "new-sports-8df77.appspot.com",
+//   messagingSenderId: "1053444109448",
+//   appId: "1:1053444109448:web:dc8693364d3128a2e75b3d",
+// };
 
 // const firebaseConfig = {
 //     apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
@@ -48,11 +57,14 @@ const firestore = getFirestore(app);
 // Initialize Firebase authentication
 const auth = getAuth();
 
+// global
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get("id");
+// var autocomplete;
+// let eventLocation;
+
 // fetch the clubs
 function fetchClubDetails() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const id = urlParams.get("id");
-
   if (id) {
     const clubDocRef = doc(firestore, "clubs", id);
     getDoc(clubDocRef)
@@ -64,6 +76,7 @@ function fetchClubDetails() {
           clubDetails.innerHTML = `
                     <div style="text-align:center">
                         <h2>Club Name:${clubData.clubName}</h2>
+                        <img src=${clubData?.addressOfImage} alt="${clubData.title}" style="width: 50%;height:50%" >
                         <p> Club Description: ${clubData.clubDescription}</p>
                         <p>Club Address: ${clubData.clubDetails.address}</p>
                         <p>Club Category: ${clubData.Sport}</p>
