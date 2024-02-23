@@ -41,6 +41,7 @@ let clubDetails=[]
         querySnapshot.forEach((doc) => {
           // Extract data from each document
           const club = doc.data();
+          console.log(club,'>>>>');
           const clubId = doc.id; // Accessing the unique ID of the document
             // Add additional processing here if needed
             clubData.push({ id: clubId, ...club });
@@ -116,13 +117,15 @@ let clubDetails=[]
           console.log(val,"CCCLLLL")
           // Add other markers here
           if(val){
+            debugger;
+            console.log(val);
           // console.log(val,"CCCLLLL22 2")
 
-            const clubLocations = [
-            { position: { lat: 49.223574, lng: -123.085842 }, title: 'Club A', detailsUrl: 'club-a-details.html', image: 'club-a-image.jpg', details: 'Club A details' },
-            { position: { lat: 49.228003, lng: -123.098764 }, title: 'Club B', detailsUrl: 'club-b-details.html', image: 'club-b-image.jpg', details: 'Club B details' },
-            // Add more club locations as needed
-          ];
+          //   const clubLocations = [
+          //   { position: { lat: 49.223574, lng: -123.085842 }, title: 'Club A', detailsUrl: 'club-a-details.html', image: 'club-a-image.jpg', details: 'Club A details' },
+          //   { position: { lat: 49.228003, lng: -123.098764 }, title: 'Club B', detailsUrl: 'club-b-details.html', image: 'club-b-image.jpg', details: 'Club B details' },
+          //   // Add more club locations as needed
+          // ];
 
           val.forEach(location => {
             console.log(location)

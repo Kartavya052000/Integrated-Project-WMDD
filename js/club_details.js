@@ -23,15 +23,15 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth
 //   messagingSenderId: "675271753145",
 //   appId: "1:675271753145:web:0f2070f6b149b210608a68",
 // };
-  // Davinder Firebase
-  const firebaseConfig = {
-    apiKey: "AIzaSyAAKBahfdbR25SHn1F2IDejzjpd2mC8R5g",
-    authDomain: "new-sports-8df77.firebaseapp.com",
-    projectId: "new-sports-8df77",
-    storageBucket: "new-sports-8df77.appspot.com",
-    messagingSenderId: "1053444109448",
-    appId: "1:1053444109448:web:dc8693364d3128a2e75b3d",
-  };
+// Davinder Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyAAKBahfdbR25SHn1F2IDejzjpd2mC8R5g",
+  authDomain: "new-sports-8df77.firebaseapp.com",
+  projectId: "new-sports-8df77",
+  storageBucket: "new-sports-8df77.appspot.com",
+  messagingSenderId: "1053444109448",
+  appId: "1:1053444109448:web:dc8693364d3128a2e75b3d",
+};
 
 // const firebaseConfig = {
 //     apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
@@ -48,11 +48,14 @@ const firestore = getFirestore(app);
 // Initialize Firebase authentication
 const auth = getAuth();
 
+// global
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get("id");
+// var autocomplete;
+// let eventLocation;
+
 // fetch the clubs
 function fetchClubDetails() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const id = urlParams.get("id");
-
   if (id) {
     const clubDocRef = doc(firestore, "clubs", id);
     getDoc(clubDocRef)
@@ -64,6 +67,7 @@ function fetchClubDetails() {
           clubDetails.innerHTML = `
                     <div style="text-align:center">
                         <h2>Club Name:${clubData.clubName}</h2>
+                        <img src=${clubData?.addressOfImage} alt="${clubData.title}" style="width: 50%;height:50%" >
                         <p> Club Description: ${clubData.clubDescription}</p>
                         <p>Club Address: ${clubData.clubDetails.address}</p>
                         <p>Club Category: ${clubData.Sport}</p>
@@ -246,8 +250,95 @@ async function allReq() {
 // intiate callback
 allReq();
 
+// document.addEventListener("DOMContentLoaded", function () {
+//     initAutocomplete();
+//   });
 
+// function initAutocomplete() {
+//   autocomplete = new google.maps.places.Autocomplete(
+//     document.getElementById("eventLocationId"),
+//     { types: ["geocode"] }
+//   );
+//   autocomplete.addListener("place_changed", onPlaceChanged);
+// }
 
+// function onPlaceChanged() {
+//   var place = autocomplete.getPlace();
+//   console.log("Selected Place:", place);
+
+//   // Accessing the geometry object
+//   const geometry = place.geometry;
+
+//   // Accessing the location object within geometry
+//   const location = geometry.location;
+
+//   // Extracting latitude and longitude
+//   const latitude = location.lat();
+//   const longitude = location.lng();
+
+//   console.log("Latitude:", latitude);
+//   console.log("Longitude:", longitude);
+
+//   eventLocation = { Latitude: latitude, Longitude: longitude };
+// }
+
+// // create schedule for an event
+// document.getElementById("submitSchedule").addEventListener("click", (event) => {
+//   event.preventDefault();
+//   submitScheduleForm();
+// });
+
+// const submitScheduleForm = async () => {
+//   const clubDocRef = doc(firestore, "clubs", id);
+//   getDoc(clubDocRef)
+//     .then((docSnapshot) => {
+//         debugger;
+//       if (docSnapshot.exists()) {
+//         const clubData = docSnapshot.data();
+
+//         let eventName = document.getElementById("eventName").value;
+//         console.log(eventLocation, document.getElementById("eventLocationId").value);
+//         let eventLocation = {
+//           lat: eventLocation.Latitude,
+//           long: eventLocation.Longitude,
+//           address: document.getElementById("eventLocationId").value,
+//         };
+//         let events = [];
+//         events.push({
+//           eventName,
+//           eventLocation,
+//         });
+//       } else {
+//         console.log("No such document!");
+//       }
+//     })
+//     .catch((error) => {
+//       console.log("Error getting document:", error);
+//     });
+
+  
+
+// //   let user = JSON.parse(localStorage.getItem("user"));
+// //   data = {
+// //     eventName: eventName,
+// //     clubDetails: clubDetails,
+// //     // Add other fields if needed
+// //     // club id
+// //     // array of object of events
+// //   };
+
+// //   try {
+// //     const clubsCollectionRef = collection(db, "clubs");
+
+// //     // update.query
+// //     // club.
+// //     const clubDocRef = await addDoc(clubsCollectionRef, data);
+// //     alert("Event Successfully Added");
+// //   } catch (error) {
+// //     console.error("Error creating event: ", error);
+// //     alert(error);
+// //   }
+// };
 
 async function checkAdmin() {
   try {
@@ -273,9 +364,9 @@ async function checkAdmin() {
         membersDiv.innerHTML = ""; // Clear previous content
         const approvedRequests = clubData.approved_requests || [];
         if (approvedRequests.length > 0) {
-            const members = document.getElementById("members_head");
-            members.textContent = `Members (${approvedRequests.length})`;
-          }
+          const members = document.getElementById("members_head");
+          members.textContent = `Members (${approvedRequests.length})`;
+        }
         approvedRequests.forEach(async (approvedUid) => {
           try {
             // Construct a reference to the "users" collection and query for the user with the approved UID
