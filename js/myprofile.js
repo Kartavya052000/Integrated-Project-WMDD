@@ -1,12 +1,12 @@
-// FIREBASE //
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
 import {
-  getDatabase,
-  ref,
-  set,
-  get,
-  child,
-} from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js";
+  getFirestore,
+  collection,
+  doc,
+  getDoc,
+  updateDoc,
+  setDoc,
+} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
 
 // // ARUN'S Firebase CDN //
 const firebaseConfig = {
@@ -31,80 +31,69 @@ const firebaseConfig = {
 //   appId: "1:675271753145:web:0f2070f6b149b210608a68",
 // };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Realtime Database and get a reference to the service
-const database = getDatabase(app);
-
 // My Query
-const form = document.querySelector("form");
-const dataHolder = {};
-form.addEventListener("submit", function (event) {
-  event.preventDefault();
+const db = getFirestore(app);
 
-  const formData = new FormData(form);
-
-  formData.forEach((value, key) => {
-    dataHolder[key] = value;
+let user = JSON.parse(localStorage.getItem("user"));
+const userCollection = collection(getFirestore(), "users"); // Note: Invoke getFirestore()
+const userDocRef = doc(userCollection, user.email);
+console.log(userDocRef);
+getDoc(userDocRef)
+  .then((docSnapshot) => {
+    if (docSnapshot.exists()) {
+      const userData = docSnapshot.data();
+      document.getElementById("firstName").value = userData.firstName;
+      document.getElementById("lastName").value = userData.lastName;
+      document.getElementById("gender").value = userData.gender;
+      document.getElementById("dob").value = userData.dob;
+      document.getElementById("phoneNumber").value = userData.phoneNumber;
+      document.getElementById("email").value = userData.email;
+      document.getElementById("address").value = userData.address;
+    } else {
+      console.log("No such Document!");
+    }
+  })
+  .catch((error) => {
+    console.log("Error getting document:", error);
   });
-  console.log("Form Data:", dataHolder);
-  //   writeUserData(dataHolder);
-  form.reset();
+window.addEventListener("load", (event) => {
+  let username = (document.querySelector(".username").innerHTML = user.email);
 });
 
-let gd = document
-  .getElementById("get-data-btn")
-  .addEventListener("click", () => {
-    let data = document.getElementById("get-data").value;
-    console.log(dataHolder);
-    getUserData(dataHolder);
-  });
+// onload = (event) => {};
+document.querySelector("#form").addEventListener("submit", function (event) {
+  event.preventDefault(); // Prevent form submission
 
-// Write user data
-
-function writeUserData(dataHolder) {
-  const db = getDatabase();
-  set(ref(db, "users/" + dataHolder.phoneNumber), dataHolder)
+  // Capture edited data from form fields
+  let editedData = {
+    firstName: document.getElementById("firstName").value,
+    lastName: document.getElementById("lastName").value,
+    gender: document.getElementById("gender").value,
+    dob: document.getElementById("dob").value,
+    phoneNumber: document.getElementById("phoneNumber").value,
+    email: document.getElementById("email").value,
+    address: document.getElementById("address").value,
+  };
+  //creating data
+  setData(editedData);
+  // Update user document in Firestore
+  updateDoc(userDocRef, editedData)
     .then(() => {
-      console.log("Data written successfully");
+      console.log("Document successfully updated!");
+      // You can provide a success message to the user or redirect them to another page
     })
     .catch((error) => {
-      console.error("Error writing data: ", error);
+      console.error("Error updating document: ", error);
+      // Handle error scenario
     });
-}
-// Get User ID
-function getUserData(dataHolder) {
-  let userid = JSON.parse(localStorage.getItem("user"));
-  console.log(userid.uid);
-  return;
-
-  console.log(dataHolder.phoneNumber);
-  const dbRef = ref(getDatabase());
-  get(child(dbRef, `users/6049064571`))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        console.log(snapshot.val());
-        let rd = snapshot.val();
-        console.log(rd);
-        let address = document.getElementById("address");
-        address.value = rd.address;
-        let firstName = document.getElementById("firstName");
-        firstName.value = rd.firstName;
-        let lastName = document.getElementById("lastName");
-        lastName.value = rd.lastName;
-        let gender = document.getElementById("gender");
-        gender.value = rd.gender;
-        let dob = document.getElementById("dob");
-        dob.value = rd.dob;
-        let phoneNumber = document.getElementById("phoneNumber");
-        phoneNumber.value = rd.phoneNumber;
-      } else {
-        console.log("No data available");
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-}
-getUserData();
+});
+const setData = async (data) => {
+  try {
+    await setDoc(doc(db, "users", user.email), data);
+    console.log("data added fuckfessfully");
+  } catch (err) {
+    console.log(err);
+  }
+};

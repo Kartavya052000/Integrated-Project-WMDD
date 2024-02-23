@@ -135,6 +135,10 @@
         initAutocomplete();
       });
     </script>
+
+    <!--  -->
+    <!--  -->
+
     <script type="module">
       import {
         getStorage,
@@ -153,8 +157,8 @@
         collection,
         addDoc,
       } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
-    
-      //Chitransh Firebase     
+
+      //Chitransh Firebase
       // const firebaseConfig = {
       // apiKey: "AIzaSyDpN1dFF_d3RhD-ndBd3dGpapZqFAPS7O0",
       // authDomain: "test-7d410.firebaseapp.com",
@@ -244,17 +248,15 @@
             },
             () => {
               getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                addressOfImage= downloadURL;
-                console.log("File available at", downloadURL,addressOfImage);
-        submitForm();
-
+                addressOfImage = downloadURL;
+                console.log("File available at", downloadURL, addressOfImage);
+                submitForm();
               });
             }
           );
         } else {
           console.error("Invalid file type. Please select an image.");
         }
-
       });
       const submitForm = async () => {
         let clubName = document.getElementById("clubname").value;
@@ -279,11 +281,11 @@
           // "location":locationInput.value,
           clubDetails: clubDetails,
           admin_id: user.uid,
-          club_requests:{
-            pending_requests:[],
-            approved_requests:[],
-            declined_requests:[],
-          }
+          club_requests: {
+            pending_requests: [],
+            approved_requests: [],
+            declined_requests: [],
+          },
 
           // Add other fields if needed
         };
@@ -301,20 +303,19 @@
           // Add club document to "clubs" collection
 
           const clubDocRef = await addDoc(clubsCollectionRef, {
-            
-          clubName: clubName,
-          Sport: sport,
-          clubDescription: clubDescription,
-          addressOfImage: addressOfImage,
-          // "location":locationInput.value,
-          clubDetails: clubDetails,
-          admin_id: user.uid,
-          
-          // club_requests:{
-          //   pending_requests:[],
-          //   approved_requests:[],
-          //   declined_requests:[],
-          // }
+            clubName: clubName,
+            Sport: sport,
+            clubDescription: clubDescription,
+            addressOfImage: addressOfImage,
+            // "location":locationInput.value,
+            clubDetails: clubDetails,
+            admin_id: user.uid,
+
+            // club_requests:{
+            //   pending_requests:[],
+            //   approved_requests:[],
+            //   declined_requests:[],
+            // }
           });
           alert("Club Store Successfully Added");
           console.log("Club created successfully with ID: ", clubDocRef.id);
@@ -322,8 +323,7 @@
           console.error("Error creating club: ", error);
           alert(error);
         }
-      }
-      
+      };
     </script>
   </body>
 </html>
