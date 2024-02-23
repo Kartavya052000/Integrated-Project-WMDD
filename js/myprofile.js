@@ -91,7 +91,7 @@ document.querySelector("#form").addEventListener("submit", function (event) {
 });
 const setData = async (data) => {
   try {
-    await setDoc(doc(db, "users", user.email), data);
+    await setDoc(doc(db, "users", user.uid), data);
     console.log("data added fuckfessfully");
   } catch (err) {
     console.log(err);
