@@ -60,15 +60,13 @@
                 class="form-control"
               ></textarea>
             </div>
-            <!-- <label for="address">Address<input type="text" id="address"></label>
-                <label for="country">Country<input type="text" id="country"></label>
-                <label for="postalcode">Postal/Zip Code<input type="text" id="postalcode"></label> -->
             <div class="col-12">
               <label for="uploadImage" class="form-label col-9"
                 >Upload Image<input
                   type="file"
                   class="form-control"
                   id="uploadImage"
+                  accept="/image"
               /></label>
             </div>
             <div class="col-12">
@@ -155,24 +153,14 @@
         collection,
         addDoc,
       } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
-
-      //Chitransh Firebase
-      // const firebaseConfig = {
-      //   apiKey: "AIzaSyDpN1dFF_d3RhD-ndBd3dGpapZqFAPS7O0",
-      //   authDomain: "test-7d410.firebaseapp.com",
-      //   projectId: "test-7d410",
-      //   storageBucket: "test-7d410.appspot.com",
-      //   messagingSenderId: "1090057594905",
-      //   appId: "1:1090057594905:web:ca3f2b2bef00bbb86a2288",
-      // };
-      //Kartavya Firebase
+      //Chitransh Firebase     
       const firebaseConfig = {
-        apiKey: "AIzaSyDpN1dFF_d3RhD-ndBd3dGpapZqFAPS7O0",
-        authDomain: "test-7d410.firebaseapp.com",
-        projectId: "test-7d410",
-        storageBucket: "test-7d410.appspot.com",
-        messagingSenderId: "1090057594905",
-        appId: "1:1090057594905:web:ca3f2b2bef00bbb86a2288",
+      apiKey: "AIzaSyDpN1dFF_d3RhD-ndBd3dGpapZqFAPS7O0",
+      authDomain: "test-7d410.firebaseapp.com",
+      projectId: "test-7d410",
+      storageBucket: "test-7d410.appspot.com",
+      messagingSenderId: "1090057594905",
+      appId: "1:1090057594905:web:ca3f2b2bef00bbb86a2288"
       };
       //Kartavya Firebase
       /*const firebaseConfig = {
@@ -183,7 +171,7 @@
         storageBucket: "test-8e125.appspot.com",
         messagingSenderId: "675271753145",
         appId: "1:675271753145:web:0f2070f6b149b210608a68",
-      };
+      };*/
 
       // Initialize Firebase
       const app = initializeApp(firebaseConfig);
@@ -220,9 +208,52 @@
       });
 
       let data = {};
+      var addressOfImage = "";
+
       document.getElementById("submit").addEventListener("click", (event) => {
         event.preventDefault();
+
+        let uploadImageInput = document.getElementById("uploadImage");
+        const file = uploadImageInput.files[0];
+        if (file && file.type.startsWith("image/")) {
+          var storage = getStorage();
+          var storageRef = ref(storage, "images/" + file.name);
+          const metadata = {
+            contentType: "image/jpeg",
+          };
+          const uploadTask = uploadBytesResumable(storageRef, file, metadata);
+          console.log(uploadTask);
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              const progress =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              console.log("Upload is " + progress + "% done");
+              switch (snapshot.state) {
+                case "paused":
+                  console.log("Upload is paused");
+                  break;
+                case "running":
+                  console.log("Upload is running");
+                  break;
+              }
+            },
+            (error) => {
+              // Handle unsuccessful uploads
+            },
+            () => {
+              getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                addressOfImage= downloadURL;
+                console.log("File available at", downloadURL,addressOfImage);
         submitForm();
+
+              });
+            }
+          );
+        } else {
+          console.error("Invalid file type. Please select an image.");
+        }
+
       });
       const submitForm = async () => {
         let clubName = document.getElementById("clubname").value;
@@ -243,15 +274,16 @@
           Sport: sport,
           clubDescription: clubDescription,
           image: clubImage,
+          addressOfImage: addressOfImage,
           // "location":locationInput.value,
           clubDetails: clubDetails,
           admin_id: user.uid,
-          club_requests: {
-            pending_requests: [],
-            approved_requests: [],
-            declined_requests: [],
-          },
-          image: clubImage,
+          club_requests:{
+            pending_requests:[],
+            approved_requests:[],
+            declined_requests:[],
+          }
+
           // Add other fields if needed
         };
         console.log(data);
@@ -268,19 +300,20 @@
           // Add club document to "clubs" collection
 
           const clubDocRef = await addDoc(clubsCollectionRef, {
-            clubName: clubName,
-            Sport: sport,
-            clubDescription: clubDescription,
-            // "location":locationInput.value,
-            clubDetails: clubDetails,
-            admin_id: user.uid,
-            image: clubImage,
-
-            // club_requests:{
-            //   pending_requests:[],
-            //   approved_requests:[],
-            //   declined_requests:[],
-            // }
+            
+          clubName: clubName,
+          Sport: sport,
+          clubDescription: clubDescription,
+          addressOfImage: addressOfImage,
+          // "location":locationInput.value,
+          clubDetails: clubDetails,
+          admin_id: user.uid,
+          
+          // club_requests:{
+          //   pending_requests:[],
+          //   approved_requests:[],
+          //   declined_requests:[],
+          // }
           });
           alert("Club Store Successfully Added");
           console.log("Club created successfully with ID: ", clubDocRef.id);
@@ -288,61 +321,8 @@
           console.error("Error creating club: ", error);
           alert(error);
         }
-      };
-      let clubImage = document.querySelector("#uploadImage");
-      // Function to handle file upload
-      document
-        .getElementById("uploadImage")
-        .addEventListener("change", handleFileUpload);
-
-      function handleFileUpload(event) {
-        const file = event.target.files[0]; // Get the selected file
-        const metadata = { contentType: "image/jpeg" };
-        // Create a storage reference
-        // Assume 'file' is the image file selected by the user
-
-        // Create a reference to Firebase Storage
-        const storageRef = ref(getStorage(), "images/" + file.name);
-
-        // Upload file to the storage reference
-        const uploadTask = uploadBytesResumable(storageRef, file);
-
-        // Listen for state changes, errors, and completion of the upload.
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            // Handle progress
-          },
-          (error) => {
-            // Handle errors
-            console.error("Error uploading file: ", error);
-          },
-          () => {
-            // Handle successful upload
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              // Once the image is uploaded, you can get its download URL
-              console.log("File available at", downloadURL);
-
-              // Now, you can store this downloadURL in Firestore
-              // Example:
-              db.collection("images")
-                .add({
-                  imageURL: downloadURL,
-                  // Other metadata if needed
-                })
-                .then((docRef) => {
-                  console.log(
-                    "Image URL stored in Firestore with ID: ",
-                    docRef.id
-                  );
-                })
-                .catch((error) => {
-                  console.error("Error storing image URL: ", error);
-                });
-            });
-          }
-        );
       }
+      
     </script>
   </body>
 </html>

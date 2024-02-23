@@ -1,40 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Club Details</title>
-      <!-- --------------bootstrap------- -->
-      <link
+    <!-- --------------bootstrap------- -->
+    <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../styles/club_details.css">
+    <link rel="stylesheet" href="../styles/club_details.css" />
     <script type="module" defer src="../js/index.js"></script>
     <script type="module" defer src="../js/club_details.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <script>
-        function showTab(tabId) {
-            // Hide all tab contents
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.style.display = 'none';
-            });
-    
-            // Show the selected tab content
-            document.getElementById(tabId).style.display = 'block';
-    
-            // Remove 'active' class from all nav links
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-    
-            // Add 'active' class to the clicked nav link
-            const clickedLink = document.querySelector(`a[href="#${tabId}"]`);
-            clickedLink.classList.add('active');
+      function showTab(tabId) {
+        // Hide all tab contents
+        document.querySelectorAll(".tab-content").forEach((tab) => {
+          tab.style.display = "none";
+        });
+
+        // Show the selected tab content
+        document.getElementById(tabId).style.display = "block";
+
+        // Remove 'active' class from all nav links
+        document.querySelectorAll(".nav-link").forEach((link) => {
+          link.classList.remove("active");
+        });
+
+        // Add 'active' class to the clicked nav link
+        const clickedLink = document.querySelector(`a[href="#${tabId}"]`);
+        clickedLink.classList.add("active");
+      }
+    </script>
+
+    <!-- for autocomplete -->
+    <script
+      type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpN1dFF_d3RhD-ndBd3dGpapZqFAPS7O0&libraries=places&callback=initAutocomplete"
+    ></script>
+    <script>
+      // Manual initialization after the script has loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        initAutocomplete();
+      });
+    </script>
+    <script>
+      var autocomplete;
+      let clubLocation;
+      function initAutocomplete() {
+        console.log("Autocomplete initialized");
+        autocomplete = new google.maps.places.Autocomplete(
+          document.getElementById("location"),
+          { types: ["geocode"] }
+        );
+        autocomplete.addListener("place_changed", onPlaceChanged);
+      }
+
+      function onPlaceChanged() {
+        var place = autocomplete.getPlace();
+        console.log("Selected Place:", place);
+
+        // Accessing the geometry object
+        const geometry = place.geometry;
+
+        // Accessing the location object within geometry
+        const location = geometry.location;
+
+        // Extracting latitude and longitude
+        const latitude = location.lat();
+        const longitude = location.lng();
+
+        console.log("Latitude:", latitude);
+        console.log("Longitude:", longitude);
+
+        clubLocation = { Latitude: latitude, Longitude: longitude };
+      }
+
+      document.getElementById("submit").addEventListener("click", (event) => {
+        event.preventDefault();
+        submitForm();
+      });
+
+      const submitForm = async () => {
+        let clubName = document.getElementById("eventName").value;
+        // let sport = document.getElementById("sport").value;
+        let clubDetails = {
+          lat: clubLocation.Latitude,
+          long: clubLocation.Longitude,
+          address: locationInput.value,
+        };
+
+        let user = JSON.parse(localStorage.getItem("user"));
+        data = {
+          eventName: eventName,
+          clubDetails: clubDetails,
+          // Add other fields if needed
+          // club id 
+          // array of object of events
+        };
+
+        try {
+          const clubsCollectionRef = collection(db, "clubs");
+
+          // update.query
+          // club.
+          const clubDocRef = await addDoc(clubsCollectionRef, data);
+          alert("Event Successfully Added");
+        } catch (error) {
+          console.error("Error creating event: ", error);
+          alert(error);
         }
+      };
     </script>
     <s-header></s-header>
     
@@ -59,22 +139,69 @@
     </li>
 </ul>
 
-<div id="schedule" class="tab-content" style="display: block;">
-    <h3>Schedule Content</h3>
-    <!-- Schedule content goes here -->
-</div>
-<div id="members" class="tab-content" style="display: none;">
-    <h3>Members Content</h3>
-    <!-- Members content goes here -->
-</div>
-<div id="admin-request" class="tab-content" style="display: none;">
-    <h3>Request for Admin Content</h3>
-    <!-- Admin request content goes here -->
-</div>
+    <div style="text-align: center">
+      <h1>Club_Deatils</h1>
+      <button type="button" class="btn btn-success" id="join">Join</button>
+      <button type="button" class="btn btn-success" id="joined">Joined</button>
+      <button type="button" class="btn btn-warning">Pending</button>
+      <div id="clubDetails"></div>
+      <ul class="nav nav-pills club_tabs">
+        <li class="nav-item">
+          <a class="nav-link active" href="#" onclick="showTab('schedule')"
+            >Schedule</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="showTab('members')">Members</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="showTab('admin-request')"
+            >Request for Admin</a
+          >
+        </li>
+      </ul>
 
+      <div id="schedule" class="tab-content" style="display: block">
+        <h3>Schedule Content</h3>
+        <!-- Schedule content goes here -->
+        <table>
+          <thead>
+            <tr>
+              <th>Club Name</th>
+              <th>Date and Time</th>
+              <th>Location</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="eventTableBody">
+            <!-- Table rows will be dynamically added here -->
+          </tbody>
+        </table>
 
+        <!-- Form to add a new event -->
+        <div>
+          <form>
+            <label for="eventName">Event Name:</label>
+            <input type="text" id="eventName" required /><br />
 
-</div>
-    
-</body>
+            <label for="datetimepicker">Date and Time:</label>
+            <input type="text" id="datetimepicker" required /><br />
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" class="form-control" required />
+
+            <input type="submit" id="submit" class="btn btn-success" />
+          </form>
+        </div>
+      </div>
+      <div id="members" class="tab-content" style="display: none">
+        <h3>Members Content</h3>
+        <!-- Members content goes here -->
+      </div>
+      <div id="admin-request" class="tab-content" style="display: none">
+        <h3>Request for Admin Content</h3>
+        <!-- Admin request content goes here -->
+      </div>
+    </div>
+  </body>
 </html>

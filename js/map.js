@@ -4,16 +4,26 @@ let clubDetails=[]
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
     
+      // Davinder Firebase
+      const firebaseConfig = {
+        apiKey: "AIzaSyAAKBahfdbR25SHn1F2IDejzjpd2mC8R5g",
+        authDomain: "new-sports-8df77.firebaseapp.com",
+        projectId: "new-sports-8df77",
+        storageBucket: "new-sports-8df77.appspot.com",
+        messagingSenderId: "1053444109448",
+        appId: "1:1053444109448:web:dc8693364d3128a2e75b3d",
+      };
+
     // Your Firebase configuration
-         const firebaseConfig = {
-            apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
-            authDomain: "test-8e125.firebaseapp.com",
-            databaseURL: "https://test-8e125-default-rtdb.firebaseio.com",
-            projectId: "test-8e125",
-            storageBucket: "test-8e125.appspot.com",
-            messagingSenderId: "675271753145",
-            appId: "1:675271753145:web:0f2070f6b149b210608a68",
-          };
+        //  const firebaseConfig = {
+        //     apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
+        //     authDomain: "test-8e125.firebaseapp.com",
+        //     databaseURL: "https://test-8e125-default-rtdb.firebaseio.com",
+        //     projectId: "test-8e125",
+        //     storageBucket: "test-8e125.appspot.com",
+        //     messagingSenderId: "675271753145",
+        //     appId: "1:675271753145:web:0f2070f6b149b210608a68",
+        //   };
     
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);

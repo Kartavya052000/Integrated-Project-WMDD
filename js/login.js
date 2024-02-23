@@ -30,6 +30,45 @@ import {
 //   messagingSenderId: "48172665362",
 //   appId: "1:48172665362:web:1a401f43ed83b3faaba6cb"
 // };
+    // Your web app's Firebase configuration
+    // Davinder 
+    const firebaseConfig = {
+        apiKey: "AIzaSyAAKBahfdbR25SHn1F2IDejzjpd2mC8R5g",
+        authDomain: "new-sports-8df77.firebaseapp.com",
+        projectId: "new-sports-8df77",
+        storageBucket: "new-sports-8df77.appspot.com",
+        messagingSenderId: "1053444109448",
+        appId: "1:1053444109448:web:dc8693364d3128a2e75b3d"
+      };
+    // const firebaseConfig = {
+    //   apiKey: "AIzaSyAGLcybmjB3QBZ5Bdk02nIkqb0F3pJKf1E",
+    //   authDomain: "fir-sports-93164.firebaseapp.com",
+    //   databaseURL: "https://fir-sports-93164-default-rtdb.firebaseio.com",
+    //   projectId: "fir-sports-93164",
+    //   storageBucket: "fir-sports-93164.appspot.com",
+    //   messagingSenderId: "48172665362",
+    //   appId: "1:48172665362:web:1a401f43ed83b3faaba6cb"
+    // };
+//     const firebaseConfig = {
+//     apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
+//     authDomain: "test-8e125.firebaseapp.com",
+//     databaseURL: "https://test-8e125-default-rtdb.firebaseio.com",
+//     projectId: "test-8e125",
+//     storageBucket: "test-8e125.appspot.com",
+//     messagingSenderId: "675271753145",
+//     appId: "1:675271753145:web:0f2070f6b149b210608a68",
+// };
+  
+    // Initialize Firebase
+    // const app = initializeApp(firebaseConfig);
+    // let auth = getAuth();
+    // let database = getDatabase(app);
+    // let provider = new GoogleAuthProvider(app);
+    // let firestore = getFirestore()
+    // // SignUp
+    // document.getElementById("signUp").addEventListener("click", function () {
+    //     var email = document.getElementById('email').value;
+    // var password = document.getElementById('password').value;
 
 // <<<<<<< HEAD
 //
