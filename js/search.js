@@ -40,15 +40,20 @@ const firebaseConfig = {
   
   let retrieveData = async (text) => {
     try {
-      const q1 = query(collection(db, "clubs"), where("Sport", "==", text));
-      const q2 = query(collection(db, "clubs"), where("clubName","==",text));//,
+      console.log(text);
+      // const q1 = query(collection(db, "clubs"), where("Sport", "==", text));
+      // const q2 = query(collection(db, "clubs"), where("clubName","==",text));//,
+      const q1 = query(collection(db, "clubs"), where("Sport", ">=", text), where("Sport", "<=", text + "\uf8ff"));
+      const q2 = query(collection(db, "clubs"), where("clubName", ">=", text), where("clubName", "<=", text + "\uf8ff"));
 //    ) (where("Sport", "==", text), where("clubName","==",""));
       const querySnapshot1 = await getDocs(q1);
+
       querySnapshot1.forEach((doc) => {
         console.log(doc.id, " => ", doc.data());
         searchResults.push(doc.data()); // Push data directly, no need for JSON.stringify
       });
       const querySnapshot2 = await getDocs(q2);
+
       querySnapshot2.forEach((doc) => {
         console.log(doc.id, " => ", doc.data());
         searchResults.push(doc.data()); // Push data directly, no need for JSON.stringify

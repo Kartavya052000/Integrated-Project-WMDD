@@ -1,0 +1,9 @@
+body{
+    background-color: black;
+    color: white;
+}
+.content_wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

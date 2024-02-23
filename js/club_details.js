@@ -32,15 +32,6 @@ const firebaseConfig = {
 //   messagingSenderId: "1053444109448",
 //   appId: "1:1053444109448:web:dc8693364d3128a2e75b3d",
 // };
-// Davinder Firebase
-// const firebaseConfig = {
-//   apiKey: "AIzaSyAAKBahfdbR25SHn1F2IDejzjpd2mC8R5g",
-//   authDomain: "new-sports-8df77.firebaseapp.com",
-//   projectId: "new-sports-8df77",
-//   storageBucket: "new-sports-8df77.appspot.com",
-//   messagingSenderId: "1053444109448",
-//   appId: "1:1053444109448:web:dc8693364d3128a2e75b3d",
-// };
 
 // const firebaseConfig = {
 //     apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
@@ -120,9 +111,12 @@ function handleJoin() {
       };
 
       setDoc(clubDocRef, updateData, { merge: true })
-        .then(() => {
+        .then(async () => {
           alert("Request Sent Successfully");
           console.log("UID stored in pending_requests successfully.");
+          await updateDoc(doc(firestore, "users", uid), {
+            pending_clubs: arrayUnion(clubId),
+          });
         })
         .catch((error) => {
           console.error("Error storing UID in pending_requests:", error);
@@ -215,6 +209,7 @@ async function allReq() {
                     });
                     // Update the user's document to add the approved club ID to the 'approvedClubs' array
                     await updateDoc(doc(firestore, "users", pendingUid), {
+                      pending_clubs: arrayRemove(clubId),
                       approvedClubs: arrayUnion(clubId),
                     });
                     alert("Pending request has been accepted.");
@@ -259,6 +254,7 @@ async function allReq() {
 // intiate callback
 allReq();
 
+// check for club admin
 async function checkAdmin() {
   try {
     // Get the UID from localStorage if it exists
