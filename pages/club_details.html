@@ -16,6 +16,7 @@
     <script type="module" defer src="../js/club_details.js"></script>
   </head>
   <body>
+    <!-- this is script is only for tab shifting -->
     <script>
       function showTab(tabId) {
         // Hide all tab contents
@@ -37,85 +38,8 @@
       }
     </script>
 
-    <!-- for autocomplete -->
-    <script
-      type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpN1dFF_d3RhD-ndBd3dGpapZqFAPS7O0&libraries=places&callback=initAutocomplete"
-    ></script>
-    <script>
-      // Manual initialization after the script has loaded
-      document.addEventListener("DOMContentLoaded", function () {
-        initAutocomplete();
-      });
-    </script>
-    <script>
-      var autocomplete;
-      let clubLocation;
-      function initAutocomplete() {
-        console.log("Autocomplete initialized");
-        autocomplete = new google.maps.places.Autocomplete(
-          document.getElementById("location"),
-          { types: ["geocode"] }
-        );
-        autocomplete.addListener("place_changed", onPlaceChanged);
-      }
-
-      function onPlaceChanged() {
-        var place = autocomplete.getPlace();
-        console.log("Selected Place:", place);
-
-        // Accessing the geometry object
-        const geometry = place.geometry;
-
-        // Accessing the location object within geometry
-        const location = geometry.location;
-
-        // Extracting latitude and longitude
-        const latitude = location.lat();
-        const longitude = location.lng();
-
-        console.log("Latitude:", latitude);
-        console.log("Longitude:", longitude);
-
-        clubLocation = { Latitude: latitude, Longitude: longitude };
-      }
-
-      document.getElementById("submit").addEventListener("click", (event) => {
-        event.preventDefault();
-        submitForm();
-      });
-
-      const submitForm = async () => {
-        let clubName = document.getElementById("eventName").value;
-        // let sport = document.getElementById("sport").value;
-        let clubDetails = {
-          lat: clubLocation.Latitude,
-          long: clubLocation.Longitude,
-          address: locationInput.value,
-        };
-
-        let user = JSON.parse(localStorage.getItem("user"));
-        data = {
-          eventName: eventName,
-          clubDetails: clubDetails,
-          // Add other fields if needed
-          // club id 
-          // array of object of events
-        };
-
-        try {
-          const clubsCollectionRef = collection(db, "clubs");
-
-          // update.query
-          // club.
-          const clubDocRef = await addDoc(clubsCollectionRef, data);
-          alert("Event Successfully Added");
-        } catch (error) {
-          console.error("Error creating event: ", error);
-          alert(error);
-        }
-      };
-    </script>
+  
+    
     <s-header></s-header>
     
     <div style="text-align:center">
@@ -158,23 +82,25 @@
           </tbody>
         </table>
 
-        <!-- Form to add a new event -->
-        <div>
-          <form>
+        <div id="schedule" class="tab-content" style="display: block">
+          <h3>Schedule Content</h3>
+          <button id="schedule_addbtn" style="display: none;">+ Add Schedule</button>
+          <div id="users_message" style="display: none;">No Schedule Yet</div>
+          <div id="editable_content" style="display: none;">
             <label for="eventName">Event Name:</label>
             <input type="text" id="eventName" required /><br />
 
             <label for="datetimepicker">Date and Time:</label>
-            <input type="text" id="datetimepicker" required /><br />
+            <input type="datetime-local" id="datetimepicker" required /><br />
 
             <label for="location">Location:</label>
-            <input type="text" id="location" class="form-control" required />
+            <input type="text" id="location" class="form-control"
+              required />
 
             <input type="submit" id="submit" class="btn btn-success" />
-          </form>
-        </div>
-      </div>
-      <div id="members" class="tab-content" style="display: none">
+          </div>
+          
+    <div id="members" class="tab-content" style="display: none">
         <h3>Members Content</h3>
         <!-- Members content goes here -->
       </div>

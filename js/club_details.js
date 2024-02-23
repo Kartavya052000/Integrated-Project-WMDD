@@ -43,6 +43,10 @@ function fetchClubDetails() {
         if (docSnapshot.exists()) {
           const clubData = docSnapshot.data();
           console.log(clubData);
+          if(!clubData.events){
+            document.getElementById("schedule_addbtn").style.display = "block";
+
+          }
           const clubDetails = document.getElementById("clubDetails");
           clubDetails.innerHTML = `
                     <div style="text-align:center">
@@ -323,6 +327,8 @@ async function checkAdmin() {
 
           // For example: fetchClubDetails(), handleJoin(), allReq(), etc.
         } else {
+          document.getElementById("users_message").style.display='block'
+          document.getElementById("schedule_addbtn").style.display='none'
           console.log("Current user is not the admin of the club.");
           document.getElementById("adminRequestTab").style.display = "none";
         }
@@ -338,3 +344,35 @@ async function checkAdmin() {
 }
 
 checkAdmin();
+
+
+
+// function to show user status
+
+
+// add schedule intially only for admin
+document.getElementById("schedule_addbtn").addEventListener('click',()=>{
+
+  document.getElementById("editable_content").style.display="flex"
+  document.getElementById("schedule_addbtn").style.display="none"
+})
+
+
+// submit to add the schedule
+document.getElementById("submit").addEventListener('click',async()=>{
+  let event_name=document.getElementById("eventName").value;
+  let date_time=document.getElementById("datetimepicker").value;
+  let location=document.getElementById("location").value;
+  let schedule={
+    event_name,
+    date_time,
+    location
+  }
+  
+// console.log(schedule,id)
+// const clubDocRef = doc(firestore, "clubs", id);
+await updateDoc(doc(firestore, "clubs", id), {
+  events: arrayUnion(schedule)
+});
+alert('event saved!');
+})
