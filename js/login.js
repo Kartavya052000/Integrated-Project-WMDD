@@ -31,6 +31,7 @@ import {
 //   appId: "1:48172665362:web:1a401f43ed83b3faaba6cb"
 // };
 
+// <<<<<<< HEAD
 //
 // Import the functions you need from the SDKs you need
 // import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -42,16 +43,27 @@ import {
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
 //arun firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyD0815flbjkOuw-q3yvqwAhC3th2Ot6bKU",
-  authDomain: "sportscrush-a2c22.firebaseapp.com",
-  databaseURL: "https://sportscrush-a2c22-default-rtdb.firebaseio.com",
-  projectId: "sportscrush-a2c22",
-  storageBucket: "sportscrush-a2c22.appspot.com",
-  messagingSenderId: "207698821549",
-  appId: "1:207698821549:web:603d14dd42309de0e4e124",
-  measurementId: "G-Q57DD6FLFZ",
-};
+// const firebaseConfig = {
+//   apiKey: "AIzaSyD0815flbjkOuw-q3yvqwAhC3th2Ot6bKU",
+//   authDomain: "sportscrush-a2c22.firebaseapp.com",
+//   databaseURL: "https://sportscrush-a2c22-default-rtdb.firebaseio.com",
+//   projectId: "sportscrush-a2c22",
+//   storageBucket: "sportscrush-a2c22.appspot.com",
+//   messagingSenderId: "207698821549",
+//   appId: "1:207698821549:web:603d14dd42309de0e4e124",
+//   measurementId: "G-Q57DD6FLFZ",
+// =======
+//     //KARTAVYA CREDS
+//     const firebaseConfig = {
+//     apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
+//     authDomain: "test-8e125.firebaseapp.com",
+//     databaseURL: "https://test-8e125-default-rtdb.firebaseio.com",
+//     projectId: "test-8e125",
+//     storageBucket: "test-8e125.appspot.com",
+//     messagingSenderId: "675271753145",
+//     appId: "1:675271753145:web:0f2070f6b149b210608a68",
+// >>>>>>> 9eb3222bd4fa3283ee606f7366210e3cd69e244f
+// };
 
 // Initialize Firebase
 // const app = initializeApp(firebaseConfig);
