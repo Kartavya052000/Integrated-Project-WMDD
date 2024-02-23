@@ -40,6 +40,8 @@ import {
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+//arun firebase
 const firebaseConfig = {
   apiKey: "AIzaSyD0815flbjkOuw-q3yvqwAhC3th2Ot6bKU",
   authDomain: "sportscrush-a2c22.firebaseapp.com",

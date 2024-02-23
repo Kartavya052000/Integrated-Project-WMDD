@@ -138,10 +138,16 @@
       });
     </script>
     <script type="module">
+      import {
+        getStorage,
+        ref,
+        uploadBytesResumable,
+        getDownloadURL,
+      } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-storage.js";
+
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
       import {
         getDatabase,
-        ref,
         set,
       } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
       import {
@@ -150,13 +156,24 @@
         addDoc,
       } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
       //Chitransh Firebase
+      // const firebaseConfig = {
+      //   apiKey: "AIzaSyDpN1dFF_d3RhD-ndBd3dGpapZqFAPS7O0",
+      //   authDomain: "test-7d410.firebaseapp.com",
+      //   projectId: "test-7d410",
+      //   storageBucket: "test-7d410.appspot.com",
+      //   messagingSenderId: "1090057594905",
+      //   appId: "1:1090057594905:web:ca3f2b2bef00bbb86a2288",
+      // };
+      //arun firebase
       const firebaseConfig = {
-        apiKey: "AIzaSyDpN1dFF_d3RhD-ndBd3dGpapZqFAPS7O0",
-        authDomain: "test-7d410.firebaseapp.com",
-        projectId: "test-7d410",
-        storageBucket: "test-7d410.appspot.com",
-        messagingSenderId: "1090057594905",
-        appId: "1:1090057594905:web:ca3f2b2bef00bbb86a2288",
+        apiKey: "AIzaSyD0815flbjkOuw-q3yvqwAhC3th2Ot6bKU",
+        authDomain: "sportscrush-a2c22.firebaseapp.com",
+        databaseURL: "https://sportscrush-a2c22-default-rtdb.firebaseio.com",
+        projectId: "sportscrush-a2c22",
+        storageBucket: "sportscrush-a2c22.appspot.com",
+        messagingSenderId: "207698821549",
+        appId: "1:207698821549:web:603d14dd42309de0e4e124",
+        measurementId: "G-Q57DD6FLFZ",
       };
       //Kartavya Firebase
       /*const firebaseConfig = {
@@ -212,44 +229,13 @@
         let clubName = document.getElementById("clubname").value;
         let sport = document.getElementById("sport").value;
         let clubDescription = document.getElementById("clubdescription").value;
-        let clubImage = document.querySelector("#uploadImage").files[0];
-        let storageRef = firebase.storage().ref("images/" + clubImage.name);
+        let clubImage = document.querySelector("#uploadImage").value;
 
-        var uploadTask = storageRef.put(clubImage);
-
-        uploadTask.on(
-          "state_changed",
-          function (snapshot) {
-            // Progress monitoring
-            var progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log("Upload is " + progress + "% done");
-          },
-          function (error) {
-            // Error handling
-            console.error("Upload failed:", error);
-          },
-          function () {
-            // Upload successful
-            uploadTask.snapshot.ref
-              .getDownloadURL()
-              .then(function (downloadURL) {
-                // Save image URL to database (optional)
-                firebase.database().ref("images").push({
-                  url: downloadURL,
-                });
-                console.log("File available at", downloadURL);
-              });
-          }
-        );
-
-        console.log(clubImage);
         console.log(clubLocation);
         let clubDetails = {
           lat: clubLocation.Latitude,
           long: clubLocation.Longitude,
           address: locationInput.value,
-          image: clubImage,
         };
         let user = JSON.parse(localStorage.getItem("user"));
         console.log(user.uid, "USERRRRR");
@@ -257,6 +243,7 @@
           clubName: clubName,
           Sport: sport,
           clubDescription: clubDescription,
+          image: clubImage,
           // "location":locationInput.value,
           clubDetails: clubDetails,
           admin_id: user.uid,
@@ -303,6 +290,60 @@
           alert(error);
         }
       };
+      let clubImage = document.querySelector("#uploadImage");
+      // Function to handle file upload
+      document
+        .getElementById("uploadImage")
+        .addEventListener("change", handleFileUpload);
+
+      function handleFileUpload(event) {
+        const file = event.target.files[0]; // Get the selected file
+        const metadata = { contentType: "image/jpeg" };
+        // Create a storage reference
+        // Assume 'file' is the image file selected by the user
+
+        // Create a reference to Firebase Storage
+        const storageRef = ref(getStorage(), "images/" + file.name);
+
+        // Upload file to the storage reference
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        // Listen for state changes, errors, and completion of the upload.
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            // Handle progress
+          },
+          (error) => {
+            // Handle errors
+            console.error("Error uploading file: ", error);
+          },
+          () => {
+            // Handle successful upload
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              // Once the image is uploaded, you can get its download URL
+              console.log("File available at", downloadURL);
+
+              // Now, you can store this downloadURL in Firestore
+              // Example:
+              db.collection("images")
+                .add({
+                  imageURL: downloadURL,
+                  // Other metadata if needed
+                })
+                .then((docRef) => {
+                  console.log(
+                    "Image URL stored in Firestore with ID: ",
+                    docRef.id
+                  );
+                })
+                .catch((error) => {
+                  console.error("Error storing image URL: ", error);
+                });
+            });
+          }
+        );
+      }
     </script>
   </body>
 </html>
