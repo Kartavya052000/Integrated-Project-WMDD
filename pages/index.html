@@ -63,10 +63,13 @@
     </nav>
     <div class="search-container">
       <h2>Search Results</h2>
-    <form id="searchForm">
+    <form id="searchForm" action="/search-results.html" method="GET">
       <div class="dropdown">
           <!-- <label for="search">Search club or sports<input type="text" id="search"></label>  -->
-          <input class="form-control me-2" type="search" id="search" placeholder="Search club or sports" aria-label="Search" autocomplete="off">
+          <div class="search-div">
+            <input class="form-control me-2" type="search" id="search" placeholder="Search club or sports" aria-label="Search" autocomplete="off">
+            <button id="cutButton" type="button">X</button>
+          </div>
           <ul id="suggestions" class="dropdown-menu" aria-labelledby="dropdownMenuButton"></ul>
       </div> 
       <button id="submit" type="submit">Search</button>

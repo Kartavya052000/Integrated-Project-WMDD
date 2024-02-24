@@ -46,6 +46,7 @@ import { getFirestore, collection, doc,addDoc, setDoc, getDoc ,arrayUnion,arrayR
       querySnapshot2.forEach((doc) => {
         console.log(doc.id, " => ", doc.data());
         searchResults.push(doc.data()); // Push data directly, no need for JSON.stringify
+        console.log(searchResults);
       });
       console.log("searchResults Array", searchResults);
     } catch (err) {
@@ -60,8 +61,21 @@ import { getFirestore, collection, doc,addDoc, setDoc, getDoc ,arrayUnion,arrayR
     if (res.length > 0) {
         let htmlcontent=``;    
         res.forEach((ele)=>{
+            // htmlcontent +=`<div>
+            // <img src="${ele.image}"><p>Category: ${ele.Sport}</p><p>Club Name: ${ele.clubName}</p><p>Location: ${JSON.stringify(ele.clubDetails)}</p><p>Members</p>
+            // </div>`;
+            /*htmlcontent +=`<div>
+            <img src="${ele.image}"><p>${ele.clubName ? 'Club Name: ' + ele.clubName : ''}</p><p>${ele.Sport ? 'Category: ' + ele.Sport : ''}</p><p>Location: ${JSON.stringify(ele.clubDetails)}</p><p>Members</p>
+            </div>`; */
             htmlcontent +=`<div>
-            <img src="${ele.image}"><p>Category: ${ele.Sport}</p><p>Club Name: ${ele.clubName}</p><p>Location: ${JSON.stringify(ele.clubDetails)}</p><p>Members</p>
+            <img src="${ele.image}">`;
+            if (ele.clubName) {
+                htmlcontent += `<p>Club Name: ${ele.clubName}</p>`;
+            }
+            if (ele.Sport) {
+                htmlcontent += `<p>Category: ${ele.Sport}</p>`;
+            }
+            htmlcontent += `<p>Location: ${JSON.stringify(ele.clubDetails)}</p><p>Members</p>
             </div>`; 
         })
         console.log(htmlcontent);
@@ -70,16 +84,7 @@ import { getFirestore, collection, doc,addDoc, setDoc, getDoc ,arrayUnion,arrayR
       rest.innerHTML = "No results found";
     }
   };
-  document.getElementById("search").addEventListener("input", async (e) => {
-    let searchText = e.target.value.trim();
-    if (searchText === "") {
-        // Clear suggestions if the search input is empty
-        showSearchResults([]);
-    } else {
-        await retrieveData(searchText); // Wait for data retrieval to complete
-        showSearchResults(searchResults);
-    }
-});
+
 document.getElementById("search").addEventListener("input", async (e) => {
   let searchText = e.target.value.trim();
   if (searchText === "") {
@@ -88,6 +93,9 @@ document.getElementById("search").addEventListener("input", async (e) => {
       await retrieveData(searchText);
       displaySuggestions(searchResults);
   }
+});
+document.getElementById("cutButton").addEventListener("click", (e) => {
+  document.getElementById("search").value = ""; // Clear the search input field
 });
 // Function to handle selection from dropdown
 document.getElementById("suggestions").addEventListener("click", (e) => {
@@ -100,17 +108,25 @@ document.getElementById("suggestions").addEventListener("click", (e) => {
 const displaySuggestions = (res) => {
   let suggestionsList = document.getElementById("suggestions");
   suggestionsList.innerHTML = ""; // Clear previous suggestions
-
   if (res.length > 0) {
-      res.forEach((club) => {
-          let listItem = document.createElement("li");
-          listItem.innerHTML = `<a class="dropdown-item">${club.clubName}</a>`;
-          suggestionsList.appendChild(listItem);
-      });
-      suggestionsList.classList.add("show"); // Show the dropdown
-  } else {
-      suggestionsList.classList.remove("show"); // Hide the dropdown if no suggestions
-  }
+  const categorySuggestions = res.map(club => club.Sport).filter((value, index, self) => self.indexOf(value) === index);
+  categorySuggestions.forEach((category) => {
+    let listItem = document.createElement("li");
+    listItem.innerHTML = `<a class="dropdown-item">${category}</a>`;
+    suggestionsList.appendChild(listItem);
+  });
+
+  // Add club names to suggestions
+  res.forEach((club) => {
+    let listItem = document.createElement("li");
+    listItem.innerHTML = `<a class="dropdown-item">${club.clubName}</a>`;
+    suggestionsList.appendChild(listItem);
+  });
+
+  suggestionsList.classList.add("show"); // Show the dropdown
+} else {
+  suggestionsList.classList.remove("show"); // Hide the dropdown if no suggestions
+}
 };
 const clearSuggestions = () => {
   let suggestionsList = document.getElementById("suggestions");
@@ -124,58 +140,19 @@ document.getElementById("searchForm").addEventListener("submit", async (e) => {
     // window.location.href = "/search-results.html?query=" + searchText; // Redirect to search results page with query parameter
     // Retrieve search results based on the search text
     await retrieveData(searchText);
-
-    // Store search results in localStorage to pass to the next page
-    localStorage.setItem("searchResults", JSON.stringify(searchResults));
-
+    try {
+      // Store searchResults in localStorage
+      localStorage.setItem("searchResults", JSON.stringify(searchResults));
+    } catch (error) {
+      console.error("Error storing searchResults in localStorage:", error);
+    }
+    // // Store search results in localStorage to pass to the next page
+    // localStorage.setItem("searchResults", JSON.stringify(searchResults));
+    localStorage.setItem("searchText",JSON.stringify(searchText));
     // Redirect to the search results page
-    window.location.href = "/search-results.html";
+    window.location.href = `../pages/search-results.html?category=${searchText}`
   }
 });
 
 
-// In the search results page (search-results.html)
-document.addEventListener("DOMContentLoaded", async function() {
-  const params = new URLSearchParams(window.location.search);
-  const query = params.get("query");
-  if (query) {
-      await retrieveData(query); // Fetch search results based on query parameter
-      showSearchResults(searchResults); // Render search results on the page
-  }
-});
-
-  
-//   document.getElementById("submit").addEventListener("click",(e)=>{
-//     e.preventDefault();
-//     let text=document.getElementById("search").value;
-//     retrieveData(text);
-//     console.log(text);
-//     let sr=searchResults;
-//     console.log(searchResults);
-//     showSearchResults(sr);  
-//     // searchResults=[];
-//   })
-
-//   let searchResults=[];
-//   let retrieveData=async(text)=>{
-//     try{
-//         const q = query(collection(db, "clubs"), where("Sport", "==", text));
-
-//         const querySnapshot = await getDocs(q);
-//         querySnapshot.forEach((doc) => {
-//             // doc.data() is never undefined for query doc snapshots
-//             console.log(doc.id, " => ", doc.data());
-//             searchResults.push(JSON.stringify(doc.data()));
-//             console.log("searchResults Array"+searchResults);
-//             });
-            
-//     }catch(err){
-//         console.log(err);
-//     }
-//   }
-//   const showSearchResults=(res)=>{
-//     console.log("in showSearchResults",res)
-//     let rest=document.getElementById("result");
-//     rest.innerHTML=`<img src="#"><p>Category: ${res.Sport}</p><p>Club Name: ${res.clubName}</p><p>Location: ${res.clubDetails}</p><p>Members</p>`
-//   }
   

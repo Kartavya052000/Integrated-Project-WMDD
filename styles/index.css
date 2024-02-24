@@ -55,3 +55,19 @@ p{
 .dropdown-menu.show {
     display: block;
 }   
+.search-div{
+    display: flex;
+}
+#cutButton{
+    padding: 1rem;
+    border-radius: 1rem;
+    border-radius: 1rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: white;
+}
+#search{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-right: 0 !important;
+}
