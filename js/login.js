@@ -20,103 +20,21 @@ import {
   setDoc,
 } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js"; // Import Firestore functions
 
-// Your web app's Firebase configuration
-// const firebaseConfig = {
-//   apiKey: "AIzaSyAGLcybmjB3QBZ5Bdk02nIkqb0F3pJKf1E",
-//   authDomain: "fir-sports-93164.firebaseapp.com",
-//   databaseURL: "https://fir-sports-93164-default-rtdb.firebaseio.com",
-//   projectId: "fir-sports-93164",
-//   storageBucket: "fir-sports-93164.appspot.com",
-//   messagingSenderId: "48172665362",
-//   appId: "1:48172665362:web:1a401f43ed83b3faaba6cb"
-// };
-    // Your web app's Firebase configuration
-    // Davinder 
-    // const firebaseConfig = {
-    //     apiKey: "AIzaSyAAKBahfdbR25SHn1F2IDejzjpd2mC8R5g",
-    //     authDomain: "new-sports-8df77.firebaseapp.com",
-    //     projectId: "new-sports-8df77",
-    //     storageBucket: "new-sports-8df77.appspot.com",
-    //     messagingSenderId: "1053444109448",
-    //     appId: "1:1053444109448:web:dc8693364d3128a2e75b3d"
-    //   };
-    // const firebaseConfig = {
-    //   apiKey: "AIzaSyAGLcybmjB3QBZ5Bdk02nIkqb0F3pJKf1E",
-    //   authDomain: "fir-sports-93164.firebaseapp.com",
-    //   databaseURL: "https://fir-sports-93164-default-rtdb.firebaseio.com",
-    //   projectId: "fir-sports-93164",
-    //   storageBucket: "fir-sports-93164.appspot.com",
-    //   messagingSenderId: "48172665362",
-    //   appId: "1:48172665362:web:1a401f43ed83b3faaba6cb"
-    // };
-//     const firebaseConfig = {
-//     apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
-//     authDomain: "test-8e125.firebaseapp.com",
-//     databaseURL: "https://test-8e125-default-rtdb.firebaseio.com",
-//     projectId: "test-8e125",
-//     storageBucket: "test-8e125.appspot.com",
-//     messagingSenderId: "675271753145",
-//     appId: "1:675271753145:web:0f2070f6b149b210608a68",
-// };
-  
-    // Initialize Firebase
-    // const app = initializeApp(firebaseConfig);
-    // let auth = getAuth();
-    // let database = getDatabase(app);
-    // let provider = new GoogleAuthProvider(app);
-    // let firestore = getFirestore()
-    // // SignUp
-    // document.getElementById("signUp").addEventListener("click", function () {
-    //     var email = document.getElementById('email').value;
-    // var password = document.getElementById('password').value;
-
-// <<<<<<< HEAD
-//
-// Import the functions you need from the SDKs you need
-// import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-// import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-
-//arun firebase
-// const firebaseConfig = {
-//   apiKey: "AIzaSyD0815flbjkOuw-q3yvqwAhC3th2Ot6bKU",
-//   authDomain: "sportscrush-a2c22.firebaseapp.com",
-//   databaseURL: "https://sportscrush-a2c22-default-rtdb.firebaseio.com",
-//   projectId: "sportscrush-a2c22",
-//   storageBucket: "sportscrush-a2c22.appspot.com",
-//   messagingSenderId: "207698821549",
-//   appId: "1:207698821549:web:603d14dd42309de0e4e124",
-//   measurementId: "G-Q57DD6FLFZ",
-// =======
-    //KARTAVYA CREDS
-    const firebaseConfig = {
-    apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
-    authDomain: "test-8e125.firebaseapp.com",
-    databaseURL: "https://test-8e125-default-rtdb.firebaseio.com",
-    projectId: "test-8e125",
-    storageBucket: "test-8e125.appspot.com",
-    messagingSenderId: "675271753145",
-    appId: "1:675271753145:web:0f2070f6b149b210608a68",
+// global
+const firebaseConfig = {
+  apiKey: "AIzaSyD2wZz5FE67IV7278ezzTiQfm0tP8Okmus",
+  authDomain: "sportscrush-b20bd.firebaseapp.com",
+  projectId: "sportscrush-b20bd",
+  storageBucket: "sportscrush-b20bd.appspot.com",
+  messagingSenderId: "188829017619",
+  appId: "1:188829017619:web:f0bbbe5f64d432a2a3c1e6",
+  measurementId: "G-9CS7TKRD9H"
 };
-
 // Initialize Firebase
 // const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 // //
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
-//   authDomain: "test-8e125.firebaseapp.com",
-//   databaseURL: "https://test-8e125-default-rtdb.firebaseio.com",
-//   projectId: "test-8e125",
-//   storageBucket: "test-8e125.appspot.com",
-//   messagingSenderId: "675271753145",
-//   appId: "1:675271753145:web:0f2070f6b149b210608a68",
-// };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

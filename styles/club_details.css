@@ -2,3 +2,6 @@
     display: flex;
     justify-content: center;
 }
+#editable_content{
+    height: 50px;
+}

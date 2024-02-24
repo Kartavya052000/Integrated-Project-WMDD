@@ -14,34 +14,16 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
 
+//global
 const firebaseConfig = {
-  apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
-  authDomain: "test-8e125.firebaseapp.com",
-  databaseURL: "https://test-8e125-default-rtdb.firebaseio.com",
-  projectId: "test-8e125",
-  storageBucket: "test-8e125.appspot.com",
-  messagingSenderId: "675271753145",
-  appId: "1:675271753145:web:0f2070f6b149b210608a68",
+  apiKey: "AIzaSyD2wZz5FE67IV7278ezzTiQfm0tP8Okmus",
+  authDomain: "sportscrush-b20bd.firebaseapp.com",
+  projectId: "sportscrush-b20bd",
+  storageBucket: "sportscrush-b20bd.appspot.com",
+  messagingSenderId: "188829017619",
+  appId: "1:188829017619:web:f0bbbe5f64d432a2a3c1e6",
+  measurementId: "G-9CS7TKRD9H",
 };
-// Davinder Firebase
-// const firebaseConfig = {
-//   apiKey: "AIzaSyAAKBahfdbR25SHn1F2IDejzjpd2mC8R5g",
-//   authDomain: "new-sports-8df77.firebaseapp.com",
-//   projectId: "new-sports-8df77",
-//   storageBucket: "new-sports-8df77.appspot.com",
-//   messagingSenderId: "1053444109448",
-//   appId: "1:1053444109448:web:dc8693364d3128a2e75b3d",
-// };
-
-// const firebaseConfig = {
-//     apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
-//     authDomain: "test-8e125.firebaseapp.com",
-//     databaseURL: "https://test-8e125-default-rtdb.firebaseio.com",
-//     projectId: "test-8e125",
-//     storageBucket: "test-8e125.appspot.com",
-//     messagingSenderId: "675271753145",
-//     appId: "1:675271753145:web:0f2070f6b149b210608a68",
-// };
 
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
@@ -63,6 +45,9 @@ function fetchClubDetails() {
         if (docSnapshot.exists()) {
           const clubData = docSnapshot.data();
           console.log(clubData);
+          if (!clubData.events) {
+            document.getElementById("schedule_addbtn").style.display = "block";
+          }
           const clubDetails = document.getElementById("clubDetails");
           clubDetails.innerHTML = `
                     <div style="text-align:center">
@@ -340,6 +325,8 @@ async function checkAdmin() {
 
           // For example: fetchClubDetails(), handleJoin(), allReq(), etc.
         } else {
+          document.getElementById("users_message").style.display = "block";
+          document.getElementById("schedule_addbtn").style.display = "none";
           console.log("Current user is not the admin of the club.");
           document.getElementById("adminRequestTab").style.display = "none";
         }
@@ -355,3 +342,30 @@ async function checkAdmin() {
 }
 
 checkAdmin();
+
+// function to show user status
+
+// add schedule intially only for admin
+document.getElementById("schedule_addbtn").addEventListener("click", () => {
+  document.getElementById("editable_content").style.display = "flex";
+  document.getElementById("schedule_addbtn").style.display = "none";
+});
+
+// submit to add the schedule
+document.getElementById("submit").addEventListener("click", async () => {
+  let event_name = document.getElementById("eventName").value;
+  let date_time = document.getElementById("datetimepicker").value;
+  let location = document.getElementById("location").value;
+  let schedule = {
+    event_name,
+    date_time,
+    location,
+  };
+
+  // console.log(schedule,id)
+  // const clubDocRef = doc(firestore, "clubs", id);
+  await updateDoc(doc(firestore, "clubs", id), {
+    events: arrayUnion(schedule),
+  });
+  alert("event saved!");
+});

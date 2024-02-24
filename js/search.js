@@ -1,27 +1,16 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
 import { getFirestore, collection, doc,addDoc, setDoc, getDoc ,arrayUnion,arrayRemove,query,where,getDocs,updateDoc} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
 
-// chitransh connection
-// const firebaseConfig = {
-//     apiKey: "AIzaSyBbf7kUlnYsVd39msTgcH7rTyYVNqqDYQ8",
-//     authDomain: "test-7d410.firebaseapp.com",
-//     projectId: "test-7d410",
-//     storageBucket: "test-7d410.appspot.com",
-//     messagingSenderId: "1090057594905",
-//     appId: "1:1090057594905:web:ca3f2b2bef00bbb86a2288"
-//   };
-
-
-//kartavya connecion
-const firebaseConfig = {
-  apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
-  authDomain: "test-8e125.firebaseapp.com",
-  databaseURL: "https://test-8e125-default-rtdb.firebaseio.com",
-  projectId: "test-8e125",
-  storageBucket: "test-8e125.appspot.com",
-  messagingSenderId: "675271753145",
-  appId: "1:675271753145:web:0f2070f6b149b210608a68",
-};
+  //global
+  const firebaseConfig = {
+    apiKey: "AIzaSyD2wZz5FE67IV7278ezzTiQfm0tP8Okmus",
+    authDomain: "sportscrush-b20bd.firebaseapp.com",
+    projectId: "sportscrush-b20bd",
+    storageBucket: "sportscrush-b20bd.appspot.com",
+    messagingSenderId: "188829017619",
+    appId: "1:188829017619:web:f0bbbe5f64d432a2a3c1e6",
+    measurementId: "G-9CS7TKRD9H"
+  };
   const firebaseApp=initializeApp(firebaseConfig);
 
   const db = getFirestore(firebaseApp);

@@ -157,34 +157,17 @@
         collection,
         addDoc,
       } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
-      // Davinder
+
+      //global
       const firebaseConfig = {
-        apiKey: "AIzaSyAAKBahfdbR25SHn1F2IDejzjpd2mC8R5g",
-        authDomain: "new-sports-8df77.firebaseapp.com",
-        projectId: "new-sports-8df77",
-        storageBucket: "new-sports-8df77.appspot.com",
-        messagingSenderId: "1053444109448",
-        appId: "1:1053444109448:web:dc8693364d3128a2e75b3d",
+        apiKey: "AIzaSyD2wZz5FE67IV7278ezzTiQfm0tP8Okmus",
+        authDomain: "sportscrush-b20bd.firebaseapp.com",
+        projectId: "sportscrush-b20bd",
+        storageBucket: "sportscrush-b20bd.appspot.com",
+        messagingSenderId: "188829017619",
+        appId: "1:188829017619:web:f0bbbe5f64d432a2a3c1e6",
+        measurementId: "G-9CS7TKRD9H",
       };
-      //Chitransh Firebase
-      // const firebaseConfig = {
-      // apiKey: "AIzaSyDpN1dFF_d3RhD-ndBd3dGpapZqFAPS7O0",
-      // authDomain: "test-7d410.firebaseapp.com",
-      // projectId: "test-7d410",
-      // storageBucket: "test-7d410.appspot.com",
-      // messagingSenderId: "1090057594905",
-      // appId: "1:1090057594905:web:ca3f2b2bef00bbb86a2288"
-      // };
-      //Kartavya Firebase
-      // const firebaseConfig = {
-      //   apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
-      //   authDomain: "test-8e125.firebaseapp.com",
-      //   databaseURL: "https://test-8e125-default-rtdb.firebaseio.com",
-      //   projectId: "test-8e125",
-      //   storageBucket: "test-8e125.appspot.com",
-      //   messagingSenderId: "675271753145",
-      //   appId: "1:675271753145:web:0f2070f6b149b210608a68",
-      // };
 
       // Initialize Firebase
       const app = initializeApp(firebaseConfig);
@@ -299,11 +282,7 @@
           // Add other fields if needed
         };
         console.log(data);
-        // Call the writeUserData function
-        // writeUserData(data);
-        // createClub(data);
-        // };
-        // async function createClub(data) {
+
         try {
           console.log(data);
           // Get a reference to the "clubs" collection
@@ -319,12 +298,6 @@
             // "location":locationInput.value,
             clubDetails: clubDetails,
             admin_id: user.uid,
-
-            // club_requests:{
-            //   pending_requests:[],
-            //   approved_requests:[],
-            //   declined_requests:[],
-            // }
           });
           alert("Club Store Successfully Added");
           console.log("Club created successfully with ID: ", clubDocRef.id);
