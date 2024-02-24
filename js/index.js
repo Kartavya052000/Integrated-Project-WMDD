@@ -24,11 +24,11 @@ class sHeader extends HTMLElement {
                 <a class="nav-link " href="myprofile.html">My Profile</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="myclubs_details.html">My Clubs</a>
-              </li>
-              <li class="nav-item">
-              <a class="nav-link " href="myprofile.html">Manage Clubs</a>
-            </li>
+              <a class="nav-link" id="myclubs" style="cursor: pointer;">My Clubs</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" id="manageclubs" style="cursor: pointer;">Manage Clubs</a>
+          </li>
             </ul>
             <form class="d-flex" role="search">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -41,40 +41,21 @@ class sHeader extends HTMLElement {
 }
 
 customElements.define("s-header", sHeader);
-// Initialize Firebase
-// const firebaseConfig = {
-//   apiKey: "AIzaSyC3L-pygyvZqYOGp5Os7swV54Mhno1To88",
-//   authDomain: "test-8e125.firebaseapp.com",
-//   databaseURL: "https://test-8e125-default-rtdb.firebaseio.com",
-//   projectId: "test-8e125",
-//   storageBucket: "test-8e125.appspot.com",
-//   messagingSenderId: "675271753145",
-//   appId: "1:675271753145:web:0f2070f6b149b210608a68",
-// };
-
-// firebase.initializeApp(firebaseConfig); // Initialize Firebase
-
-// // Function to create a club
-// async function createClub(userId, clubName, clubDescription) {
-//   try {
-//     // Add club document to "clubs" collection
-//     const clubRef = await firebase.firestore().collection("clubs").add({
-//       name: clubName,
-//       description: clubDescription,
-//       admin: userId,
-//     });
-
-//     // Add user as admin in the "members" subcollection of the club
-//     await clubRef.collection("members").doc(userId).set({
-//       userId: userId,
-//       role: "admin",
-//     });
-
-//     console.log("Club created successfully!");
-//   } catch (error) {
-//     console.error("Error creating club: ", error);
-//   }
-// }
-
-// // Call the createClub function
-// // createClub("zAuTYTmuOcgGFjI0daHLLCXjZPX2", "My Club", "Club Description");
+// Wrap the event listener attachment in DOMContentLoaded to ensure the element exists in the DOM
+document.addEventListener('DOMContentLoaded', function() {
+  // Navigation to myclubs_details.html with type admin
+  const myClubsLink = document.getElementById('myclubs');
+  const managaeCLubLink = document.getElementById('manageclubs');
+  if (myClubsLink) {
+      myClubsLink.addEventListener('click', function(event) {
+          event.preventDefault(); // Prevent default behavior of the anchor tag
+          window.location.href = './myclubs_details.html?type=self'; // Navigate to myclubs_details.html with type=admin
+      });
+  }
+  if (managaeCLubLink) {
+    managaeCLubLink.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default behavior of the anchor tag
+        window.location.href = './myclubs_details.html?type=admin'; // Navigate to myclubs_details.html with type=admin
+    });
+}
+});

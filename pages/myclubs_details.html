@@ -12,13 +12,15 @@
   />
   <link rel="stylesheet" href="../styles/myclubs.css">
 <script src="/js/index.js"></script>
-<script src="/js/myclubs_details.js"></script>
+<script src="/js/myclubs_details.js" type="module"></script>
 
 </head>
 <body>
     <s-header></s-header>
+    <h1 class="title">My Clubs</h1>
+
     <div class="content_wrapper">
-        <h1>My Clubs</h1>
+        <div id="clubs_list"></div> <!-- Div to contain dynamically generated club elements -->
     </div>
     
 </body>

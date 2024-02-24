@@ -93,9 +93,8 @@ function handleJoin() {
         .then(async() => {
           alert("Request Sent Successfully");
           console.log("UID stored in pending_requests successfully.");
-          await updateDoc(doc(firestore, "users", uid), {
-            pending_clubs: arrayUnion(clubId),
-          });
+       
+          fetchClubDetails() // call to update the page
         })
         .catch((error) => {
           console.error("Error storing UID in pending_requests:", error);

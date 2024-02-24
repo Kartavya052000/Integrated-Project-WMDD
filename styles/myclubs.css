@@ -7,3 +7,11 @@ body{
     align-items: center;
     justify-content: center;
 }
+.club{
+    border: 1px solid green;
+    cursor: pointer;
+
+}
+.title{
+    text-align: center;
+}
