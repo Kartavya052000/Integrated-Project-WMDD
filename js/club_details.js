@@ -14,28 +14,30 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
 
-
-  //global
-  const firebaseConfig = {
-    apiKey: "AIzaSyD2wZz5FE67IV7278ezzTiQfm0tP8Okmus",
-    authDomain: "sportscrush-b20bd.firebaseapp.com",
-    projectId: "sportscrush-b20bd",
-    storageBucket: "sportscrush-b20bd.appspot.com",
-    messagingSenderId: "188829017619",
-    appId: "1:188829017619:web:f0bbbe5f64d432a2a3c1e6",
-    measurementId: "G-9CS7TKRD9H"
-  };
+//global
+const firebaseConfig = {
+  apiKey: "AIzaSyD2wZz5FE67IV7278ezzTiQfm0tP8Okmus",
+  authDomain: "sportscrush-b20bd.firebaseapp.com",
+  projectId: "sportscrush-b20bd",
+  storageBucket: "sportscrush-b20bd.appspot.com",
+  messagingSenderId: "188829017619",
+  appId: "1:188829017619:web:f0bbbe5f64d432a2a3c1e6",
+  measurementId: "G-9CS7TKRD9H",
+};
 
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
 // Initialize Firebase authentication
 const auth = getAuth();
 
+// global
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get("id");
+// var autocomplete;
+// let eventLocation;
+
 // fetch the clubs
 function fetchClubDetails() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const id = urlParams.get("id");
-
   if (id) {
     const clubDocRef = doc(firestore, "clubs", id);
     getDoc(clubDocRef)
@@ -43,10 +45,14 @@ function fetchClubDetails() {
         if (docSnapshot.exists()) {
           const clubData = docSnapshot.data();
           console.log(clubData);
+          if (!clubData.events) {
+            document.getElementById("schedule_addbtn").style.display = "block";
+          }
           const clubDetails = document.getElementById("clubDetails");
           clubDetails.innerHTML = `
                     <div style="text-align:center">
                         <h2>Club Name:${clubData.clubName}</h2>
+                        <img src=${clubData?.addressOfImage} alt="${clubData.title}" style="width: 50%;height:50%" >
                         <p> Club Description: ${clubData.clubDescription}</p>
                         <p>Club Address: ${clubData.clubDetails.address}</p>
                         <p>Club Category: ${clubData.Sport}</p>
@@ -88,9 +94,9 @@ function handleJoin() {
       const updateData = {
         pending_requests: arrayUnion(uid),
       };
-    
+
       setDoc(clubDocRef, updateData, { merge: true })
-        .then(async() => {
+        .then(async () => {
           alert("Request Sent Successfully");
           console.log("UID stored in pending_requests successfully.");
        
@@ -99,8 +105,6 @@ function handleJoin() {
         .catch((error) => {
           console.error("Error storing UID in pending_requests:", error);
         });
-       
-  
     } else {
       console.log("No club ID provided in the URL.");
     }
@@ -234,8 +238,6 @@ async function allReq() {
 // intiate callback
 allReq();
 
-
-
 // check for club admin
 async function checkAdmin() {
   try {
@@ -261,9 +263,9 @@ async function checkAdmin() {
         membersDiv.innerHTML = ""; // Clear previous content
         const approvedRequests = clubData.approved_requests || [];
         if (approvedRequests.length > 0) {
-            const members = document.getElementById("members_head");
-            members.textContent = `Members (${approvedRequests.length})`;
-          }
+          const members = document.getElementById("members_head");
+          members.textContent = `Members (${approvedRequests.length})`;
+        }
         approvedRequests.forEach(async (approvedUid) => {
           try {
             // Construct a reference to the "users" collection and query for the user with the approved UID
@@ -322,6 +324,8 @@ async function checkAdmin() {
 
           // For example: fetchClubDetails(), handleJoin(), allReq(), etc.
         } else {
+          document.getElementById("users_message").style.display = "block";
+          document.getElementById("schedule_addbtn").style.display = "none";
           console.log("Current user is not the admin of the club.");
           document.getElementById("adminRequestTab").style.display = "none";
         }
@@ -337,3 +341,30 @@ async function checkAdmin() {
 }
 
 checkAdmin();
+
+// function to show user status
+
+// add schedule intially only for admin
+document.getElementById("schedule_addbtn").addEventListener("click", () => {
+  document.getElementById("editable_content").style.display = "flex";
+  document.getElementById("schedule_addbtn").style.display = "none";
+});
+
+// submit to add the schedule
+document.getElementById("submit").addEventListener("click", async () => {
+  let event_name = document.getElementById("eventName").value;
+  let date_time = document.getElementById("datetimepicker").value;
+  let location = document.getElementById("location").value;
+  let schedule = {
+    event_name,
+    date_time,
+    location,
+  };
+
+  // console.log(schedule,id)
+  // const clubDocRef = doc(firestore, "clubs", id);
+  await updateDoc(doc(firestore, "clubs", id), {
+    events: arrayUnion(schedule),
+  });
+  alert("event saved!");
+});

@@ -135,6 +135,10 @@
         initAutocomplete();
       });
     </script>
+
+    <!--  -->
+    <!--  -->
+
     <script type="module">
       import {
         getStorage,
@@ -153,17 +157,17 @@
         collection,
         addDoc,
       } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
-    
-     //global
-     const firebaseConfig = {
-      apiKey: "AIzaSyD2wZz5FE67IV7278ezzTiQfm0tP8Okmus",
-      authDomain: "sportscrush-b20bd.firebaseapp.com",
-      projectId: "sportscrush-b20bd",
-      storageBucket: "sportscrush-b20bd.appspot.com",
-      messagingSenderId: "188829017619",
-      appId: "1:188829017619:web:f0bbbe5f64d432a2a3c1e6",
-      measurementId: "G-9CS7TKRD9H"
-    };
+
+      //global
+      const firebaseConfig = {
+        apiKey: "AIzaSyD2wZz5FE67IV7278ezzTiQfm0tP8Okmus",
+        authDomain: "sportscrush-b20bd.firebaseapp.com",
+        projectId: "sportscrush-b20bd",
+        storageBucket: "sportscrush-b20bd.appspot.com",
+        messagingSenderId: "188829017619",
+        appId: "1:188829017619:web:f0bbbe5f64d432a2a3c1e6",
+        measurementId: "G-9CS7TKRD9H",
+      };
 
       // Initialize Firebase
       const app = initializeApp(firebaseConfig);
@@ -235,19 +239,18 @@
             },
             () => {
               getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                addressOfImage= downloadURL;
-                console.log("File available at", downloadURL,addressOfImage);
-        submitForm();
-
+                addressOfImage = downloadURL;
+                console.log("File available at", downloadURL, addressOfImage);
+                submitForm();
               });
             }
           );
         } else {
           console.error("Invalid file type. Please select an image.");
         }
-
       });
       const submitForm = async () => {
+        debugger;
         let clubName = document.getElementById("clubname").value;
         let sport = document.getElementById("sport").value;
         let clubDescription = document.getElementById("clubdescription").value;
@@ -270,11 +273,11 @@
           // "location":locationInput.value,
           clubDetails: clubDetails,
           admin_id: user.uid,
-          club_requests:{
-            pending_requests:[],
-            approved_requests:[],
-            declined_requests:[],
-          }
+          club_requests: {
+            pending_requests: [],
+            approved_requests: [],
+            declined_requests: [],
+          },
 
           // Add other fields if needed
         };
@@ -288,16 +291,13 @@
           // Add club document to "clubs" collection
 
           const clubDocRef = await addDoc(clubsCollectionRef, {
-            
-          clubName: clubName,
-          Sport: sport,
-          clubDescription: clubDescription,
-          addressOfImage: addressOfImage,
-          // "location":locationInput.value,
-          clubDetails: clubDetails,
-          admin_id: user.uid,
-          
-       
+            clubName: clubName,
+            Sport: sport,
+            clubDescription: clubDescription,
+            addressOfImage: addressOfImage,
+            // "location":locationInput.value,
+            clubDetails: clubDetails,
+            admin_id: user.uid,
           });
           alert("Club Store Successfully Added");
           console.log("Club created successfully with ID: ", clubDocRef.id);
@@ -305,8 +305,7 @@
           console.error("Error creating club: ", error);
           alert(error);
         }
-      }
-      
+      };
     </script>
   </body>
 </html>
