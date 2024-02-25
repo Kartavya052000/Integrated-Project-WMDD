@@ -101,27 +101,47 @@ document.getElementById("cutButton").addEventListener("click", (e) => {
 document.getElementById("suggestions").addEventListener("click", (e) => {
   if (e.target && e.target.nodeName == "A") {
       let selectedText = e.target.textContent;
+      let selectedType = e.target.dataset.type;
+      if (selectedType === "category") {
+        // Handle category selection
+        console.log("Selected category:", selectedText);
+      } else if (selectedType === "clubName") {
+        // Handle club name selection
+        console.log("Selected club name:", selectedText);
+      }
       document.getElementById("search").value = selectedText;
       clearSuggestions(); // Clear dropdown suggestions
   }
 });
 const displaySuggestions = (res) => {
+  
   let suggestionsList = document.getElementById("suggestions");
   suggestionsList.innerHTML = ""; // Clear previous suggestions
-  if (res.length > 0) {
-  const categorySuggestions = res.map(club => club.Sport).filter((value, index, self) => self.indexOf(value) === index);
-  categorySuggestions.forEach((category) => {
-    let listItem = document.createElement("li");
-    listItem.innerHTML = `<a class="dropdown-item">${category}</a>`;
-    suggestionsList.appendChild(listItem);
-  });
 
-  // Add club names to suggestions
-  res.forEach((club) => {
-    let listItem = document.createElement("li");
-    listItem.innerHTML = `<a class="dropdown-item">${club.clubName}</a>`;
-    suggestionsList.appendChild(listItem);
-  });
+  if (res.length > 0) {
+    const uniqueCategories = [];
+    const uniqueClubNames = [];
+
+    res.forEach((club) => {
+      if (club.Sport && !uniqueCategories.includes(club.Sport)) {
+        uniqueCategories.push(club.Sport);
+      }
+      if (club.clubName && !uniqueClubNames.includes(club.clubName)) {
+        uniqueClubNames.push(club.clubName);
+      }
+    });
+
+    uniqueCategories.forEach((category) => {
+      let listItem = document.createElement("li");
+      listItem.innerHTML = `<a class="dropdown-item" data-type="category">${category} :Category</a>`;
+      suggestionsList.appendChild(listItem);
+    });
+
+    uniqueClubNames.forEach((clubName) => {
+      let listItem = document.createElement("li");
+      listItem.innerHTML = `<a class="dropdown-item" data-type="clubName">${clubName} :Club</a>`;
+      suggestionsList.appendChild(listItem);
+    });
 
   suggestionsList.classList.add("show"); // Show the dropdown
 } else {
