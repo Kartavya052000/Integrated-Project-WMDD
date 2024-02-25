@@ -102,12 +102,10 @@ document.getElementById("suggestions").addEventListener("click", (e) => {
   if (e.target && e.target.nodeName == "A") {
       let selectedText = e.target.textContent;
       let selectedType = e.target.dataset.type;
-      if (selectedType === "category") {
-        // Handle category selection
-        console.log("Selected category:", selectedText);
-      } else if (selectedType === "clubName") {
-        // Handle club name selection
-        console.log("Selected club name:", selectedText);
+      if (selectedType === "category" || selectedType === "clubName") {
+        // Remove the ":Category" or ":Club" label from the selected text
+        selectedText = selectedText.split(":")[0].trim();
+        console.log("Selected:", selectedType, selectedText);
       }
       document.getElementById("search").value = selectedText;
       clearSuggestions(); // Clear dropdown suggestions
