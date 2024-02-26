@@ -71,8 +71,15 @@ window.initMap = async function () {
         elementType: "geometry",
         stylers: [
           {
-            color: "#000000",
+            color: "#FCC577",
           },
+        ],
+      },
+      {
+        featureType: "administrative.country",
+        elementType: "geometry.stroke",
+        stylers: [
+          { color: "#C626B8" }, // Country border color
         ],
       },
 
@@ -81,7 +88,7 @@ window.initMap = async function () {
         elementType: "geometry",
         stylers: [
           {
-            color: "#FFD23F", // Set road color to green
+            color: "#FF8D75", // Set road color to green
           },
         ],
       },
@@ -90,7 +97,7 @@ window.initMap = async function () {
         elementType: "geometry.fill",
         stylers: [
           {
-            color: "#0C6B37", // Set color of forests
+            color: "#FCD1AC", // Set color of forests
           },
         ],
       },
