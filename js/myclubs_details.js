@@ -98,7 +98,8 @@ const urlParams = new URLSearchParams(window.location.search);
 const type = urlParams.get("type");
 console.log(type);
 if(type=='self'){
-    myClubs(uid)
+  document.getElementById("titlehead").textContent = "My Clubs";
+  myClubs(uid)
     .then((clubs) => {
         console.log("User's clubs:", clubs);
         // Display clubs on the page
@@ -119,7 +120,7 @@ if(type=='self'){
             clubsList.appendChild(clubElement);
         });
     }else{
-        const clubElement = document.createElement('div');
+      const clubElement = document.createElement('div');
         clubElement.classList.add('club_card');
         clubElement.innerHTML = `
             <h3>No Clubs  to Show</h3>
@@ -132,6 +133,8 @@ if(type=='self'){
         console.error("Error:", error);
     });
 }else{
+  document.getElementById("titlehead").textContent = "Manage Clubs";
+
     managaeClubs(uid)
     .then((clubs) => {
         console.log("User's clubs:", clubs);

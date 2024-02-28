@@ -55,28 +55,34 @@ function fetchClubDetails() {
           if (clubData.events) {
             const eventTableBody = document.getElementById("eventTableBody");
             eventTableBody.innerHTML = "";
-            clubData.events.forEach((doc) => {
-              console.log(doc, ">>>>>s");
+            clubData.events.forEach((ite) => {
+              // console.log(doc, ">>>>>s");
               const listItem = document.createElement("tr");
               listItem.innerHTML = `
-                <td>${doc.event_name}</td>
-                <td>${doc.date_time}</td>
-                <td>${doc.event_location}</td>
+                <td>${ite.event_name}</td>
+                <td>${ite.date_time}</td>
+                <td>${ite.event_location}</td>
                 <td>
-                  <button class="btn btn-primary btn-sm" onclick="editItem('${doc.eventId}', '${doc.event_name}','${doc.date_time}','${doc.event_location}')">Edit</button>
+                  <button class="btn btn-primary btn-sm" onclick="editItem('${ite.eventId}', '${ite.event_name}','${ite.date_time}','${ite.event_location}')">Edit</button>
                  
                 </td>
               `;
               const tdbtn =  document.createElement("td");
               const removeButton = document.createElement("button");
+              removeButton.textContent='Remove';
               removeButton.classList.add("btn");
 removeButton.addEventListener("click", async()=>{
   try{
-alert('def');
+    alert(ite.eventId)
+    await updateDoc(doc(firestore, "clubs", id), {
+            events: arrayRemove( ite?.eventId )
+          });
+          alert("Event removed!");
+     
   }
   catch(error){
 
-    alert('efgefg');
+    alert(error);
   }
 });
 tdbtn.appendChild(removeButton);
