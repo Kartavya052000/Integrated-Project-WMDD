@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Club Details</title>
     <!-- --------------bootstrap------- -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous" />
+     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuidv4.min.js"></script>
+
     <link rel="stylesheet" href="../styles/club_details.css" />
     <script type="module" defer src="../js/index.js"></script>
     <script type="module" defer src="../js/club_details.js"></script>
@@ -67,10 +69,12 @@
      
 
         <div id="schedule" class="tab-content" style="display: block">
-          <h3>Schedule Content</h3>
-          <button id="schedule_addbtn" style="display: none;">+ Add Schedule</button>
+          <!-- <h3>Schedule Content</h3> -->
+        <div>
+          <button id="schedule_addbtn" style="display: none;" >+ Add Schedule</button>
           <div id="users_message" style="display: none;">No Schedule Yet</div>
-          <div id="editable_content" style="display: none;">
+
+          <div id="editable_content" style="display: none; margin:2rem">
             <label for="eventName">Event Name:</label>
             <input type="text" id="eventName" required /><br />
 
@@ -83,6 +87,22 @@
 
             <input type="submit" id="submit" class="btn btn-success" />
           </div>
+        </div>
+          <div class="schedule_container">
+            <table class="schedule_table">
+              <thead>
+                <tr>
+                  <th>Event Name</th>
+                  <th>Date and Time</th>
+                  <th>Location</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="eventTableBody">
+                <!-- Table rows will be dynamically added here -->
+              </tbody>
+            </table>
+          </div>
           
     <div id="members" class="tab-content" style="display: none">
         <h3>Members Content</h3>
@@ -93,5 +113,7 @@
         <!-- Admin request content goes here -->
       </div>
     </div>
+
   </body>
+
 </html>
