@@ -32,6 +32,8 @@ const auth = getAuth();
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get("id");
 
+var eventId ='';
+
 // global
 // const urlParams = new URLSearchParams(window.location.search);
 // const id = urlParams.get("id");
@@ -62,44 +64,73 @@ function fetchClubDetails() {
                 <td>${ite.event_name}</td>
                 <td>${ite.date_time}</td>
                 <td>${ite.event_location}</td>
-                <td>
-                  <button class="btn btn-primary btn-sm" onclick="editItem('${ite.eventId}', '${ite.event_name}','${ite.date_time}','${ite.event_location}')">Edit</button>
-                 
-                </td>
               `;
-              const tdbtn =  document.createElement("td");
+
+              const eventEditButton = document.createElement("td");
+              const editButton = document.createElement("button");
+              editButton.textContent = 'Edit';
+              editButton.classList.add("btn");
+              editButton.addEventListener("click", async () => {
+                try {
+                  debugger;
+                  document.getElementById("editable_content").style.display = "flex";
+                  document.getElementById("eventName").value = ite.event_name;
+                  document.getElementById("datetimepicker").value = ite.date_time;
+                  document.getElementById("location").value = ite.event_location;
+eventId= ite.eventId;
+                  let updateEvent = {
+                    eventId: ite.eventId,
+                    event_name: document.getElementById("eventName").value,
+                    date_time: document.getElementById("datetimepicker").value,
+                    location: document.getElementById("location").value
+                  }
+                  // let event_name = document.getElementById("eventName").value;
+                  // let date_time = document.getElementById("datetimepicker").value;
+                  // let location = document.getElementById("location").value;
+                  // debugger;
+
+                  await updateDoc(doc(firestore, "clubs", id), {
+                    events: arrayRemove(clubData.events.find(event => event.eventId === ite.eventId))
+                  });
+                  // listItem.remove();
+
+                  // Update the event in Firestore
+                  await updateDoc(doc(firestore, "clubs", id), {
+                    events: arrayUnion(updateEvent)
+                  });
+                }
+                catch (error) {
+
+                  alert(error);
+                }
+              });
+              eventEditButton.appendChild(editButton);
+              listItem.appendChild(eventEditButton);
+
+              const eventRemoveButton = document.createElement("td");
               const removeButton = document.createElement("button");
-              removeButton.textContent='Remove';
+              removeButton.textContent = 'Remove';
               removeButton.classList.add("btn");
-removeButton.addEventListener("click", async()=>{
-  try{
-    alert(ite.eventId)
-    await updateDoc(doc(firestore, "clubs", id), {
-      events: arrayRemove(clubData.events.find(event => event.eventId === ite.eventId))
-    });
-          listItem.remove(); // Remove the <tr> element from the table
+              removeButton.addEventListener("click", async () => {
+                try {
+                  await updateDoc(doc(firestore, "clubs", id), {
+                    events: arrayRemove(clubData.events.find(event => event.eventId === ite.eventId))
+                  });
+                  listItem.remove(); // Remove the <tr> element from the table
 
-          alert("Event removed!");
-     
-  }
-  catch(error){
+                  alert("Event removed!");
 
-    alert(error);
-  }
-});
-tdbtn.appendChild(removeButton);
-listItem.appendChild(tdbtn);
+                }
+                catch (error) {
+
+                  alert(error);
+                }
+              });
+              eventRemoveButton.appendChild(removeButton);
+              listItem.appendChild(eventRemoveButton);
 
               eventTableBody.appendChild(listItem);
-              
-              // var removeItemButton = document.getElementById("removeItem");
-              // console.log(removeItemButton, "<<<<<<<<<<<");
 
-              // removeItemButton.addEventListener("click", async (e) => {
-              //   console.log(removeItemButton, "<<<<<<<<<<<");
-              //   // debugger;
-              //   // removeEvent();
-              // });
             });
           }
 
@@ -157,7 +188,7 @@ function handleJoin() {
         .then(async () => {
           alert("Request Sent Successfully");
           console.log("UID stored in pending_requests successfully.");
-       
+
           fetchClubDetails() // call to update the page
         })
         .catch((error) => {
@@ -408,6 +439,28 @@ document.getElementById("schedule_addbtn").addEventListener("click", () => {
   // document.getElementById("schedule_addbtn").style.display="none"
 });
 
+
+//update event
+document.getElementById("updateEvent").addEventListener("click", async (e) => {
+debugger;
+let event_name = document.getElementById("eventName").value;
+  let date_time = document.getElementById("datetimepicker").value;
+  let location = document.getElementById("location").value;
+
+  let schedule = {
+    eventId: eventId,
+    event_name,
+    date_time,
+    event_location: location,
+  };
+
+await updateDoc(doc(firestore, "clubs", id), {
+  events: arrayUnion(schedule),
+});
+alert("event updated!");
+fetchClubDetails();
+});
+
 // submit to add the schedule
 document.getElementById("submit").addEventListener("click", async () => {
   let event_name = document.getElementById("eventName").value;
@@ -422,95 +475,12 @@ document.getElementById("submit").addEventListener("click", async () => {
   await updateDoc(doc(firestore, "clubs", id), {
     events: arrayUnion(schedule),
   });
-  
+
   alert("event saved!");
   fetchClubDetails();
-  document.getElementById("eventName").value="";
- document.getElementById("datetimepicker").value="";
-   document.getElementById("location").value="";
+  document.getElementById("eventName").value = "";
+  document.getElementById("datetimepicker").value = "";
+  document.getElementById("location").value = "";
 });
 
 
-//   // Form Submission (Create or Edit)
-//   document.getElementById("addForm").addEventListener("submit", function (event) {
-//     event.preventDefault();
-//     debugger;
-//     const event_name = document.getElementById("eventName").value;
-//     const date_time = document.getElementById("datetimepicker").value;
-//     const location = document.getElementById("location").value;
-
-//     let schedule = {
-//       eventId: uuidv4(),
-//       event_name,
-//       date_time,
-//       event_location: location,
-//     };
-
-//     if (itemId) {
-//       // Edit existing item
-//       editItemInFirebase(itemId, schedule);
-//     } else {
-//       // Add new item
-//       addItemToFirebase(schedule);
-//     }
-//     this.reset(); // Reset the form
-//     // Close the modal
-//     $("#addRecordModal").modal("hide");
-//   });
-
-
-// // Add Item Function
-// async function addItemToFirebase(event) {
-//   debugger;
-//   await updateDoc(doc(firestore, "clubs", id), {
-//     events: arrayUnion(schedule),
-//   }).then(() => {
-//     console.log("Item added successfully");
-//     fetchClubDetails(); // Refresh the item list
-//   }).catch(error => {
-//     console.error("Error adding item: ", error);
-//   });
-// }
-
-// Edit Item Function
-// async function editItemInFirebase(itemId, event) {
-//   debugger;
-//   await updateDoc(doc(firestore, "clubs", id), {
-//     events: arrayRemove({ eventId })
-//   }).then(() => {
-//     console.log("Item updated successfully");
-//     fetchItems(); // Refresh the item list
-//   }).catch(error => {
-//     console.error("Error updating item: ", error);
-//   });
-// }
-
-// // Edit Item - Show Modal with Data
-// function editItem(itemId, itemName,datetimepicker,location) {
-//   debugger;
-//   document.getElementById("eventName").value=itemName;
-//    document.getElementById("datetimepicker").value=datetimepicker;
-//   document.getElementById("location").value=location;
-//   // Open the modal
-//   $("#addRecordModal").modal("show");
-// }
-
-// document.getElementById('removeItem').addEventListener('click',function(e){
-
-//   debugger;
-// e.preventDefault();
-// });
-// Remove event schedule
-// async function removeEvent(eventId) {
-//   e.preventDefault();
-//   try {
-
-//     await updateDoc(doc(firestore, "clubs", id), {
-//       events: arrayRemove({ eventId })
-//     });
-//     alert("Event removed!");
-//     fetchClubDetails();
-//   } catch (error) {
-//     console.error("Error removing item: ", error);
-//   }
-// }
