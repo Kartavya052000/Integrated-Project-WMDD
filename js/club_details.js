@@ -75,8 +75,10 @@ removeButton.addEventListener("click", async()=>{
   try{
     alert(ite.eventId)
     await updateDoc(doc(firestore, "clubs", id), {
-            events: arrayRemove( ite?.eventId )
-          });
+      events: arrayRemove(clubData.events.find(event => event.eventId === ite.eventId))
+    });
+          listItem.remove(); // Remove the <tr> element from the table
+
           alert("Event removed!");
      
   }
