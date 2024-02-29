@@ -64,7 +64,7 @@ getCat()
                             <div class="card-body">
                               <h5 class="card-title">Club Name: ${club.clubName}</h5>
                               <p class="card-text">Category: ${club.Sport}</p>
-                              <p class="card-text">Location: ${JSON.stringify(club.clubDetails)}</p>
+                              <p class="card-text">Location: ${JSON.stringify(club.clubDetails.address)}</p>
                               <!-- Add more details as needed -->
                             </div>
                         </div>`;
