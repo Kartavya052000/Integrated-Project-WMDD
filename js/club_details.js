@@ -254,7 +254,7 @@ async function allReq() {
               );
 
               const querySnapshot = await getDocs(query2);
-
+                
               if (!querySnapshot.empty) {
                 // User document found, get the first document's data
                 const userData = querySnapshot.docs[0].data();
@@ -276,12 +276,12 @@ async function allReq() {
                 const crossButton = document.createElement("button");
                 crossButton.textContent = "❌";
                 crossButton.classList.add("cross-button"); // Add a CSS class for styling
-
+                console.log(adminRequestDiv);
                 // Append elements to adminRequestDiv
                 adminRequestDiv.appendChild(usernameElement);
                 adminRequestDiv.appendChild(tickButton);
                 adminRequestDiv.appendChild(crossButton);
-
+                
                 // Add event listeners for tick and cross buttons if needed
                 // Add event listeners for tick and cross buttons
                 tickButton.addEventListener("click", async () => {
@@ -305,8 +305,28 @@ async function allReq() {
                   }
                 });
 
-                crossButton.addEventListener("click", () => {
+                crossButton.addEventListener("click", async() => {
                   // Handle cross button click event
+                  console.log("crossButton is clicked");
+                  try {
+                    // Update the document in the 'clubs' collection to move UID from pending_requests to approved_requests
+                    await updateDoc(doc(firestore, "clubs", clubId), {
+                      pending_requests: arrayRemove(pendingUid),
+                      // approved_requests: arrayUnion(pendingUid),
+                    });
+                    // Update the user's document to add the approved club ID to the 'approvedClubs' array
+                    await updateDoc(doc(firestore, "users", pendingUid), {
+                      pending_clubs: arrayRemove(clubId),
+                      declined_requests: arrayUnion(clubId),
+                    });
+                    console.log("inside try after")
+                    alert("Pending request has been rejected.");
+                    console.log(
+                      `${username} has been rejected to join the club.`
+                    );
+                  } catch (error) {
+                    console.error("Error updating club document:", error);
+                  }
                 });
               } else {
                 console.log(`User with UID ${pendingUid} not found.`);
@@ -336,7 +356,7 @@ async function allReq() {
 }
 
 // intiate callback
-allReq();
+// allReq();
 
 // check for club admin
 async function checkAdmin() {
