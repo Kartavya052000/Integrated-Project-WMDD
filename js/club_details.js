@@ -32,7 +32,7 @@ const auth = getAuth();
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get("id");
 
-var eventId ='';
+var eventId = "";
 
 // global
 // const urlParams = new URLSearchParams(window.location.search);
@@ -41,6 +41,7 @@ var eventId ='';
 // let eventLocation;
 
 // fetch the clubs
+let myModal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
 function fetchClubDetails() {
   if (id) {
     const clubDocRef = doc(firestore, "clubs", id);
@@ -68,39 +69,49 @@ function fetchClubDetails() {
 
               const eventEditButton = document.createElement("td");
               const editButton = document.createElement("button");
-              editButton.textContent = 'Edit';
+              editButton.textContent = "Edit";
               editButton.classList.add("btn");
               editButton.addEventListener("click", async () => {
                 try {
-                  debugger;
-                  document.getElementById("editable_content").style.display = "flex";
+                  // debugger;
+                  
+                  document.getElementById("submit").style.display = "none";
+                  document.getElementById("updateEvent").style.display = "block";
+                  // var myModal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
+  myModal.show();
+                  // document.getElementById("editable_content").style.display =
+                  //   "flex";
                   document.getElementById("eventName").value = ite.event_name;
-                  document.getElementById("datetimepicker").value = ite.date_time;
-                  document.getElementById("location").value = ite.event_location;
-eventId= ite.eventId;
+                  document.getElementById("datetimepicker").value =
+                    ite.date_time;
+                  document.getElementById("location").value =
+                    ite.event_location;
+                  eventId = ite.eventId;
                   let updateEvent = {
                     eventId: ite.eventId,
                     event_name: document.getElementById("eventName").value,
                     date_time: document.getElementById("datetimepicker").value,
-                    location: document.getElementById("location").value
-                  }
+                    location: document.getElementById("location").value,
+                  };
                   // let event_name = document.getElementById("eventName").value;
                   // let date_time = document.getElementById("datetimepicker").value;
                   // let location = document.getElementById("location").value;
                   // debugger;
 
                   await updateDoc(doc(firestore, "clubs", id), {
-                    events: arrayRemove(clubData.events.find(event => event.eventId === ite.eventId))
+                    events: arrayRemove(
+                      clubData.events.find(
+                        (event) => event.eventId === ite.eventId
+                      )
+                    ),
                   });
                   // listItem.remove();
 
                   // Update the event in Firestore
                   await updateDoc(doc(firestore, "clubs", id), {
-                    events: arrayUnion(updateEvent)
+                    events: arrayUnion(updateEvent),
                   });
-                }
-                catch (error) {
-
+                } catch (error) {
                   alert(error);
                 }
               });
@@ -109,20 +120,21 @@ eventId= ite.eventId;
 
               const eventRemoveButton = document.createElement("td");
               const removeButton = document.createElement("button");
-              removeButton.textContent = 'Remove';
+              removeButton.textContent = "Remove";
               removeButton.classList.add("btn");
               removeButton.addEventListener("click", async () => {
                 try {
                   await updateDoc(doc(firestore, "clubs", id), {
-                    events: arrayRemove(clubData.events.find(event => event.eventId === ite.eventId))
+                    events: arrayRemove(
+                      clubData.events.find(
+                        (event) => event.eventId === ite.eventId
+                      )
+                    ),
                   });
                   listItem.remove(); // Remove the <tr> element from the table
 
                   alert("Event removed!");
-
-                }
-                catch (error) {
-
+                } catch (error) {
                   alert(error);
                 }
               });
@@ -130,7 +142,6 @@ eventId= ite.eventId;
               listItem.appendChild(eventRemoveButton);
 
               eventTableBody.appendChild(listItem);
-
             });
           }
 
@@ -189,7 +200,7 @@ function handleJoin() {
           alert("Request Sent Successfully");
           console.log("UID stored in pending_requests successfully.");
 
-          fetchClubDetails() // call to update the page
+          fetchClubDetails(); // call to update the page
         })
         .catch((error) => {
           console.error("Error storing UID in pending_requests:", error);
@@ -435,31 +446,62 @@ checkAdmin();
 // function to show user status
 // add schedule intially only for admin
 document.getElementById("schedule_addbtn").addEventListener("click", () => {
-  document.getElementById("editable_content").style.display = "flex";
+  // document.getElementById("editable_content").style.display = "flex";
   // document.getElementById("schedule_addbtn").style.display="none"
+  // var myModal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
+  document.getElementById("submit").style.display = "block";
+  document.getElementById("updateEvent").style.display = "none";
+  myModal.show();
 });
-
 
 //update event
 document.getElementById("updateEvent").addEventListener("click", async (e) => {
-debugger;
-let event_name = document.getElementById("eventName").value;
+  // Get the updated event data from the form fields
+  let event_name = document.getElementById("eventName").value;
   let date_time = document.getElementById("datetimepicker").value;
   let location = document.getElementById("location").value;
 
-  let schedule = {
-    eventId: eventId,
-    event_name,
-    date_time,
-    event_location: location,
-  };
+  // Retrieve club data from Firestore
+  const clubDocRef = doc(firestore, "clubs", id);
+  const docSnapshot = await getDoc(clubDocRef);
 
-await updateDoc(doc(firestore, "clubs", id), {
-  events: arrayUnion(schedule),
+  if (docSnapshot.exists()) {
+    const clubData = docSnapshot.data();
+    console.log(clubData);
+
+    // Create an object with the updated event data
+    let updatedEvent = {
+      eventId: eventId,
+      event_name: event_name,
+      date_time: date_time,
+      event_location: location,
+    };
+console.log(updatedEvent,"UU")
+// return
+    // Find the index of the event to be updated in the events array
+    let index = clubData.events.findIndex((event) => event.eventId === eventId);
+
+    // Remove the existing event from the events array
+    await updateDoc(doc(firestore, "clubs", id), {
+      events: arrayRemove(clubData.events[index]),
+    });
+
+    // Update the events array with the updated event data
+    await updateDoc(doc(firestore, "clubs", id), {
+      events: arrayUnion(updatedEvent),
+    });
+
+    // Hide the modal
+    myModal.hide();
+
+    // Display an alert to indicate that the event has been updated
+    alert("Event updated!");
+
+    // Fetch the updated club details to refresh the UI
+    fetchClubDetails();
+  }
 });
-alert("event updated!");
-fetchClubDetails();
-});
+
 
 // submit to add the schedule
 document.getElementById("submit").addEventListener("click", async () => {
@@ -472,15 +514,17 @@ document.getElementById("submit").addEventListener("click", async () => {
     date_time,
     event_location: location,
   };
+  console.log(schedule);
+  // return
   await updateDoc(doc(firestore, "clubs", id), {
     events: arrayUnion(schedule),
   });
 
   alert("event saved!");
+  // var myModal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
+  myModal.hide();
   fetchClubDetails();
   document.getElementById("eventName").value = "";
   document.getElementById("datetimepicker").value = "";
   document.getElementById("location").value = "";
 });
-
-
