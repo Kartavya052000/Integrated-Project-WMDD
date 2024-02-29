@@ -8,18 +8,16 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
 
-  //global
-  const firebaseConfig = {
-    apiKey: "AIzaSyD2wZz5FE67IV7278ezzTiQfm0tP8Okmus",
-    authDomain: "sportscrush-b20bd.firebaseapp.com",
-    projectId: "sportscrush-b20bd",
-    storageBucket: "sportscrush-b20bd.appspot.com",
-    messagingSenderId: "188829017619",
-    appId: "1:188829017619:web:f0bbbe5f64d432a2a3c1e6",
-    measurementId: "G-9CS7TKRD9H"
-  };
-
-
+//global
+const firebaseConfig = {
+  apiKey: "AIzaSyD2wZz5FE67IV7278ezzTiQfm0tP8Okmus",
+  authDomain: "sportscrush-b20bd.firebaseapp.com",
+  projectId: "sportscrush-b20bd",
+  storageBucket: "sportscrush-b20bd.appspot.com",
+  messagingSenderId: "188829017619",
+  appId: "1:188829017619:web:f0bbbe5f64d432a2a3c1e6",
+  measurementId: "G-9CS7TKRD9H",
+};
 
 const app = initializeApp(firebaseConfig);
 
@@ -82,7 +80,7 @@ document.querySelector("#form").addEventListener("submit", function (event) {
 const setData = async (data) => {
   try {
     await setDoc(doc(db, "users", user.uid), data);
-    console.log("data added fuckfessfully");
+    console.log("data added successfully");
   } catch (err) {
     console.log(err);
   }
