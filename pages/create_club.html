@@ -74,6 +74,29 @@
                 >Location<input type="text" id="location" class="form-control"
               /></label>
             </div>
+            <div class="col-12">
+              <label for="publicClub" class="form-label col-9">
+                <input
+                  id="publicClub"
+                  type="radio"
+                  name="clubType"
+                  value="public"
+                />
+                Public Club
+              </label>
+            </div>
+            <div class="col-12">
+              <label for="privateClub" class="form-label col-9">
+                <input
+                  id="privateClub"
+                  type="radio"
+                  name="clubType"
+                  value="private"
+                />
+                Private Club
+              </label>
+            </div>
+
             <div class="col-9 d-grid">
               <input type="submit" id="submit" class="btn btn-success" />
             </div>
@@ -250,7 +273,21 @@
         }
       });
       const submitForm = async () => {
-        debugger;
+        // Club type public or private
+        let clubType;
+        const publicClubBtn = document.getElementById("publicClub");
+        const privateClubBtn = document.getElementById("privateClub");
+
+        if (publicClubBtn.checked) {
+          clubType = publicClubBtn.value;
+        } else if (privateClubBtn.checked) {
+          clubType = privateClubBtn.value;
+        } else {
+          alert("Please select a club type (public or private).");
+          return;
+        }
+
+        // club details
         let clubName = document.getElementById("clubname").value;
         let sport = document.getElementById("sport").value;
         let clubDescription = document.getElementById("clubdescription").value;
@@ -261,6 +298,7 @@
           lat: clubLocation.Latitude,
           long: clubLocation.Longitude,
           address: locationInput.value,
+          clubType: clubType,
         };
         let user = JSON.parse(localStorage.getItem("user"));
         console.log(user.uid, "USERRRRR");

@@ -20,54 +20,11 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
-    <!-- <style>
-      body {
-          font-family: 'Arial', sans-serif;
-          background-color: #f5f5f5;
-          margin: 0;
-          padding: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          height: 100vh;
-      }
-
-      div {
-          background-color: #fff;
-          border-radius: 8px;
-          padding: 20px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
-
-      input {
-          width: 100%;
-          padding: 10px;
-          margin-bottom: 10px;
-          box-sizing: border-box;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-      }
-
-      button {
-          width: 100%;
-          padding: 10px;
-          background-color: #4caf50;
-          color: #fff;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          font-size: 16px;
-      }
-
-      button:hover {
-          background-color: #45a049;
-      }
-  </style> -->
-  </head>
+   </head>
 
   <body>
     <s-header></s-header>
-    <div class="container">
+    <div id="loginContainer" class="container">
       <div class="row">
         <div class="col-md-6 offset-md-3">
           <div class="login-container d-grid justify-content-center mt-3 mb-3">
@@ -93,6 +50,17 @@
               placeholder="enter password"
             />
           </div>
+
+          <div class="mb-3">
+          <label for="sports">Choose your interest:</label>
+          <select name="sports" id="sports" required>
+            <option value="Cricket">Cricket</option>
+            <option value="Badminton">Badminton</option>
+            <option value="Hockey">Hockey</option>
+            <option value="Ballpool">Ballpool</option>
+          </select>
+        </div>
+
           <div class="mb-3 d-grid">
             <button id="signUp" class="btn btn-success">Sign Up</button>
           </div>
@@ -104,10 +72,16 @@
               Google Sign In
             </button>
           </div>
-          <div class="mb-3 d-grid">
+          <!-- <div class="mb-3 d-grid">
             <button id="logout" class="btn btn-primary">Logout</button>
-          </div>
+          </div> -->
         </div>
+      </div>
+    </div>
+    <div id="userDetailsWrapper">
+      <div id="userDetails">User Details :</div>
+      <div class="mb-3 d-grid">
+        <button id="logout" class="btn btn-primary">Logout</button>
       </div>
     </div>
   </body>

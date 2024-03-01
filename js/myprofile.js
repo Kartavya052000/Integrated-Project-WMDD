@@ -26,19 +26,20 @@ const db = getFirestore(app);
 
 let user = JSON.parse(localStorage.getItem("user"));
 const userCollection = collection(getFirestore(), "users"); // Note: Invoke getFirestore()
-const userDocRef = doc(userCollection, user.email);
-console.log(userDocRef);
+const userDocRef = doc(userCollection, user.uid);
+
 getDoc(userDocRef)
   .then((docSnapshot) => {
     if (docSnapshot.exists()) {
       const userData = docSnapshot.data();
-      document.getElementById("firstName").value = userData.firstName;
-      document.getElementById("lastName").value = userData.lastName;
-      document.getElementById("gender").value = userData.gender;
-      document.getElementById("dob").value = userData.dob;
-      document.getElementById("phoneNumber").value = userData.phoneNumber;
-      document.getElementById("email").value = userData.email;
-      document.getElementById("address").value = userData.address;
+      document.getElementById("firstName").value = userData?.firstName;
+      document.getElementById("lastName").value = userData?.lastName;
+      document.getElementById("gender").value = userData?.gender;
+      document.getElementById("dob").value = userData?.dob;
+      document.getElementById("phoneNumber").value = userData?.phoneNumber;
+      document.getElementById("email").value = userData?.email;
+      document.getElementById("address").value = userData?.address;
+      document.getElementById("sportsInterest").value = userData?.sports_interest;
     } else {
       console.log("No such Document!");
     }
@@ -48,6 +49,7 @@ getDoc(userDocRef)
   });
 window.addEventListener("load", (event) => {
   let username = (document.querySelector(".username").innerHTML = user.email);
+  
 });
 
 // onload = (event) => {};
