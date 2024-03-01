@@ -31,7 +31,6 @@ async function getClubMapData() {
     querySnapshot.forEach((doc) => {
       // Extract data from each document
       const club = doc.data();
-      console.log(club, ">>>>");
       const clubId = doc.id; // Accessing the unique ID of the document
       // Add additional processing here if needed
       clubData.push({ id: clubId, ...club });
@@ -48,19 +47,13 @@ async function getClubMapData() {
 //  Add other markers here
 getClubMapData()
   .then((clubData) => {
-    // console.log("Club data:", clubData);
     clubDetails = clubData;
-
     // Process the retrieved club data here
   })
   .catch((error) => {
     console.error("Error:", error);
   });
 
-// import { clubDetails } from './module-script.js';
-//
-// console.log(clubDetails,"AAA");
-// const apiKey = 'YOUR_API_KEY';
 const apiKey = "AIzaSyCNnCpF2ku_EhRvDgix0AdgEtWN-aK0wMU";
 
 window.initMap = async function () {
@@ -179,31 +172,9 @@ window.initMap = async function () {
           },
         });
 
-        // const infowindow = new google.maps.InfoWindow({
-        //   content: 'You are here'
-        // });
-
-        // userMarker.addListener('mouseover', function() {
-        //   infowindow.open(map, userMarker);
-        // });
-
-        // userMarker.addListener('mouseout', function() {
-        //   infowindow.close();
-        // });
         const val = await getClubMapData();
-        console.log(val, "CCCLLLL");
         // Add other markers here
         if (val) {
-          debugger;
-          console.log(val);
-          // console.log(val,"CCCLLLL22 2")
-
-          //   const clubLocations = [
-          //   { position: { lat: 49.223574, lng: -123.085842 }, title: 'Club A', detailsUrl: 'club-a-details.html', image: 'club-a-image.jpg', details: 'Club A details' },
-          //   { position: { lat: 49.228003, lng: -123.098764 }, title: 'Club B', detailsUrl: 'club-b-details.html', image: 'club-b-image.jpg', details: 'Club B details' },
-          //   // Add more club locations as needed
-          // ];
-
           val.forEach((location) => {
             console.log(location);
             const marker = new google.maps.Marker({
@@ -214,7 +185,6 @@ window.initMap = async function () {
               map: map,
               title: location.clubName,
             });
-            // <img src="../kartavya/test.jpeg" alt="${location.title}" style="width: 100%;height:100px">
 
             const contentString = `
               <div style="width:200px"  id="infoWindowContent">
@@ -253,9 +223,6 @@ window.initMap = async function () {
                 }, 300); // Adjust the delay as needed
               });
             });
-            // marker.addListener('mouseout', function() {
-            //   infowindow.close();
-            // });
           });
         }
       },

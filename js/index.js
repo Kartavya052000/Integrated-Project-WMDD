@@ -29,6 +29,9 @@ class sHeader extends HTMLElement {
           <li class="nav-item">
               <a class="nav-link" id="manageclubs" style="cursor: pointer;">Manage Clubs</a>
           </li>
+          <li class="nav-item">
+              <a class="nav-link" id="recommendations" style="cursor: pointer;">Recommendations</a>
+              </li>
             </ul>
             <form class="d-flex" role="search">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -42,20 +45,28 @@ class sHeader extends HTMLElement {
 
 customElements.define("s-header", sHeader);
 // Wrap the event listener attachment in DOMContentLoaded to ensure the element exists in the DOM
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   // Navigation to myclubs_details.html with type admin
   const myClubsLink = document.getElementById('myclubs');
   const managaeCLubLink = document.getElementById('manageclubs');
+  const recommendationsLink = document.getElementById('recommendations');
+
   if (myClubsLink) {
-      myClubsLink.addEventListener('click', function(event) {
-          event.preventDefault(); // Prevent default behavior of the anchor tag
-          window.location.href = './myclubs_details.html?type=self'; // Navigate to myclubs_details.html with type=admin
-      });
+    myClubsLink.addEventListener('click', function (event) {
+      event.preventDefault(); // Prevent default behavior of the anchor tag
+      window.location.href = './myclubs_details.html?type=self'; // Navigate to myclubs_details.html with type=admin
+    });
   }
   if (managaeCLubLink) {
-    managaeCLubLink.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent default behavior of the anchor tag
-        window.location.href = './myclubs_details.html?type=admin'; // Navigate to myclubs_details.html with type=admin
+    managaeCLubLink.addEventListener('click', function (event) {
+      event.preventDefault(); // Prevent default behavior of the anchor tag
+      window.location.href = './myclubs_details.html?type=admin'; // Navigate to myclubs_details.html with type=admin
     });
-}
+  }
+  if (recommendationsLink) {
+    recommendationsLink.addEventListener('click', function (event) {
+      event.preventDefault(); 
+      window.location.href = './myclubs_details.html?type=recommendations';
+    });
+  }
 });

@@ -29,16 +29,16 @@ const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
 // Initialize Firebase authentication
 const auth = getAuth();
+
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get("id");
+const clubId = urlParams.get("id");
+
+// Get the UID from localStorage if it exists
+let user = JSON.parse(localStorage.getItem("user"));
+const uid = user.uid;
 
 var eventId = "";
-
-// global
-// const urlParams = new URLSearchParams(window.location.search);
-// const id = urlParams.get("id");
-// var autocomplete;
-// let eventLocation;
 
 // fetch the clubs
 let myModal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
@@ -49,100 +49,113 @@ function fetchClubDetails() {
       .then((docSnapshot) => {
         if (docSnapshot.exists()) {
           const clubData = docSnapshot.data();
-          console.log(clubData);
           if (!clubData.events) {
             document.getElementById("schedule_addbtn").style.display = "block";
           }
-
-          // Events Schedule tab data
-          if (clubData.events) {
-            const eventTableBody = document.getElementById("eventTableBody");
-            eventTableBody.innerHTML = "";
-            clubData.events.forEach((ite) => {
-              // console.log(doc, ">>>>>s");
-              const listItem = document.createElement("tr");
-              listItem.innerHTML = `
+          // Events Schedule tab data for non-admin
+          if (clubData.admin_id !== uid) {
+            // display schedule for non-admin users of club 
+            // or show no schedule yet if nothing is available
+            if (clubData.events) {
+              const eventTableBody = document.getElementById("eventTableBody");
+              eventTableBody.innerHTML = "";
+              clubData.events.forEach((ite) => {
+                const listItem = document.createElement("tr");
+                listItem.innerHTML = `
+                <td>${ite.event_name}</td>
+                <td>${ite.date_time}</td>
+                <td>${ite.event_location}</td>
+              `;
+                let schedule_table = document.querySelector('.schedule_table')
+                var headerRow = schedule_table.rows[0];
+                headerRow.deleteCell(3);
+                eventTableBody.appendChild(listItem);
+              });
+            } else {
+              document.querySelector('.schedule_table').style.display = "none";
+              document.getElementById("users_message").style.display = "block";
+            }
+          }
+          else {
+            // Events Schedule tab data for admin
+            if (clubData.events) {
+              const eventTableBody = document.getElementById("eventTableBody");
+              eventTableBody.innerHTML = "";
+              clubData.events.forEach((ite) => {
+                const listItem = document.createElement("tr");
+                listItem.innerHTML = `
                 <td>${ite.event_name}</td>
                 <td>${ite.date_time}</td>
                 <td>${ite.event_location}</td>
               `;
 
-              const eventEditButton = document.createElement("td");
-              const editButton = document.createElement("button");
-              editButton.textContent = "Edit";
-              editButton.classList.add("btn");
-              editButton.addEventListener("click", async () => {
-                try {
-                  // debugger;
-                  
-                  document.getElementById("submit").style.display = "none";
-                  document.getElementById("updateEvent").style.display = "block";
-                  // var myModal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
-  myModal.show();
-                  // document.getElementById("editable_content").style.display =
-                  //   "flex";
-                  document.getElementById("eventName").value = ite.event_name;
-                  document.getElementById("datetimepicker").value =
-                    ite.date_time;
-                  document.getElementById("location").value =
-                    ite.event_location;
-                  eventId = ite.eventId;
-                  let updateEvent = {
-                    eventId: ite.eventId,
-                    event_name: document.getElementById("eventName").value,
-                    date_time: document.getElementById("datetimepicker").value,
-                    location: document.getElementById("location").value,
-                  };
-                  // let event_name = document.getElementById("eventName").value;
-                  // let date_time = document.getElementById("datetimepicker").value;
-                  // let location = document.getElementById("location").value;
-                  // debugger;
+                const eventEditButton = document.createElement("td");
+                const editButton = document.createElement("button");
+                editButton.textContent = "Edit";
+                editButton.classList.add("btn");
+                editButton.addEventListener("click", async () => {
+                  try {
+                    document.getElementById("submit").style.display = "none";
+                    document.getElementById("updateEvent").style.display = "block";
+                    myModal.show();
+                    document.getElementById("eventName").value = ite.event_name;
+                    document.getElementById("datetimepicker").value =
+                      ite.date_time;
+                    document.getElementById("location").value =
+                      ite.event_location;
+                    eventId = ite.eventId;
+                    let updateEvent = {
+                      eventId: ite.eventId,
+                      event_name: document.getElementById("eventName").value,
+                      date_time: document.getElementById("datetimepicker").value,
+                      location: document.getElementById("location").value,
+                    };
 
-                  await updateDoc(doc(firestore, "clubs", id), {
-                    events: arrayRemove(
-                      clubData.events.find(
-                        (event) => event.eventId === ite.eventId
-                      )
-                    ),
-                  });
-                  // listItem.remove();
+                    await updateDoc(doc(firestore, "clubs", id), {
+                      events: arrayRemove(
+                        clubData.events.find(
+                          (event) => event.eventId === ite.eventId
+                        )
+                      ),
+                    });
 
-                  // Update the event in Firestore
-                  await updateDoc(doc(firestore, "clubs", id), {
-                    events: arrayUnion(updateEvent),
-                  });
-                } catch (error) {
-                  alert(error);
-                }
+                    // Update the event in Firestore
+                    await updateDoc(doc(firestore, "clubs", id), {
+                      events: arrayUnion(updateEvent),
+                    });
+                  } catch (error) {
+                    alert(error);
+                  }
+                });
+                eventEditButton.appendChild(editButton);
+                listItem.appendChild(eventEditButton);
+
+                const eventRemoveButton = document.createElement("td");
+                const removeButton = document.createElement("button");
+                removeButton.textContent = "Remove";
+                removeButton.classList.add("btn");
+                removeButton.addEventListener("click", async () => {
+                  try {
+                    await updateDoc(doc(firestore, "clubs", id), {
+                      events: arrayRemove(
+                        clubData.events.find(
+                          (event) => event.eventId === ite.eventId
+                        )
+                      ),
+                    });
+                    listItem.remove(); // Remove the <tr> element from the table
+
+                    alert("Event removed!");
+                  } catch (error) {
+                    alert(error);
+                  }
+                });
+                eventRemoveButton.appendChild(removeButton);
+                listItem.appendChild(eventRemoveButton);
+
+                eventTableBody.appendChild(listItem);
               });
-              eventEditButton.appendChild(editButton);
-              listItem.appendChild(eventEditButton);
-
-              const eventRemoveButton = document.createElement("td");
-              const removeButton = document.createElement("button");
-              removeButton.textContent = "Remove";
-              removeButton.classList.add("btn");
-              removeButton.addEventListener("click", async () => {
-                try {
-                  await updateDoc(doc(firestore, "clubs", id), {
-                    events: arrayRemove(
-                      clubData.events.find(
-                        (event) => event.eventId === ite.eventId
-                      )
-                    ),
-                  });
-                  listItem.remove(); // Remove the <tr> element from the table
-
-                  alert("Event removed!");
-                } catch (error) {
-                  alert(error);
-                }
-              });
-              eventRemoveButton.appendChild(removeButton);
-              listItem.appendChild(eventRemoveButton);
-
-              eventTableBody.appendChild(listItem);
-            });
+            }
           }
 
           const clubDetails = document.getElementById("clubDetails");
@@ -177,15 +190,8 @@ joinButton.addEventListener("click", () => {
 
 // join request function
 function handleJoin() {
-  // Get the UID from localStorage if it exists
-  let user = JSON.parse(localStorage.getItem("user"));
-  const uid = user.uid;
-
   if (uid) {
     // Get the club ID from the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const clubId = urlParams.get("id");
-
     if (clubId) {
       const clubDocRef = doc(firestore, "clubs", clubId);
       console.log(clubDocRef);
@@ -214,15 +220,7 @@ function handleJoin() {
 }
 // display request to admin
 async function allReq() {
-  // Get the UID from localStorage if it exists
-  let user = JSON.parse(localStorage.getItem("user"));
-  const uid = user.uid;
-
   if (uid) {
-    // Get the club ID from the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const clubId = urlParams.get("id");
-
     if (clubId) {
       const clubDocRef = doc(firestore, "clubs", clubId);
 
@@ -254,7 +252,7 @@ async function allReq() {
               );
 
               const querySnapshot = await getDocs(query2);
-                
+
               if (!querySnapshot.empty) {
                 // User document found, get the first document's data
                 const userData = querySnapshot.docs[0].data();
@@ -281,7 +279,7 @@ async function allReq() {
                 adminRequestDiv.appendChild(usernameElement);
                 adminRequestDiv.appendChild(tickButton);
                 adminRequestDiv.appendChild(crossButton);
-                
+
                 // Add event listeners for tick and cross buttons if needed
                 // Add event listeners for tick and cross buttons
                 tickButton.addEventListener("click", async () => {
@@ -305,7 +303,7 @@ async function allReq() {
                   }
                 });
 
-                crossButton.addEventListener("click", async() => {
+                crossButton.addEventListener("click", async () => {
                   // Handle cross button click event
                   console.log("crossButton is clicked");
                   try {
@@ -355,20 +353,9 @@ async function allReq() {
   }
 }
 
-// intiate callback
-// allReq();
-
 // check for club admin
 async function checkAdmin() {
   try {
-    // Get the UID from localStorage if it exists
-    let user = JSON.parse(localStorage.getItem("user"));
-    const uid = user.uid;
-
-    // Get the club ID from the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const clubId = urlParams.get("id");
-
     if (clubId) {
       const clubDocRef = doc(firestore, "clubs", clubId);
 
@@ -443,9 +430,7 @@ async function checkAdmin() {
           document.getElementById("admin_mess").style.display = "block";
           document.getElementById("schedule_addbtn").style.display = "block";
 
-          // For example: fetchClubDetails(), handleJoin(), allReq(), etc.
         } else {
-          document.getElementById("users_message").style.display = "block";
           document.getElementById("schedule_addbtn").style.display = "none";
           console.log("Current user is not the admin of the club.");
           document.getElementById("adminRequestTab").style.display = "none";
@@ -496,8 +481,8 @@ document.getElementById("updateEvent").addEventListener("click", async (e) => {
       date_time: date_time,
       event_location: location,
     };
-console.log(updatedEvent,"UU")
-// return
+    console.log(updatedEvent, "UU")
+    // return
     // Find the index of the event to be updated in the events array
     let index = clubData.events.findIndex((event) => event.eventId === eventId);
 
@@ -548,3 +533,4 @@ document.getElementById("submit").addEventListener("click", async () => {
   document.getElementById("datetimepicker").value = "";
   document.getElementById("location").value = "";
 });
+
