@@ -48,7 +48,6 @@ document.getElementById("signUp").addEventListener("click", function () {
       const user = userCredential.user;
       alert("User created!");
       localStorage.setItem("user", JSON.stringify(user));
-debugger;
       // Save user information in Firestore collection'
       var sportsSelect = document.getElementById("sports").value;
       const userInfo = {

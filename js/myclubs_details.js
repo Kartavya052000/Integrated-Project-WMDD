@@ -168,7 +168,6 @@ else if (type == 'recommendations') {
     .then((clubs) => {
       // Display clubs on the page
       if (clubs.length > 0) {
-        debugger;
         clubs.forEach((club) => {
           const clubElement = document.createElement('div');
           clubElement.classList.add('club_card');
