@@ -27,18 +27,22 @@ const db = getFirestore(app);
 let user = JSON.parse(localStorage.getItem("user"));
 const userCollection = collection(getFirestore(), "users"); // Note: Invoke getFirestore()
 const userDocRef = doc(userCollection, user.uid);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 772692db25c4b931b15d6e6db0cd9a961703baea
 getDoc(userDocRef)
   .then((docSnapshot) => {
     if (docSnapshot.exists()) {
       const userData = docSnapshot.data();
-      console.log(userData);
-      document.getElementById("firstName").value = userData.firstName;
-      document.getElementById("lastName").value = userData.lastName;
-      document.getElementById("gender").value = userData.gender;
-      document.getElementById("dob").value = userData.dob;
-      document.getElementById("phoneNumber").value = userData.phoneNumber;
-      document.getElementById("email").value = userData.email;
-      document.getElementById("address").value = userData.address;
+      document.getElementById("firstName").value = userData?.firstName;
+      document.getElementById("lastName").value = userData?.lastName;
+      document.getElementById("gender").value = userData?.gender;
+      document.getElementById("dob").value = userData?.dob;
+      document.getElementById("phoneNumber").value = userData?.phoneNumber;
+      document.getElementById("email").value = userData?.email;
+      document.getElementById("address").value = userData?.address;
+      document.getElementById("sportsInterest").value = userData?.sports_interest;
     } else {
       console.log("No such Document!");
     }
@@ -46,11 +50,10 @@ getDoc(userDocRef)
   .catch((error) => {
     console.log("Error getting document:", error);
   });
-// window.addEventListener("load", (event) => {
-//   let username = (document.querySelector(
-//     ".username"
-//   ).innerHTML = `<h4>Email Id </h4>${user.email}`);
-// });
+window.addEventListener("load", (event) => {
+  let username = (document.querySelector(".username").innerHTML = user.email);
+  
+});
 
 // onload = (event) => {};
 document.querySelector("#form").addEventListener("submit", function (event) {
