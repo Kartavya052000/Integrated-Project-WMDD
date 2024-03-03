@@ -26,12 +26,12 @@ const db = getFirestore(app);
 
 let user = JSON.parse(localStorage.getItem("user"));
 const userCollection = collection(getFirestore(), "users"); // Note: Invoke getFirestore()
-const userDocRef = doc(userCollection, user.email);
-console.log(userDocRef);
+const userDocRef = doc(userCollection, user.uid);
 getDoc(userDocRef)
   .then((docSnapshot) => {
     if (docSnapshot.exists()) {
       const userData = docSnapshot.data();
+      console.log(userData);
       document.getElementById("firstName").value = userData.firstName;
       document.getElementById("lastName").value = userData.lastName;
       document.getElementById("gender").value = userData.gender;
@@ -46,9 +46,11 @@ getDoc(userDocRef)
   .catch((error) => {
     console.log("Error getting document:", error);
   });
-window.addEventListener("load", (event) => {
-  let username = (document.querySelector(".username").innerHTML = user.email);
-});
+// window.addEventListener("load", (event) => {
+//   let username = (document.querySelector(
+//     ".username"
+//   ).innerHTML = `<h4>Email Id </h4>${user.email}`);
+// });
 
 // onload = (event) => {};
 document.querySelector("#form").addEventListener("submit", function (event) {
@@ -85,3 +87,44 @@ const setData = async (data) => {
     console.log(err);
   }
 };
+//
+window.addEventListener("load", (event) => {
+  document
+    .getElementById("editButton")
+    .addEventListener("click", function (event) {
+      const fields = document.querySelectorAll(
+        'input[type="text"], input[type="date"], input[type="tel"],input[type="email"]'
+      );
+      const editButton = document.getElementById("editButton");
+
+      if (editButton.textContent === "Edit") {
+        // Enable editing
+        fields.forEach((field) => {
+          field.removeAttribute("readonly");
+        });
+        editButton.textContent = "Save";
+      } else {
+        console.log;
+        // Save changes
+        const editedData = {
+          firstName: document.getElementById("firstName").value,
+          lastName: document.getElementById("lastName").value,
+          gender: document.getElementById("gender").value,
+          dob: document.getElementById("dob").value,
+          phoneNumber: document.getElementById("phoneNumber").value,
+          email: document.getElementById("email").value,
+          address: document.getElementById("address").value,
+        };
+        setData(editedData); // Define this function to update user data
+        // Disable editing
+        fields.forEach((field) => {
+          field.setAttribute("readonly", true);
+        });
+        editButton.textContent = "Edit";
+        console.log(editButton.textContent);
+      }
+    });
+  let username = (document.querySelector(
+    ".username"
+  ).innerHTML = `<h4>Email Id </h4>${user.email}`);
+});
