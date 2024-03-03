@@ -27,10 +27,6 @@ const db = getFirestore(app);
 let user = JSON.parse(localStorage.getItem("user"));
 const userCollection = collection(getFirestore(), "users"); // Note: Invoke getFirestore()
 const userDocRef = doc(userCollection, user.uid);
-<<<<<<< HEAD
-=======
-
->>>>>>> 772692db25c4b931b15d6e6db0cd9a961703baea
 getDoc(userDocRef)
   .then((docSnapshot) => {
     if (docSnapshot.exists()) {
@@ -42,7 +38,8 @@ getDoc(userDocRef)
       document.getElementById("phoneNumber").value = userData?.phoneNumber;
       document.getElementById("email").value = userData?.email;
       document.getElementById("address").value = userData?.address;
-      document.getElementById("sportsInterest").value = userData?.sports_interest;
+      document.getElementById("sportsInterest").value =
+        userData?.sports_interest;
     } else {
       console.log("No such Document!");
     }
@@ -52,7 +49,6 @@ getDoc(userDocRef)
   });
 window.addEventListener("load", (event) => {
   let username = (document.querySelector(".username").innerHTML = user.email);
-  
 });
 
 // onload = (event) => {};
