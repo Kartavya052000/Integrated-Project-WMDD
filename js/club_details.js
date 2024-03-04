@@ -534,3 +534,45 @@ document.getElementById("submit").addEventListener("click", async () => {
   document.getElementById("location").value = "";
 });
 
+//implementing autocomplete 
+var autocomplete;
+let clubLocation;
+function initAutocomplete() {
+  console.log("Autocomplete initialized");
+  autocomplete = new google.maps.places.Autocomplete(
+    document.getElementById("location"),
+    { types: ["geocode"] }
+  );
+  autocomplete.addListener("place_changed", onPlaceChanged);
+}
+
+function onPlaceChanged() {
+  var place = autocomplete.getPlace();
+  console.log("Selected Place:", place);
+
+  // Assuming your object is named 'locationObject'
+
+  // Accessing the geometry object
+  const geometry = place.geometry;
+
+  // Accessing the location object within geometry
+  const location = geometry.location;
+
+  // Extracting latitude and longitude
+  const latitude = location.lat(); // lat() function retrieves the latitude
+  const longitude = location.lng(); // lng() function retrieves the longitude
+
+  console.log("Latitude:", latitude);
+  console.log("Longitude:", longitude);
+
+  clubLocation = { Latitude: latitude, Longitude: longitude };
+  //   console.log(clubLocation)
+  // You can access various details of the selected place here and use them as needed.
+  // For example, place.formatted_address, place.geometry.location.lat(), place.geometry.location.lng(), etc.
+}
+
+// Manual initialization after the script has loaded
+document.addEventListener("DOMContentLoaded", function () {
+    initAutocomplete();
+  });
+

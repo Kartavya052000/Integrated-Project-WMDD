@@ -5,3 +5,26 @@
 #editable_content{
     height: 50px;
 }
+.pac-container {
+    z-index: 1050; /* Ensure this value is higher than the modal's z-index */
+  }
+  /* .modal{
+    z-index: -1050;
+  } */
+
+  /* .modal-backdrop {
+    background-color: transparent !important;
+} */
+/* CSS to adjust autocomplete suggestion box */
+.pac-container {
+    z-index: 10000; /* Ensure the autocomplete dropdown is above other elements */
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-height: 200px; /* Optional: Set a maximum height for the dropdown */
+    overflow-y: auto; /* Allow vertical scrolling if needed */
+    width: inherit; /* Match the width of the input field */
+    margin-top: 5px; /* Adjust the margin top as needed */
+  }
+  
