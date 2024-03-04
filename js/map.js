@@ -178,17 +178,7 @@ window.initMap = async function () {
         if (val) {
           val.forEach((location) => {
             console.log(location);
-<<<<<<< HEAD
-            const marker = new google.maps.Marker({
-              position: {
-                lat: location.clubDetails.lat,
-                lng: location.clubDetails.long,
-              },
-              map: map,
-              title: location.clubName,
-            });
-=======
-debugger;
+
 const marker =  addMarker(location.Sport, {
               lat: location.clubDetails.lat,
               lng: location.clubDetails.long,
@@ -203,7 +193,6 @@ const marker =  addMarker(location.Sport, {
             //   title: location.clubName,
             // });
             // <img src="../kartavya/test.jpeg" alt="${location.title}" style="width: 100%;height:100px">
->>>>>>> c75c197 (moved create club js code to js file)
 
             const contentString = `
               <div style="width:200px"  id="infoWindowContent">
