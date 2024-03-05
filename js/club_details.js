@@ -40,6 +40,7 @@ var eventId = "";
 
 // fetch the clubs
 let myModal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
+
 function fetchClubDetails() {
   if (id) {
     const clubDocRef = doc(firestore, "clubs", id);
@@ -96,6 +97,22 @@ function fetchClubDetails() {
                     document.getElementById("submit").style.display = "none";
                     document.getElementById("updateEvent").style.display = "block";
                     myModal.show();
+                    const locationInput = document.getElementById("location");
+
+                    let autocompleteEnabled = true; // Flag to track whether autocomplete is enabled
+
+                    locationInput.addEventListener("input", function () {
+                      if (autocompleteEnabled) {
+                        const inputText = this.value;
+                      }
+                    });
+                    locationInput.addEventListener("keydown", function () {
+                      autocompleteEnabled = false;
+                    });
+                    locationInput.addEventListener("blur", function () {
+                      autocompleteEnabled = true;
+                    });
+
                     document.getElementById("eventName").value = ite.event_name;
                     document.getElementById("datetimepicker").value =
                       ite.date_time;
@@ -516,9 +533,6 @@ checkAdmin();
 // function to show user status
 // add schedule intially only for admin
 document.getElementById("schedule_addbtn").addEventListener("click", () => {
-  // document.getElementById("editable_content").style.display = "flex";
-  // document.getElementById("schedule_addbtn").style.display="none"
-  // var myModal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
   document.getElementById("submit").style.display = "block";
   document.getElementById("updateEvent").style.display = "none";
   myModal.show();
@@ -591,7 +605,6 @@ document.getElementById("submit").addEventListener("click", async () => {
   });
 
   alert("event saved!");
-  // var myModal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
   myModal.hide();
   fetchClubDetails();
   document.getElementById("eventName").value = "";
@@ -625,10 +638,17 @@ document.getElementById("submit").addEventListener("click", async () => {
       console.error("Error storing UID in pending_requests:", error);
     });
  }
+ 
 //implementing autocomplete 
 var autocomplete;
 let clubLocation;
+// Manual initialization after the script has loaded
+document.addEventListener("DOMContentLoaded", function () {
+  initAutocomplete();
+});
+
 function initAutocomplete() {
+  debugger
   console.log("Autocomplete initialized");
   autocomplete = new google.maps.places.Autocomplete(
     document.getElementById("location"),
@@ -639,31 +659,16 @@ function initAutocomplete() {
 
 function onPlaceChanged() {
   var place = autocomplete.getPlace();
-  console.log("Selected Place:", place);
 
-  // Assuming your object is named 'locationObject'
-
-  // Accessing the geometry object
   const geometry = place.geometry;
-
-  // Accessing the location object within geometry
   const location = geometry.location;
 
   // Extracting latitude and longitude
-  const latitude = location.lat(); // lat() function retrieves the latitude
-  const longitude = location.lng(); // lng() function retrieves the longitude
-
-  console.log("Latitude:", latitude);
-  console.log("Longitude:", longitude);
-
+  const latitude = location.lat();
+  const longitude = location.lng();
   clubLocation = { Latitude: latitude, Longitude: longitude };
-  //   console.log(clubLocation)
-  // You can access various details of the selected place here and use them as needed.
-  // For example, place.formatted_address, place.geometry.location.lat(), place.geometry.location.lng(), etc.
 }
 
-// Manual initialization after the script has loaded
-document.addEventListener("DOMContentLoaded", function () {
-    initAutocomplete();
-  });
+
+
 
