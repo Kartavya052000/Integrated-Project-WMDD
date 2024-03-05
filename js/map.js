@@ -56,6 +56,7 @@ getClubMapData()
 
 const apiKey = "AIzaSyCNnCpF2ku_EhRvDgix0AdgEtWN-aK0wMU";
 
+
 window.initMap = async function () {
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 12,
@@ -177,14 +178,21 @@ window.initMap = async function () {
         if (val) {
           val.forEach((location) => {
             console.log(location);
-            const marker = new google.maps.Marker({
-              position: {
-                lat: location.clubDetails.lat,
-                lng: location.clubDetails.long,
-              },
-              map: map,
-              title: location.clubName,
-            });
+
+const marker =  addMarker(location.Sport, {
+              lat: location.clubDetails.lat,
+              lng: location.clubDetails.long,
+            }, location.clubName, map) ;
+
+            // const marker = new google.maps.Marker({
+            //   position: {
+            //     lat: location.clubDetails.lat,
+            //     lng: location.clubDetails.long,
+            //   },
+            //   map: map,
+            //   title: location.clubName,
+            // });
+            // <img src="../kartavya/test.jpeg" alt="${location.title}" style="width: 100%;height:100px">
 
             const contentString = `
               <div style="width:200px"  id="infoWindowContent">
@@ -275,3 +283,22 @@ function loadScript() {
 }
 
 window.onload = loadScript;
+
+
+function addMarker(category, position, title,map) {
+  
+  var icon = category === 'Cricket' ? 'https://banner2.cleanpng.com/20190627/zox/kisspng-cricket-bats-bat-and-ball-games-batting-cricket-ba-5d157f9ba10995.3232231815616900116596.jpg' 
+  : 'https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsb2ZmaWNlNF9waG90b19vZl9hX2FtZXJpY2FuX2Zvb3RiYWxsX2JhbGxfaXNvbGF0ZWRfb25fd19iOTZjODYyMy0yZDRkLTQ0ZjQtOWNkYi1lNjEzNTJjYzM3NzgucG5n.png';
+  var size = new google.maps.Size(50, 50);
+
+  var marker = new google.maps.Marker({
+    position: position,
+    map: map,
+    icon: {
+      url: icon,
+      scaledSize: size
+    },
+    title: title
+  });
+  return marker;
+}
