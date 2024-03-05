@@ -11,8 +11,8 @@ import {
   where,
   getDocs,
   updateDoc,
+  onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
 
 //global
 const firebaseConfig = {
@@ -27,8 +27,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
-// Initialize Firebase authentication
-const auth = getAuth();
 
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get("id");
@@ -218,6 +216,7 @@ function handleJoin() {
     console.log("No UID found in localStorage.");
   }
 }
+
 // display request to admin
 async function allReq() {
   if (uid) {
@@ -295,6 +294,10 @@ async function allReq() {
                       approvedClubs: arrayUnion(clubId),
                     });
                     alert("Pending request has been accepted.");
+                    document.getElementById("join").style.display = "none";
+                    // document.getElementById("joined").style.display = "none";
+                    document.getElementById("pending").style.display = "block";
+                    SendNotification(pendingUid)
                     console.log(
                       `${username} has been approved to join the club.`
                     );
@@ -534,3 +537,29 @@ document.getElementById("submit").addEventListener("click", async () => {
   document.getElementById("location").value = "";
 });
 
+
+// function to handle Notifications
+ const SendNotification = (user_id) =>{
+  const userDocRef = doc(firestore, "users", user_id);
+  console.log(userDocRef);
+  //  return
+  let obj = {
+    title:"Request Update Top",
+    message:"Your user has been successfully accepted"
+  }
+  // Update the club document with the UID in the pending_requests array
+  const updateData = {
+    notifications: arrayUnion(obj),
+  };
+
+  setDoc(userDocRef, updateData, { merge: true })
+    .then(async () => {
+      alert("Notification Sent Successfully");
+      // console.log("UID stored in pending_requests successfully.");
+
+      // fetchClubDetails(); // call to update the page
+    })
+    .catch((error) => {
+      console.error("Error storing UID in pending_requests:", error);
+    });
+ }

@@ -1,3 +1,31 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  doc,
+  setDoc,
+  getDoc,
+  arrayUnion,
+  arrayRemove,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
+//global
+const firebaseConfig = {
+  apiKey: "AIzaSyD2wZz5FE67IV7278ezzTiQfm0tP8Okmus",
+  authDomain: "sportscrush-b20bd.firebaseapp.com",
+  projectId: "sportscrush-b20bd",
+  storageBucket: "sportscrush-b20bd.appspot.com",
+  messagingSenderId: "188829017619",
+  appId: "1:188829017619:web:f0bbbe5f64d432a2a3c1e6",
+  measurementId: "G-9CS7TKRD9H",
+};
+
+const app = initializeApp(firebaseConfig);
+const firestore = getFirestore(app);
 class sHeader extends HTMLElement {
   connectedCallback() {
     this.innerHTML = ` <nav class="navbar bg-info navbar-expand-lg  bg-body-tertiary">
@@ -68,5 +96,37 @@ document.addEventListener('DOMContentLoaded', function () {
       event.preventDefault(); 
       window.location.href = './myclubs_details.html?type=recommendations';
     });
+  }
+});
+
+// Function to send notification to a user
+ // Listen for new notifications in real-time
+ // Get the UID from localStorage if it exists
+let user = JSON.parse(localStorage.getItem("user"));
+const uid = user.uid;
+ const userDocRef = doc(firestore, "users", uid); // Replace userId with the actual user ID
+ let previousNotifications = []; // Use let instead of const to allow reassignment
+
+ const unsubscribe = onSnapshot(userDocRef, (doc) => {
+  if (doc.exists()) {
+    const userData = doc.data();
+    const currentNotifications = userData.notifications || [];
+
+    // Compare previous and current notifications arrays to detect added notifications
+    const addedNotifications = currentNotifications.filter(notification => !previousNotifications.includes(notification));
+
+  
+
+    // Add new notifications to previousNotifications array
+    previousNotifications=[] // empty previus array here
+    previousNotifications.push(...addedNotifications);
+    console.log("All Notification:", previousNotifications);
+    previousNotifications.forEach(notification => {
+      const notificationElement = document.createElement('div');
+      notificationElement.textContent = `${notification.title}: ${notification.message}`;
+      document.getElementById('notifications-dummy').appendChild(notificationElement);
+    });
+  } else {
+    console.log("User document not found.");
   }
 });

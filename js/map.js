@@ -226,9 +226,10 @@ window.initMap = async function () {
           });
         }
       },
-      function () {
-        handleLocationError(true, map.getCenter());
-      }
+      
+        function (error) {
+          handleLocationError(error.code === error.PERMISSION_DENIED, map.getCenter());
+        }      
     );
   } else {
     // Browser doesn't support Geolocation
@@ -236,33 +237,34 @@ window.initMap = async function () {
   }
 };
 
-function handleLocationError(browserHasGeolocation, pos) {
+function handleLocationError(permissionDenied, pos) {
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 12,
     center: pos,
   });
 
-  const content = browserHasGeolocation
-    ? "Error: The Geolocation service failed."
-    : "Error: Your browser doesn't support geolocation.";
+  if (permissionDenied) {
+    alert("Error: Geolocation permission denied.");
+  } else {
+    const content = "Error: Your browser doesn't support geolocation.";
+    const infowindow = new google.maps.InfoWindow({
+      content: content,
+    });
 
-  const infowindow = new google.maps.InfoWindow({
-    content: content,
-  });
+    const marker = new google.maps.Marker({
+      position: pos,
+      map: map,
+      title: "Error",
+    });
 
-  const marker = new google.maps.Marker({
-    position: pos,
-    map: map,
-    title: "Error",
-  });
+    marker.addListener("mouseover", function () {
+      infowindow.open(map, marker);
+    });
 
-  marker.addListener("mouseover", function () {
-    infowindow.open(map, marker);
-  });
-
-  marker.addListener("mouseout", function () {
-    infowindow.close();
-  });
+    marker.addListener("mouseout", function () {
+      infowindow.close();
+    });
+  }
 }
 
 function loadScript() {
