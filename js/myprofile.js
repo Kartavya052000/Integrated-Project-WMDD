@@ -1,3 +1,4 @@
+
 import {
   getFirestore,
   collection,
@@ -23,7 +24,36 @@ const app = initializeApp(firebaseConfig);
 
 // My Query
 const db = getFirestore(app);
+let autocomplete;
+let clubLocation;
 
+function initAutocomplete() {
+  console.log("Autocomplete initialized");
+  autocomplete = new google.maps.places.Autocomplete(
+    document.getElementById("address"),
+    { types: ["geocode"] }
+  );
+  autocomplete.addListener("place_changed", onPlaceChanged);
+}
+
+function onPlaceChanged() {
+  var place = autocomplete.getPlace();
+  console.log("Selected Place:", place);
+
+  const geometry = place.geometry;
+  const location = geometry.location;
+  const latitude = location.lat();
+  const longitude = location.lng();
+
+  console.log("Latitude:", latitude);
+  console.log("Longitude:", longitude);
+
+  clubLocation = { Latitude: latitude, Longitude: longitude };
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  initAutocomplete();
+});
 let user = JSON.parse(localStorage.getItem("user"));
 const userCollection = collection(getFirestore(), "users"); // Note: Invoke getFirestore()
 const userDocRef = doc(userCollection, user.uid);
@@ -31,15 +61,15 @@ getDoc(userDocRef)
   .then((docSnapshot) => {
     if (docSnapshot.exists()) {
       const userData = docSnapshot.data();
-      document.getElementById("firstName").value = userData?.firstName;
-      document.getElementById("lastName").value = userData?.lastName;
-      document.getElementById("gender").value = userData?.gender;
-      document.getElementById("dob").value = userData?.dob;
-      document.getElementById("phoneNumber").value = userData?.phoneNumber;
-      document.getElementById("email").value = userData?.email;
-      document.getElementById("address").value = userData?.address;
-      document.getElementById("sportsInterest").value =
-        userData?.sports_interest;
+
+      document.getElementById("lastName").value = userData.lastName==undefined?'':userData.lastName;
+      document.getElementById("gender").value = userData.gender==undefined?'':userData.gender;
+      document.getElementById("dob").value = userData.dob==undefined?'':userData.dob;
+      document.getElementById("phoneNumber").value = userData.phoneNumber==undefined?'':userData.phoneNumber;
+      document.getElementById("email").value = userData.email==undefined?'':userData.email;
+      //document.getElementById("address").value = userData.address==undefined?'':userData.address;
+      document.getElementById("sportsInterest").value =userData.sports_interest==undefined?'':userData.sports_interest;
+      const autocomplete = new google.maps.places.Autocomplete(document.getElementById("address"));
     } else {
       console.log("No such Document!");
     }
@@ -54,7 +84,10 @@ window.addEventListener("load", (event) => {
 // onload = (event) => {};
 document.querySelector("#form").addEventListener("submit", function (event) {
   event.preventDefault(); // Prevent form submission
+  var place = autocomplete.getPlace();
+  console.log("Place inside:", place);
 
+  console.log(document.getElementById("address").value);
   // Capture edited data from form fields
   let editedData = {
     firstName: document.getElementById("firstName").value,
@@ -88,41 +121,44 @@ const setData = async (data) => {
 };
 //
 window.addEventListener("load", (event) => {
-  document
-    .getElementById("editButton")
-    .addEventListener("click", function (event) {
-      const fields = document.querySelectorAll(
-        'input[type="text"], input[type="date"], input[type="tel"],input[type="email"]'
-      );
-      const editButton = document.getElementById("editButton");
+  // document
+  //   .getElementById("editButton")
+  //   .addEventListener("click", function (event) {
+  //     const fields = document.querySelectorAll(
+  //       'input[type="text"], input[type="date"], input[type="tel"],input[type="email"]'
+  //     );
+  //     const editButton = document.getElementById("editButton");
 
-      if (editButton.textContent === "Edit") {
-        // Enable editing
-        fields.forEach((field) => {
-          field.removeAttribute("readonly");
-        });
-        editButton.textContent = "Save";
-      } else {
-        console.log;
-        // Save changes
-        const editedData = {
-          firstName: document.getElementById("firstName").value,
-          lastName: document.getElementById("lastName").value,
-          gender: document.getElementById("gender").value,
-          dob: document.getElementById("dob").value,
-          phoneNumber: document.getElementById("phoneNumber").value,
-          email: document.getElementById("email").value,
-          address: document.getElementById("address").value,
-        };
-        setData(editedData); // Define this function to update user data
-        // Disable editing
-        fields.forEach((field) => {
-          field.setAttribute("readonly", true);
-        });
-        editButton.textContent = "Edit";
-        console.log(editButton.textContent);
-      }
-    });
+  //     if (editButton.textContent === "Edit") {
+  //       // Enable editing
+  //       fields.forEach((field) => {
+  //         if(field.id!="email"){
+  //         field.removeAttribute("readonly");
+  //         }
+  //       });
+  //       editButton.textContent = "Save";
+  //     } else {
+  //       console.log;
+  //       // Save changes
+  //       const editedData = {
+  //         firstName: document.getElementById("firstName").value,
+  //         lastName: document.getElementById("lastName").value,
+  //         gender: document.getElementById("gender").value,
+  //         dob: document.getElementById("dob").value,
+  //         phoneNumber: document.getElementById("phoneNumber").value,
+  //         email: document.getElementById("email").value,
+  //         address: document.getElementById("address").value,
+  //       };
+  //       setData(editedData); // Define this function to update user data
+  //       // Disable editing
+  //       fields.forEach((field) => {
+  //         if(field)
+  //         field.setAttribute("readonly", true);
+  //       });
+  //       editButton.textContent = "Edit";
+  //       console.log(editButton.textContent);
+  //     }
+  //   });
   let username = (document.querySelector(
     ".username"
   ).innerHTML = `<h4>Email Id </h4>${user.email}`);
