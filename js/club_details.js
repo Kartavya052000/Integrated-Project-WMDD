@@ -11,8 +11,8 @@ import {
   where,
   getDocs,
   updateDoc,
+  onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
 
 //global
 const firebaseConfig = {
@@ -27,8 +27,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
-// Initialize Firebase authentication
-const auth = getAuth();
 
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get("id");
@@ -42,6 +40,7 @@ var eventId = "";
 
 // fetch the clubs
 let myModal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
+
 function fetchClubDetails() {
   if (id) {
     const clubDocRef = doc(firestore, "clubs", id);
@@ -98,6 +97,22 @@ function fetchClubDetails() {
                     document.getElementById("submit").style.display = "none";
                     document.getElementById("updateEvent").style.display = "block";
                     myModal.show();
+                    const locationInput = document.getElementById("location");
+
+                    let autocompleteEnabled = true; // Flag to track whether autocomplete is enabled
+
+                    locationInput.addEventListener("input", function () {
+                      if (autocompleteEnabled) {
+                        const inputText = this.value;
+                      }
+                    });
+                    locationInput.addEventListener("keydown", function () {
+                      autocompleteEnabled = false;
+                    });
+                    locationInput.addEventListener("blur", function () {
+                      autocompleteEnabled = true;
+                    });
+
                     document.getElementById("eventName").value = ite.event_name;
                     document.getElementById("datetimepicker").value =
                       ite.date_time;
@@ -189,27 +204,89 @@ joinButton.addEventListener("click", () => {
 });
 
 // join request function
+// function handleJoin() {
+//   if (uid) {
+//     // Get the club ID from the URL
+//     if (clubId) {
+//       const clubDocRef = doc(firestore, "clubs", clubId);
+//       console.log(clubDocRef);
+//       //  return
+//       // Update the club document with the UID in the pending_requests array
+      
+//       const updateData = {
+//         pending_requests: arrayUnion(uid),
+//       };
+
+//       setDoc(clubDocRef, updateData, { merge: true })
+//         .then(async () => {
+//           alert("Request Sent Successfully");
+//           console.log("UID stored in pending_requests successfully.");
+
+//           fetchClubDetails(); // call to update the page
+//         })
+//         .catch((error) => {
+//           console.error("Error storing UID in pending_requests:", error);
+//         });
+//     } else {
+//       console.log("No club ID provided in the URL.");
+//     }
+//   } else {
+//     console.log("No UID found in localStorage.");
+//   }
+// }
+// join request function
 function handleJoin() {
   if (uid) {
     // Get the club ID from the URL
     if (clubId) {
       const clubDocRef = doc(firestore, "clubs", clubId);
-      console.log(clubDocRef);
-      //  return
-      // Update the club document with the UID in the pending_requests array
-      const updateData = {
-        pending_requests: arrayUnion(uid),
-      };
-
-      setDoc(clubDocRef, updateData, { merge: true })
-        .then(async () => {
-          alert("Request Sent Successfully");
-          console.log("UID stored in pending_requests successfully.");
-
-          fetchClubDetails(); // call to update the page
+      
+      // Fetch the club document
+      getDoc(clubDocRef)
+        .then((clubDoc) => {
+          if (clubDoc.exists()) {
+            const clubData = clubDoc.data();
+            console.log(clubData.clubDetails.clubType);
+            // Check if the club type is private
+            if (clubData.clubDetails.clubType === "private") {
+              // If the club is private, send a join request
+              const updateData = {
+                pending_requests: arrayUnion(uid),
+              };
+              
+              setDoc(clubDocRef, updateData, { merge: true })
+                .then(() => {
+                  alert("Request Sent Successfully");
+                  console.log("UID stored in pending_requests successfully.");
+                  fetchClubDetails(); // call to update the page
+                })
+                .catch((error) => {
+                  console.error("Error storing UID in pending_requests:", error);
+                });
+            } else if (clubData.clubDetails.clubType === "public") {
+              // If the club is public, join the club immediately
+              const updateData = {
+                approved_requests: arrayUnion(uid),
+              };
+              
+              setDoc(clubDocRef, updateData, { merge: true })
+                .then(() => {
+                  alert("Joined the club successfully");
+                  console.log("UID stored in approved_requests successfully.");
+                  fetchClubDetails(); // call to update the page
+                })
+                .catch((error) => {
+                  console.error("Error storing UID in approved_requests:", error);
+                });
+            } else {
+              console.error("Invalid club type:", clubData.clubDetails.clubType);
+            }
+          } else {
+            console.log("Club document does not exist.");
+          }
         })
         .catch((error) => {
-          console.error("Error storing UID in pending_requests:", error);
+          console.error("Error fetching club document:", error);
         });
     } else {
       console.log("No club ID provided in the URL.");
@@ -218,6 +295,7 @@ function handleJoin() {
     console.log("No UID found in localStorage.");
   }
 }
+
 // display request to admin
 async function allReq() {
   if (uid) {
@@ -295,6 +373,10 @@ async function allReq() {
                       approvedClubs: arrayUnion(clubId),
                     });
                     alert("Pending request has been accepted.");
+                    document.getElementById("join").style.display = "none";
+                    // document.getElementById("joined").style.display = "none";
+                    document.getElementById("pending").style.display = "block";
+                    SendNotification(pendingUid)
                     console.log(
                       `${username} has been approved to join the club.`
                     );
@@ -451,9 +533,6 @@ checkAdmin();
 // function to show user status
 // add schedule intially only for admin
 document.getElementById("schedule_addbtn").addEventListener("click", () => {
-  // document.getElementById("editable_content").style.display = "flex";
-  // document.getElementById("schedule_addbtn").style.display="none"
-  // var myModal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
   document.getElementById("submit").style.display = "block";
   document.getElementById("updateEvent").style.display = "none";
   myModal.show();
@@ -526,11 +605,70 @@ document.getElementById("submit").addEventListener("click", async () => {
   });
 
   alert("event saved!");
-  // var myModal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
   myModal.hide();
   fetchClubDetails();
   document.getElementById("eventName").value = "";
   document.getElementById("datetimepicker").value = "";
   document.getElementById("location").value = "";
 });
+
+
+// function to handle Notifications
+ const SendNotification = (user_id) =>{
+  const userDocRef = doc(firestore, "users", user_id);
+  console.log(userDocRef);
+  //  return
+  let obj = {
+    title:"Request Update Top",
+    message:"Your user has been successfully accepted"
+  }
+  // Update the club document with the UID in the pending_requests array
+  const updateData = {
+    notifications: arrayUnion(obj),
+  };
+
+  setDoc(userDocRef, updateData, { merge: true })
+    .then(async () => {
+      alert("Notification Sent Successfully");
+      // console.log("UID stored in pending_requests successfully.");
+
+      // fetchClubDetails(); // call to update the page
+    })
+    .catch((error) => {
+      console.error("Error storing UID in pending_requests:", error);
+    });
+ }
+ 
+//implementing autocomplete 
+var autocomplete;
+let clubLocation;
+// Manual initialization after the script has loaded
+document.addEventListener("DOMContentLoaded", function () {
+  initAutocomplete();
+});
+
+function initAutocomplete() {
+  debugger
+  console.log("Autocomplete initialized");
+  autocomplete = new google.maps.places.Autocomplete(
+    document.getElementById("location"),
+    { types: ["geocode"] }
+  );
+  autocomplete.addListener("place_changed", onPlaceChanged);
+}
+
+function onPlaceChanged() {
+  var place = autocomplete.getPlace();
+
+  const geometry = place.geometry;
+  const location = geometry.location;
+
+  // Extracting latitude and longitude
+  const latitude = location.lat();
+  const longitude = location.lng();
+  clubLocation = { Latitude: latitude, Longitude: longitude };
+}
+
+
+
 
