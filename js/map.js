@@ -213,6 +213,12 @@ const marker =  addMarker(location.Sport, {
             });
 
             google.maps.event.addListener(infowindow, "domready", function () {
+              // marker.addListener("mouseout", function () {
+              //   infowindow.closeTimeout = setTimeout(function () {
+              //     infowindow.close();
+              //   }, 300); // Adjust the delay as needed
+              // });
+
               const infoWindowContent =
                 document.getElementById("infoWindowContent");
 
@@ -284,23 +290,6 @@ function loadScript() {
 
 window.onload = loadScript;
 
-// var categoryIcons = {
-//   cricket: {
-//     icon: 'https://banner2.cleanpng.com/20190627/zox/kisspng-cricket-bats-bat-and-ball-games-batting-cricket-ba-5d157f9ba10995.3232231815616900116596.jpg',
-//     size: new google.maps.Size(50, 50)
-//   },
-//   football: {
-//     icon: 'football-icon.png',
-//     size: new google.maps.Size(50, 50)
-//   },
-//   tennis: {
-//     icon: 'tennis-icon.png',
-//     size: new google.maps.Size(50, 50)
-//   },
-//   // Add more categories as needed
-// };
-
-const mySportsCategoryList = ['cricket', 'football', 'tennis'];
 const categoryIcons = [
   { name: 'cricket', image: 'https://banner2.cleanpng.com/20190627/zox/kisspng-cricket-bats-bat-and-ball-games-batting-cricket-ba-5d157f9ba10995.3232231815616900116596.jpg' },
   { name: 'football', image: 'football.png' },
@@ -309,17 +298,11 @@ const categoryIcons = [
 ];
 
 function addMarker(category, position, title,map) {
-  // var icon =
-  // categoryIcons[category] && categoryIcons[category].icon
-  //   ? categoryIcons[category].icon
-  //   : 'https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsb2ZmaWNlNF9waG90b19vZl9hX2FtZXJpY2FuX2Zvb3RiYWxsX2JhbGxfaXNvbGF0ZWRfb25fd19iOTZjODYyMy0yZDRkLTQ0ZjQtOWNkYi1lNjEzNTJjYzM3NzgucG5n.png';
-
   const matchingSport = categoryIcons.find(sport => sport.name === category);
 
   // If a match is found, get the image URL; otherwise, use a default image
   const icon = matchingSport ? matchingSport.image : 'https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsb2ZmaWNlNF9waG90b19vZl9hX2FtZXJpY2FuX2Zvb3RiYWxsX2JhbGxfaXNvbGF0ZWRfb25fd19iOTZjODYyMy0yZDRkLTQ0ZjQtOWNkYi1lNjEzNTJjYzM3NzgucG5n.png';
   
-// console.log(categoryIcons[category].icon);
   var size = new google.maps.Size(50, 50);
 
   var marker = new google.maps.Marker({
