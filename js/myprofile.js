@@ -1,3 +1,4 @@
+
 import {
   getFirestore,
   collection,
@@ -23,7 +24,36 @@ const app = initializeApp(firebaseConfig);
 
 // My Query
 const db = getFirestore(app);
+let autocomplete;
+let clubLocation;
 
+function initAutocomplete() {
+  console.log("Autocomplete initialized");
+  autocomplete = new google.maps.places.Autocomplete(
+    document.getElementById("address"),
+    { types: ["geocode"] }
+  );
+  autocomplete.addListener("place_changed", onPlaceChanged);
+}
+
+function onPlaceChanged() {
+  var place = autocomplete.getPlace();
+  console.log("Selected Place:", place);
+
+  const geometry = place.geometry;
+  const location = geometry.location;
+  const latitude = location.lat();
+  const longitude = location.lng();
+
+  console.log("Latitude:", latitude);
+  console.log("Longitude:", longitude);
+
+  clubLocation = { Latitude: latitude, Longitude: longitude };
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  initAutocomplete();
+});
 let user = JSON.parse(localStorage.getItem("user"));
 const userCollection = collection(getFirestore(), "users"); // Note: Invoke getFirestore()
 const userDocRef = doc(userCollection, user.uid);
