@@ -31,15 +31,15 @@ getDoc(userDocRef)
   .then((docSnapshot) => {
     if (docSnapshot.exists()) {
       const userData = docSnapshot.data();
-      document.getElementById("firstName").value = userData?.firstName;
-      document.getElementById("lastName").value = userData?.lastName;
-      document.getElementById("gender").value = userData?.gender;
-      document.getElementById("dob").value = userData?.dob;
-      document.getElementById("phoneNumber").value = userData?.phoneNumber;
-      document.getElementById("email").value = userData?.email;
-      document.getElementById("address").value = userData?.address;
-      document.getElementById("sportsInterest").value =
-        userData?.sports_interest;
+
+      document.getElementById("lastName").value = userData.lastName==undefined?'':userData.lastName;
+      document.getElementById("gender").value = userData.gender==undefined?'':userData.gender;
+      document.getElementById("dob").value = userData.dob==undefined?'':userData.dob;
+      document.getElementById("phoneNumber").value = userData.phoneNumber==undefined?'':userData.phoneNumber;
+      document.getElementById("email").value = userData.email==undefined?'':userData.email;
+      //document.getElementById("address").value = userData.address==undefined?'':userData.address;
+      document.getElementById("sportsInterest").value =userData.sports_interest==undefined?'':userData.sports_interest;
+      const autocomplete = new google.maps.places.Autocomplete(document.getElementById("address"));
     } else {
       console.log("No such Document!");
     }
@@ -99,7 +99,9 @@ window.addEventListener("load", (event) => {
       if (editButton.textContent === "Edit") {
         // Enable editing
         fields.forEach((field) => {
+          if(field.id!="email"){
           field.removeAttribute("readonly");
+          }
         });
         editButton.textContent = "Save";
       } else {
@@ -117,6 +119,7 @@ window.addEventListener("load", (event) => {
         setData(editedData); // Define this function to update user data
         // Disable editing
         fields.forEach((field) => {
+          if(field)
           field.setAttribute("readonly", true);
         });
         editButton.textContent = "Edit";
