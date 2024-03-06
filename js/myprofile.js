@@ -50,33 +50,58 @@ function onPlaceChanged() {
 
   clubLocation = { Latitude: latitude, Longitude: longitude };
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-  initAutocomplete();
-});
 let user = JSON.parse(localStorage.getItem("user"));
 const userCollection = collection(getFirestore(), "users"); // Note: Invoke getFirestore()
 const userDocRef = doc(userCollection, user.uid);
-getDoc(userDocRef)
-  .then((docSnapshot) => {
-    if (docSnapshot.exists()) {
-      const userData = docSnapshot.data();
+document.addEventListener("DOMContentLoaded", function () {
+  initAutocomplete();
+  getDoc(userDocRef)
+    .then((docSnapshot) => {
+      if (docSnapshot.exists()) {
+        const userData = docSnapshot.data();
+        // Populate form fields with user data
+        document.getElementById("firstName").value = userData.firstName || ''; 
+        document.getElementById("lastName").value = userData.lastName || ''; 
+        document.getElementById("gender").value = userData.gender || ''; 
+        document.getElementById("dob").value = userData.dob || ''; 
+        document.getElementById("phoneNumber").value = userData.phoneNumber || ''; 
+        document.getElementById("email").value = userData.email || ''; 
+        document.getElementById("sportsInterest").value = userData.sports_interest || ''; 
+        console.log(userData.sports_interest);
+        // Populate address input with location if available
+        if (userData.address) {
+          document.getElementById("address").value = userData.address;
+        }
+      } else {
+        console.log("No such Document!");
+      }
+    })
+    .catch((error) => {
+      console.log("Error getting document:", error);
+    });
+  // getDoc(userDocRef)
+  // .then((docSnapshot) => {
+  //   if (docSnapshot.exists()) {
+  //     const userData = docSnapshot.data();
 
-      document.getElementById("lastName").value = userData.lastName==undefined?'':userData.lastName;
-      document.getElementById("gender").value = userData.gender==undefined?'':userData.gender;
-      document.getElementById("dob").value = userData.dob==undefined?'':userData.dob;
-      document.getElementById("phoneNumber").value = userData.phoneNumber==undefined?'':userData.phoneNumber;
-      document.getElementById("email").value = userData.email==undefined?'':userData.email;
-      //document.getElementById("address").value = userData.address==undefined?'':userData.address;
-      document.getElementById("sportsInterest").value =userData.sports_interest==undefined?'':userData.sports_interest;
-      const autocomplete = new google.maps.places.Autocomplete(document.getElementById("address"));
-    } else {
-      console.log("No such Document!");
-    }
-  })
-  .catch((error) => {
-    console.log("Error getting document:", error);
-  });
+  //     document.getElementById("lastName").value = userData.lastName==undefined?'':userData.lastName;
+  //     document.getElementById("gender").value = userData.gender==undefined?'':userData.gender;
+  //     document.getElementById("dob").value = userData.dob==undefined?'':userData.dob;
+  //     document.getElementById("phoneNumber").value = userData.phoneNumber==undefined?'':userData.phoneNumber;
+  //     document.getElementById("email").value = userData.email==undefined?'':userData.email;
+  //     //document.getElementById("address").value = userData.address==undefined?'':userData.address;
+  //     document.getElementById("sportsInterest").value =userData.sports_interest==undefined?'':userData.sports_interest;
+  //     const autocomplete = new google.maps.places.Autocomplete(document.getElementById("address"));
+  //   } else {
+  //     console.log("No such Document!");
+  //   }
+  // })
+  // .catch((error) => {
+  //   console.log("Error getting document:", error);
+  // });
+});
+
+
 window.addEventListener("load", (event) => {
   let username = (document.querySelector(".username").innerHTML = user.email);
 });
@@ -97,7 +122,9 @@ document.querySelector("#form").addEventListener("submit", function (event) {
     phoneNumber: document.getElementById("phoneNumber").value,
     email: document.getElementById("email").value,
     address: document.getElementById("address").value,
+    sports_interest:document.getElementById("sportsInterest").value
   };
+  console.log(editedData);
   //creating data
   setData(editedData);
   // Update user document in Firestore
