@@ -84,7 +84,10 @@ window.addEventListener("load", (event) => {
 // onload = (event) => {};
 document.querySelector("#form").addEventListener("submit", function (event) {
   event.preventDefault(); // Prevent form submission
+  var place = autocomplete.getPlace();
+  console.log("Place inside:", place);
 
+  console.log(document.getElementById("address").value);
   // Capture edited data from form fields
   let editedData = {
     firstName: document.getElementById("firstName").value,
@@ -118,44 +121,44 @@ const setData = async (data) => {
 };
 //
 window.addEventListener("load", (event) => {
-  document
-    .getElementById("editButton")
-    .addEventListener("click", function (event) {
-      const fields = document.querySelectorAll(
-        'input[type="text"], input[type="date"], input[type="tel"],input[type="email"]'
-      );
-      const editButton = document.getElementById("editButton");
+  // document
+  //   .getElementById("editButton")
+  //   .addEventListener("click", function (event) {
+  //     const fields = document.querySelectorAll(
+  //       'input[type="text"], input[type="date"], input[type="tel"],input[type="email"]'
+  //     );
+  //     const editButton = document.getElementById("editButton");
 
-      if (editButton.textContent === "Edit") {
-        // Enable editing
-        fields.forEach((field) => {
-          if(field.id!="email"){
-          field.removeAttribute("readonly");
-          }
-        });
-        editButton.textContent = "Save";
-      } else {
-        console.log;
-        // Save changes
-        const editedData = {
-          firstName: document.getElementById("firstName").value,
-          lastName: document.getElementById("lastName").value,
-          gender: document.getElementById("gender").value,
-          dob: document.getElementById("dob").value,
-          phoneNumber: document.getElementById("phoneNumber").value,
-          email: document.getElementById("email").value,
-          address: document.getElementById("address").value,
-        };
-        setData(editedData); // Define this function to update user data
-        // Disable editing
-        fields.forEach((field) => {
-          if(field)
-          field.setAttribute("readonly", true);
-        });
-        editButton.textContent = "Edit";
-        console.log(editButton.textContent);
-      }
-    });
+  //     if (editButton.textContent === "Edit") {
+  //       // Enable editing
+  //       fields.forEach((field) => {
+  //         if(field.id!="email"){
+  //         field.removeAttribute("readonly");
+  //         }
+  //       });
+  //       editButton.textContent = "Save";
+  //     } else {
+  //       console.log;
+  //       // Save changes
+  //       const editedData = {
+  //         firstName: document.getElementById("firstName").value,
+  //         lastName: document.getElementById("lastName").value,
+  //         gender: document.getElementById("gender").value,
+  //         dob: document.getElementById("dob").value,
+  //         phoneNumber: document.getElementById("phoneNumber").value,
+  //         email: document.getElementById("email").value,
+  //         address: document.getElementById("address").value,
+  //       };
+  //       setData(editedData); // Define this function to update user data
+  //       // Disable editing
+  //       fields.forEach((field) => {
+  //         if(field)
+  //         field.setAttribute("readonly", true);
+  //       });
+  //       editButton.textContent = "Edit";
+  //       console.log(editButton.textContent);
+  //     }
+  //   });
   let username = (document.querySelector(
     ".username"
   ).innerHTML = `<h4>Email Id </h4>${user.email}`);
