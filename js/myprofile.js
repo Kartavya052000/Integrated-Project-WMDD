@@ -59,16 +59,25 @@ document.addEventListener("DOMContentLoaded", function () {
       if (docSnapshot.exists()) {
         const userData = docSnapshot.data();
         // Populate form fields with user data
-        document.getElementById("firstName").value = userData.firstName || "";
-        document.getElementById("lastName").value = userData.lastName || "";
+        // Split displayName into first name and last name
+        const displayName = userData.displayName || "";
+        const names = displayName.split(" ");
+        const firstName = names[0] || "";
+        const lastName = names.slice(1).join(" ") || "";
+
+        // Populate fields
+        document.getElementById("displayName").value = firstName;
+        document.getElementById("lastName").value = lastName;
+        // document.getElementById("firstName").value = userData.firstName || "";
+        // document.getElementById("lastName").value = userData.lastName || "";
         document.getElementById("gender").value = userData.gender || "";
         document.getElementById("dob").value = userData.dob || "";
         document.getElementById("phoneNumber").value =
           userData.phoneNumber || "";
         document.getElementById("email").value = userData.email || "";
         document.getElementById("sportsInterest").value =
-          userData.sports_interest || "";
-        console.log(userData.sports_interest);
+          userData.sportsInterest || "";
+        console.log(userData.sportsIinterest);
         // Populate address input with location if available
         if (userData.address) {
           document.getElementById("address").value = userData.address;
@@ -80,26 +89,35 @@ document.addEventListener("DOMContentLoaded", function () {
     .catch((error) => {
       console.log("Error getting document:", error);
     });
-  // getDoc(userDocRef)
-  // .then((docSnapshot) => {
-  //   if (docSnapshot.exists()) {
-  //     const userData = docSnapshot.data();
+  getDoc(userDocRef)
+    .then((docSnapshot) => {
+      if (docSnapshot.exists()) {
+        const userData = docSnapshot.data();
 
-  //     document.getElementById("lastName").value = userData.lastName==undefined?'':userData.lastName;
-  //     document.getElementById("gender").value = userData.gender==undefined?'':userData.gender;
-  //     document.getElementById("dob").value = userData.dob==undefined?'':userData.dob;
-  //     document.getElementById("phoneNumber").value = userData.phoneNumber==undefined?'':userData.phoneNumber;
-  //     document.getElementById("email").value = userData.email==undefined?'':userData.email;
-  //     //document.getElementById("address").value = userData.address==undefined?'':userData.address;
-  //     document.getElementById("sportsInterest").value =userData.sports_interest==undefined?'':userData.sports_interest;
-  //     const autocomplete = new google.maps.places.Autocomplete(document.getElementById("address"));
-  //   } else {
-  //     console.log("No such Document!");
-  //   }
-  // })
-  // .catch((error) => {
-  //   console.log("Error getting document:", error);
-  // });
+        document.getElementById("lastName").value =
+          userData.lastName == undefined ? "" : userData.lastName;
+        document.getElementById("gender").value =
+          userData.gender == undefined ? "" : userData.gender;
+        document.getElementById("dob").value =
+          userData.dob == undefined ? "" : userData.dob;
+        document.getElementById("phoneNumber").value =
+          userData.phoneNumber == undefined ? "" : userData.phoneNumber;
+        document.getElementById("email").value =
+          userData.email == undefined ? "" : userData.email;
+        document.getElementById("address").value =
+          userData.address == undefined ? "" : userData.address;
+        document.getElementById("sportsInterest").value =
+          userData.sports_interest == undefined ? "" : userData.sports_interest;
+        const autocomplete = new google.maps.places.Autocomplete(
+          document.getElementById("address")
+        );
+      } else {
+        console.log("No such Document!");
+      }
+    })
+    .catch((error) => {
+      console.log("Error getting document:", error);
+    });
 });
 
 window.addEventListener("load", (event) => {
