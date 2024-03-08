@@ -23,7 +23,6 @@ const db = getFirestore(firebaseApp);
 
 document.getElementById("searchForm").addEventListener("click", async (e) => {
   e.preventDefault();
-  debugger;
   let text = document.getElementById("search").value;
   await retrieveData(text); // Wait for data retrieval to complete
   let sr = searchResults;

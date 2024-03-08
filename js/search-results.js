@@ -23,7 +23,6 @@ const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 
 const getCat = async () => {
-  debugger;
   const params = new URLSearchParams(window.location.search);
   const category = params.get("category");
   console.log("Category:", category);
