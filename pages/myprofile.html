@@ -4,22 +4,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Profile</title>
-    <script src="../js/index.js" type="module" defer></script>
+    <!-- JAVASCRIPT FILES -->
+    <script src="../js/index.js" defer type="module"></script>
+    <script src="../js/myprofile.js" defer type="module"></script>
+
+    <!-- STYLESHEET -->
+    <link rel="stylesheet" href="../styles/myprofile.css" />
+
+    <!-- GOOGLE AUTOCOMPLETE -->
+    <script
+      type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpN1dFF_d3RhD-ndBd3dGpapZqFAPS7O0&libraries=places&callback=initAutocomplete"
+    ></script>
+
+    <!-- BOOTSTRAP CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
-    <script src="../js/myprofile.js" defer type="module"></script>
+
+    <!-- BOOTSTRAP JS -->
     <script
-      type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpN1dFF_d3RhD-ndBd3dGpapZqFAPS7O0&libraries=places&callback=initAutocomplete"
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
     ></script>
   </head>
-  <body>
+  <body class="body">
+    <!-- BOOTSTRAP NAVBAR -->
     <s-header></s-header>
-
     <main>
       <div class="container">
         <div class="row">
@@ -40,11 +55,13 @@
                     name="sportsInterest"
                     class="form-control"
                   />
-                  <label for="firstName" class="form-label">First Name:</label>
+                  <label for="displayName" class="form-label"
+                    >First Name:</label
+                  >
                   <input
                     type="text"
-                    id="firstName"
-                    name="firstName"
+                    id="displayName"
+                    name="displayName"
                     class="form-control"
                     required
                   />
@@ -118,9 +135,9 @@
               <div class="col-12 d-grid mt-3">
                 <button type="submit" class="btn btn-success">Update</button>
               </div>
-              <!-- <div class="col-12 d-grid mt-3">
+              <div class="col-12 d-grid mt-3 mb-4">
                 <button id="editButton" class="btn btn-primary">Edit</button>
-              </div> -->
+              </div>
             </form>
           </div>
         </div>
