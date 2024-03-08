@@ -149,7 +149,6 @@ import {
     }
   });
   const submitForm = async () => {
-    debugger;
 
     // Club type public or private
     let clubType;

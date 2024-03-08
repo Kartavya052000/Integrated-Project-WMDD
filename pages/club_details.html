@@ -20,9 +20,21 @@
   <script type="module" defer src="../js/club_details.js"></script>
 
   <style>
+    body{
+      color: green;
+      background-color: black;
+    }
     .pac-container {
       z-index: 1060;
       position: absolute !important;
+    }
+    .add_wrapper{
+      display: flex;
+      justify-content: center;
+    }
+    .add_wrapper button {
+      background-color: black;
+      color: green;
     }
   </style>
 </head>
@@ -75,12 +87,12 @@
 
     <div id="schedule" class="tab-content" style="display: block">
       <!-- <h3>Schedule Content</h3> -->
-      <div>
+      <div class="add_wrapper">
         <button id="schedule_addbtn" style="display: none;">+ Add Schedule</button>
         <div id="users_message" style="display: none;">No Schedule Yet</div>
       </div>
       <div class="schedule_container">
-        <table class="schedule_table">
+        <table class="schedule_table" style="display: none;">
           <thead>
             <tr>
               <th>Event Name</th>
