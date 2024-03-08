@@ -1,4 +1,3 @@
-
 import {
   getFirestore,
   collection,
@@ -60,14 +59,25 @@ document.addEventListener("DOMContentLoaded", function () {
       if (docSnapshot.exists()) {
         const userData = docSnapshot.data();
         // Populate form fields with user data
-        document.getElementById("firstName").value = userData.firstName || ''; 
-        document.getElementById("lastName").value = userData.lastName || ''; 
-        document.getElementById("gender").value = userData.gender || ''; 
-        document.getElementById("dob").value = userData.dob || ''; 
-        document.getElementById("phoneNumber").value = userData.phoneNumber || ''; 
-        document.getElementById("email").value = userData.email || ''; 
-        document.getElementById("sportsInterest").value = userData.sports_interest || ''; 
-        console.log(userData.sports_interest);
+        // Split displayName into first name and last name
+        const displayName = userData.displayName || "";
+        const names = displayName.split(" ");
+        const firstName = names[0] || "";
+        const lastName = names.slice(1).join(" ") || "";
+
+        // Populate fields
+        document.getElementById("displayName").value = firstName;
+        document.getElementById("lastName").value = lastName;
+        // document.getElementById("firstName").value = userData.firstName || "";
+        // document.getElementById("lastName").value = userData.lastName || "";
+        document.getElementById("gender").value = userData.gender || "";
+        document.getElementById("dob").value = userData.dob || "";
+        document.getElementById("phoneNumber").value =
+          userData.phoneNumber || "";
+        document.getElementById("email").value = userData.email || "";
+        document.getElementById("sportsInterest").value =
+          userData.sportsInterest || "";
+        console.log(userData.sportsIinterest);
         // Populate address input with location if available
         if (userData.address) {
           document.getElementById("address").value = userData.address;
@@ -79,28 +89,36 @@ document.addEventListener("DOMContentLoaded", function () {
     .catch((error) => {
       console.log("Error getting document:", error);
     });
-  // getDoc(userDocRef)
-  // .then((docSnapshot) => {
-  //   if (docSnapshot.exists()) {
-  //     const userData = docSnapshot.data();
+  getDoc(userDocRef)
+    .then((docSnapshot) => {
+      if (docSnapshot.exists()) {
+        const userData = docSnapshot.data();
 
-  //     document.getElementById("lastName").value = userData.lastName==undefined?'':userData.lastName;
-  //     document.getElementById("gender").value = userData.gender==undefined?'':userData.gender;
-  //     document.getElementById("dob").value = userData.dob==undefined?'':userData.dob;
-  //     document.getElementById("phoneNumber").value = userData.phoneNumber==undefined?'':userData.phoneNumber;
-  //     document.getElementById("email").value = userData.email==undefined?'':userData.email;
-  //     //document.getElementById("address").value = userData.address==undefined?'':userData.address;
-  //     document.getElementById("sportsInterest").value =userData.sports_interest==undefined?'':userData.sports_interest;
-  //     const autocomplete = new google.maps.places.Autocomplete(document.getElementById("address"));
-  //   } else {
-  //     console.log("No such Document!");
-  //   }
-  // })
-  // .catch((error) => {
-  //   console.log("Error getting document:", error);
-  // });
+        document.getElementById("lastName").value =
+          userData.lastName == undefined ? "" : userData.lastName;
+        document.getElementById("gender").value =
+          userData.gender == undefined ? "" : userData.gender;
+        document.getElementById("dob").value =
+          userData.dob == undefined ? "" : userData.dob;
+        document.getElementById("phoneNumber").value =
+          userData.phoneNumber == undefined ? "" : userData.phoneNumber;
+        document.getElementById("email").value =
+          userData.email == undefined ? "" : userData.email;
+        document.getElementById("address").value =
+          userData.address == undefined ? "" : userData.address;
+        document.getElementById("sportsInterest").value =
+          userData.sports_interest == undefined ? "" : userData.sports_interest;
+        const autocomplete = new google.maps.places.Autocomplete(
+          document.getElementById("address")
+        );
+      } else {
+        console.log("No such Document!");
+      }
+    })
+    .catch((error) => {
+      console.log("Error getting document:", error);
+    });
 });
-
 
 window.addEventListener("load", (event) => {
   let username = (document.querySelector(".username").innerHTML = user.email);
@@ -113,16 +131,16 @@ document.querySelector("#form").addEventListener("submit", function (event) {
   console.log("Place inside:", place);
 
   console.log(document.getElementById("address").value);
-  // Capture edited data from form fields
+  // Data shown in firebase
   let editedData = {
-    firstName: document.getElementById("firstName").value,
+    displayName: document.getElementById("displayName").value,
     lastName: document.getElementById("lastName").value,
     gender: document.getElementById("gender").value,
     dob: document.getElementById("dob").value,
     phoneNumber: document.getElementById("phoneNumber").value,
     email: document.getElementById("email").value,
     address: document.getElementById("address").value,
-    sports_interest:document.getElementById("sportsInterest").value
+    sports_interest: document.getElementById("sportsInterest").value,
   };
   console.log(editedData);
   //creating data
@@ -148,45 +166,114 @@ const setData = async (data) => {
 };
 //
 window.addEventListener("load", (event) => {
-  // document
-  //   .getElementById("editButton")
-  //   .addEventListener("click", function (event) {
-  //     const fields = document.querySelectorAll(
-  //       'input[type="text"], input[type="date"], input[type="tel"],input[type="email"]'
-  //     );
-  //     const editButton = document.getElementById("editButton");
+  document
+    .getElementById("editButton")
+    .addEventListener("click", function (event) {
+      const fields = document.querySelectorAll(
+        'input[type="text"], input[type="date"], input[type="tel"],input[type="email"]'
+      );
+      const editButton = document.getElementById("editButton");
 
-  //     if (editButton.textContent === "Edit") {
-  //       // Enable editing
-  //       fields.forEach((field) => {
-  //         if(field.id!="email"){
-  //         field.removeAttribute("readonly");
-  //         }
-  //       });
-  //       editButton.textContent = "Save";
-  //     } else {
-  //       console.log;
-  //       // Save changes
-  //       const editedData = {
-  //         firstName: document.getElementById("firstName").value,
-  //         lastName: document.getElementById("lastName").value,
-  //         gender: document.getElementById("gender").value,
-  //         dob: document.getElementById("dob").value,
-  //         phoneNumber: document.getElementById("phoneNumber").value,
-  //         email: document.getElementById("email").value,
-  //         address: document.getElementById("address").value,
-  //       };
-  //       setData(editedData); // Define this function to update user data
-  //       // Disable editing
-  //       fields.forEach((field) => {
-  //         if(field)
-  //         field.setAttribute("readonly", true);
-  //       });
-  //       editButton.textContent = "Edit";
-  //       console.log(editButton.textContent);
-  //     }
-  //   });
+      if (editButton.textContent === "Edit") {
+        // Enable editing
+        fields.forEach((field) => {
+          if (field.id != "email") {
+            field.removeAttribute("readonly");
+          }
+        });
+        editButton.textContent = "Save";
+      } else {
+        console.log;
+        // Save changes
+        const editedData = {
+          displayName: document.getElementById("displayName").value,
+          lastName: document.getElementById("lastName").value,
+          gender: document.getElementById("gender").value,
+          dob: document.getElementById("dob").value,
+          phoneNumber: document.getElementById("phoneNumber").value,
+          email: document.getElementById("email").value,
+          address: document.getElementById("address").value,
+          sportsInterest: document.getElementById("sportsInterest").value,
+        };
+        setData(editedData); // Define this function to update user data
+        // Disable editing
+        fields.forEach((field) => {
+          if (field) field.setAttribute("readonly", true);
+        });
+        editButton.textContent = "Edit";
+        console.log(editButton.textContent);
+      }
+    });
   let username = (document.querySelector(
     ".username"
   ).innerHTML = `<h4>Email Id </h4>${user.email}`);
+});
+// Check if user has allowed location permission
+function checkLocationPermission() {
+  if ("geolocation" in navigator) {
+    navigator.permissions
+      .query({ name: "geolocation" })
+      .then(function (result) {
+        if (result.state === "granted") {
+          // Permission granted, fetch user's location and fill in the profile
+          getCurrentLocation();
+        } else if (result.state === "prompt") {
+          // Prompt the user to allow location access
+          alert(
+            "Please allow access to your location to fill in your profile."
+          );
+        } else if (result.state === "denied") {
+          // Permission denied, show message asking user to allow access
+          alert(
+            "Please allow access to your location in order to fill in your profile."
+          );
+        }
+        result.onchange = function () {
+          console.log("Permission state changed to", this.state);
+        };
+      });
+  } else {
+    alert("Geolocation is not supported by your browser.");
+  }
+}
+
+// Fetch user's current location
+function getCurrentLocation() {
+  navigator.geolocation.getCurrentPosition(
+    function (position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+
+      // Fill in the profile with the user's location
+      fillLocation(latitude, longitude);
+    },
+    function (error) {
+      console.error("Error getting user's location:", error);
+    }
+  );
+}
+
+// Fill in the profile with the user's location
+function fillLocation(latitude, longitude) {
+  // Use latitude and longitude to populate the address input or any other fields in the profile
+  fetch(
+    `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyDpN1dFF_d3RhD-ndBd3dGpapZqFAPS7O0`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.status === "OK") {
+        const address = data.results[0].formatted_address;
+        document.getElementById("address").value = address;
+      } else {
+        console.error("Failed to fetch address:", data.status);
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching address:", error);
+    });
+}
+
+// Call checkLocationPermission when DOMContentLoaded
+document.addEventListener("DOMContentLoaded", function () {
+  checkLocationPermission();
 });

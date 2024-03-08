@@ -1,0 +1,11 @@
+body {
+  background-color: black;
+  color: white;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(
+    to bottom right,
+    rgba(123, 221, 76, 0.2),
+    rgba(43, 43, 43, 0.4)
+  );
+  height: 100vh;
+}

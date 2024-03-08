@@ -10,7 +10,7 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
-  signOut
+  signOut,
 } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
 import {
   getFirestore,
@@ -27,9 +27,8 @@ const firebaseConfig = {
   storageBucket: "sportscrush-b20bd.appspot.com",
   messagingSenderId: "188829017619",
   appId: "1:188829017619:web:f0bbbe5f64d432a2a3c1e6",
-  measurementId: "G-9CS7TKRD9H"
+  measurementId: "G-9CS7TKRD9H",
 };
-
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -106,11 +105,14 @@ document.getElementById("googleSignIn").addEventListener("click", function () {
   signInWithPopup(auth, provider)
     .then((userCredential) => {
       const user = userCredential.user;
+      console.log(user);
       localStorage.setItem("user", JSON.stringify(user));
 
       const userInfo = {
         uid: user.uid,
         email: user.email,
+        displayName: user.displayName,
+
         // Add other user information as needed
       };
 
@@ -119,11 +121,9 @@ document.getElementById("googleSignIn").addEventListener("click", function () {
 
       setDoc(doc(usersCollection, user.uid), userInfo)
         .then(() => {
-          console.log("User information saved successfully");
-          alert("User information saved successfully");
+          alert("Welcome, " + user.displayName);
         })
         .catch((error) => {
-          console.error("Error saving user information:", error);
           alert("Error saving user information: " + error.message);
         });
     })
@@ -135,18 +135,20 @@ document.getElementById("googleSignIn").addEventListener("click", function () {
 
 // Sign-out
 document.getElementById("logout").addEventListener("click", function () {
-  signOut(auth).then(() => {
-    localStorage.removeItem("user");
-    alert('logout');
-    window.location.reload();
-  }).catch((error) => {
-    alert('logout error:', error);
-  });
+  signOut(auth)
+    .then(() => {
+      localStorage.removeItem("user");
+      alert("logout");
+      window.location.reload();
+    })
+    .catch((error) => {
+      alert("logout error:", error);
+    });
 });
 
 const user = JSON.parse(localStorage.getItem("user"));
 if (user) {
-  document.getElementById('loginContainer').style.display = "none";
+  document.getElementById("loginContainer").style.display = "none";
   document.getElementById("userDetailsWrapper").style.display = "block";
 
   const userDetails = document.getElementById("userDetails");
@@ -154,8 +156,7 @@ if (user) {
                     <div style="text-align:center">
                         <h2>User:${user.email}</h2>
                     `;
-}
-else {
-  document.getElementById('loginContainer').style.display = "block";
+} else {
+  document.getElementById("loginContainer").style.display = "block";
   document.getElementById("userDetailsWrapper").style.display = "none";
 }
