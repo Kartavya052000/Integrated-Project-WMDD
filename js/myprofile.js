@@ -190,3 +190,61 @@ window.addEventListener("load", (event) => {
     ".username"
   ).innerHTML = `<h4>Email Id </h4>${user.email}`);
 });
+// Check if user has allowed location permission
+function checkLocationPermission() {
+  if ("geolocation" in navigator) {
+    navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
+      if (result.state === 'granted') {
+        // Permission granted, fetch user's location and fill in the profile
+        getCurrentLocation();
+      } else if (result.state === 'prompt') {
+        // Prompt the user to allow location access
+        alert("Please allow access to your location to fill in your profile.");
+      } else if (result.state === 'denied') {
+        // Permission denied, show message asking user to allow access
+        alert("Please allow access to your location in order to fill in your profile.");
+      }
+      result.onchange = function () {
+        console.log('Permission state changed to', this.state);
+      };
+    });
+  } else {
+    alert("Geolocation is not supported by your browser.");
+  }
+}
+
+// Fetch user's current location
+function getCurrentLocation() {
+  navigator.geolocation.getCurrentPosition(function (position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+
+    // Fill in the profile with the user's location
+    fillLocation(latitude, longitude);
+  }, function (error) {
+    console.error("Error getting user's location:", error);
+  });
+}
+
+// Fill in the profile with the user's location
+function fillLocation(latitude, longitude) {
+  // Use latitude and longitude to populate the address input or any other fields in the profile
+  fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyDpN1dFF_d3RhD-ndBd3dGpapZqFAPS7O0`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'OK') {
+        const address = data.results[0].formatted_address;
+        document.getElementById("address").value = address;
+      } else {
+        console.error('Failed to fetch address:', data.status);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching address:', error);
+    });
+}
+
+// Call checkLocationPermission when DOMContentLoaded
+document.addEventListener("DOMContentLoaded", function () {
+  checkLocationPermission();
+});
