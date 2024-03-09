@@ -133,22 +133,7 @@ window.initMap = async function () {
       },
     ],
   });
-  // marker with customized color
-  // const marker = new google.maps.Marker({
-  //   position: {
-  //     lat: position.clubDetails.latitude,
-  //     lng: position.clubDetails.longitude,
-  //   }, // Marker position
-  //   map: map, // Map object to display the marker
-  //   title: location.clubName, // Marker title (optional)
-  //   icon: {
-  //     path: google.maps.SymbolPath.CIRCLE, // Shape of the marker
-  //     fillColor: "#FF0000", // Color of the marker (e.g., red)
-  //     fillOpacity: 0.8, // Opacity of the marker
-  //     strokeWeight: 0, // Stroke weight (outline thickness)
-  //     scale: 10, // Size of the marker
-  //   },
-  // });
+  
 
   // Try HTML5 geolocation
   if (navigator.geolocation) {
@@ -184,16 +169,6 @@ const marker =  addMarker(location.Sport, {
               lng: location.clubDetails.long,
             }, location.clubName, map) ;
 
-            // const marker = new google.maps.Marker({
-            //   position: {
-            //     lat: location.clubDetails.lat,
-            //     lng: location.clubDetails.long,
-            //   },
-            //   map: map,
-            //   title: location.clubName,
-            // });
-            // <img src="../kartavya/test.jpeg" alt="${location.title}" style="width: 100%;height:100px">
-
             const contentString = `
               <div style="width:200px"  id="infoWindowContent">
               <img src="${location?.addressOfImage}" alt="${location.title}" style="width: 100%;height:100px" onerror="this.onerror=null; this.src='../kartavya/test.jpeg';">
@@ -211,32 +186,34 @@ const marker =  addMarker(location.Sport, {
             marker.addListener("mouseover", function () {
               infowindow.open(map, marker);
             });
+            // marker.addListener("mouseout", function () {
+            //   infowindow.close();
+
+            // });
 
             google.maps.event.addListener(infowindow, "domready", function () {
-              // marker.addListener("mouseout", function () {
-              //   infowindow.closeTimeout = setTimeout(function () {
-              //     infowindow.close();
-              //   }, 300); // Adjust the delay as needed
-              // });
+            
 
               const infoWindowContent =
                 document.getElementById("infoWindowContent");
 
-              // Mouseover event listener for content
-              infoWindowContent.addEventListener("mouseover", function () {
-                infowindow.open(map, marker);
-              });
+              
 
-              // Mouseout event listener for content
-              infoWindowContent.addEventListener("mouseout", function () {
-                // Delay closing the infowindow to prevent it from closing when moving between marker and content
-                setTimeout(function () {
-                  if (!infoWindowContent.matches(":hover")) {
-                    infowindow.close();
-                  }
-                }, 300); // Adjust the delay as needed
-              });
+               // Mouseout event listener for content
+     // Mouseout event listener for info window
+    infowindow.addListener("mouseout", function (event) {
+        // Check if the mouse is outside both the marker and info window
+        if (!isMouseInside(marker, event)) {
+            infowindow.close();
+        }
+    });
+        
             });
+            // Function to check if the mouse is inside the marker
+function isMouseInside(marker, event) {
+  const bounds = marker.getBounds();
+  return bounds.contains(event.toElement || event.relatedTarget);
+}
           });
         }
       },
@@ -308,10 +285,10 @@ function addMarker(category, position, title,map) {
   var marker = new google.maps.Marker({
     position: position,
     map: map,
-    icon: {
-      url: icon,
-      scaledSize: size
-    },
+    // icon: {
+    //   url: icon,
+    //   scaledSize: size
+    // },
     title: title
   });
   return marker;

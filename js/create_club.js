@@ -179,9 +179,12 @@ import {
     };
     let user = JSON.parse(localStorage.getItem("user"));
     console.log(user.uid, "USERRRRR");
+    let clubNameTokens = clubName.toLowerCase();
+
     data = {
       clubName: clubName,
       Sport: sport,
+      clubNameTokens:clubNameTokens,
       clubDescription: clubDescription,
       image: clubImage,
       addressOfImage: addressOfImage,
@@ -196,10 +199,10 @@ import {
 
       // Add other fields if needed
     };
-    console.log(data);
+    // console.log(data);
 
     try {
-      console.log(data);
+      // console.log(data);
       // Get a reference to the "clubs" collection
       const clubsCollectionRef = collection(db, "clubs");
 
@@ -208,6 +211,8 @@ import {
       const clubDocRef = await addDoc(clubsCollectionRef, {
         clubName: clubName,
         Sport: sport,
+        sportToken:sport.toLowerCase(),
+        clubNameTokens:clubNameTokens,
         clubDescription: clubDescription,
         addressOfImage: addressOfImage,
         // "location":locationInput.value,

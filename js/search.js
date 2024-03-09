@@ -33,22 +33,23 @@ let searchResults = [];
 
 const retrieveData = async (text) => {
   try {
-    const searchTextLower = text.toLowerCase();
+    const searchTextLower = text.toLowerCase()
     const q1 = query(
       collection(db, "clubs"),
-      where("Sport", ">=", searchTextLower),
-      where("Sport", "<=", searchTextLower + "\uf8ff")
+      where("sportToken", ">=", searchTextLower),
+      where("sportTokenp", "<=", searchTextLower + "\uf8ff")
     );
+    
+      const q2 = query(
+        collection(db, "clubs"),
+        where("clubNameTokens", ">=", searchTextLower),
+        where("clubNameTokens", "<=", searchTextLower+ "\uf8ff")
+      );
 
-    const q2 = query(
-      collection(db, "clubs"),
-      where("clubName", ">=", searchTextLower),
-      where("clubName", "<=", searchTextLower + "\uf8ff")
-    );
-
+      
     const querySnapshot1 = await getDocs(q1);
     const querySnapshot2 = await getDocs(q2);
-
+console.log(querySnapshot2,"Q@@aasssssssssss")
     const results1 = querySnapshot1.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
@@ -151,7 +152,7 @@ const displaySuggestions = (res) => {
   suggestionsList.innerHTML = ""; // Clear previous suggestions
   if (res.length > 0) {
     res.forEach((ite) => {
-      console.log(res);
+      // console.log(res);
       let listItem = document.createElement("li");
       let searchType = ite.search_type === "category" ? "Category" : "Club"; // Determine search type based on ite.search_type
       listItem.innerHTML = `<a class="dropdown-item" data-type="${
