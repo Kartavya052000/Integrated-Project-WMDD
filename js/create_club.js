@@ -149,7 +149,6 @@ import {
     }
   });
   const submitForm = async () => {
-
     // Club type public or private
     let clubType;
     const publicClubBtn = document.getElementById("publicClub");

@@ -164,10 +164,10 @@ window.initMap = async function () {
           val.forEach((location) => {
             console.log(location);
 
-const marker =  addMarker(location.Sport, {
+            const marker = addMarker(location.Sport, {
               lat: location.clubDetails.lat,
               lng: location.clubDetails.long,
-            }, location.clubName, map) ;
+            }, location.clubName, map);
 
             const contentString = `
               <div style="width:200px"  id="infoWindowContent">
@@ -191,6 +191,7 @@ const marker =  addMarker(location.Sport, {
 
             // });
 
+            
             google.maps.event.addListener(infowindow, "domready", function () {
             
 
@@ -217,10 +218,10 @@ function isMouseInside(marker, event) {
           });
         }
       },
-      
-        function (error) {
-          handleLocationError(error.code === error.PERMISSION_DENIED, map.getCenter());
-        }      
+
+      function (error) {
+        handleLocationError(error.code === error.PERMISSION_DENIED, map.getCenter());
+      }
     );
   } else {
     // Browser doesn't support Geolocation
@@ -274,12 +275,12 @@ const categoryIcons = [
   // Add more sports as needed
 ];
 
-function addMarker(category, position, title,map) {
+function addMarker(category, position, title, map) {
   const matchingSport = categoryIcons.find(sport => sport.name === category);
 
   // If a match is found, get the image URL; otherwise, use a default image
   const icon = matchingSport ? matchingSport.image : 'https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsb2ZmaWNlNF9waG90b19vZl9hX2FtZXJpY2FuX2Zvb3RiYWxsX2JhbGxfaXNvbGF0ZWRfb25fd19iOTZjODYyMy0yZDRkLTQ0ZjQtOWNkYi1lNjEzNTJjYzM3NzgucG5n.png';
-  
+
   var size = new google.maps.Size(50, 50);
 
   var marker = new google.maps.Marker({
