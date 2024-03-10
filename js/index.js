@@ -28,7 +28,7 @@ const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
 class sHeader extends HTMLElement {
   connectedCallback() {
-    this.innerHTML = `<nav class="navbar navbar-light" style="background-color: lightgreen;">
+    this.innerHTML = `<nav class="navbar navbar-light" style="background-color: #7BDD4C;">
     <div class="container-fluid">
         <a class="navbar-brand" href="index.html">SportsCrush</a>
         
