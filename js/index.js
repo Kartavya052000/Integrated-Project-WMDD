@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
  // Listen for new notifications in real-time
  // Get the UID from localStorage if it exists
 let user = JSON.parse(localStorage.getItem("user"));
-const uid = user.uid;
+const uid = user?.uid;
  const userDocRef = doc(firestore, "users", uid); // Replace userId with the actual user ID
  let previousNotifications = []; // Use let instead of const to allow reassignment
 

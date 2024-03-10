@@ -34,7 +34,7 @@ const clubId = urlParams.get("id");
 
 // Get the UID from localStorage if it exists
 let user = JSON.parse(localStorage.getItem("user"));
-const uid = user.uid;
+const uid = user?.uid;
 
 var eventId = "";
 
