@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  line-height: 1.5;
 }
 
 #result {
@@ -13,7 +14,7 @@
 }
 #result div {
   background-color: #7bdd4c;
-  color: black;
+  color: #2b2b2b;
   border-radius: 1rem;
   padding: 2rem;
 }
@@ -45,7 +46,7 @@ p {
   display: block;
   padding: 1rem;
   /* background-color: black; */
-  color: green  ;
+
   /* border-radius: 1rem; */
 }
 #searchForm {
@@ -79,4 +80,97 @@ p {
   border-radius: 1rem;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+  border: none;
+  background-color: #2b2b2b;
+  color: #7bdd4c;
+  border: 1px solid #7bdd4c;
+  border-left: 0;
+}
+/* Map */
+#map {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  width: 95%;
+  margin-bottom: 2rem;
+  border-radius: 2rem;
+  border: 2px solid #7bdd4c;
+}
+
+/* Home page */
+div .form-control {
+  background-color: #2b2b2b;
+  border: 1px solid #7bdd4c;
+  border-right: none;
+  color: white;
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+div .form-control::placeholder {
+  color: white;
+}
+.form-control:focus {
+  color: white;
+  background-color: #2b2b2b;
+  border: 1px solid #7bdd4c;
+  border-right: none;
+}
+.h2-wrap {
+  /* display: flex;
+  justify-content: start;
+  align-items: center; */
+  width: 80%;
+  text-align: left;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  width: 100%;
+  padding: 4%;
+}
+.cards img {
+  width: 100%;
+
+  border-radius: 1rem;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.cards h3 {
+  color: #7bdd4c;
+  font-weight: normal;
+}
+.cards p {
+  color: rgb(224, 224, 224);
+  font-weight: lighter;
+}
+.card-1,
+.card-2,
+.card-3,
+.card-4 {
+  border-radius: 1rem;
+  border: 1px solid #7bdd4c;
+  margin: 2rem 0;
+}
+div .btn-h3-wrap {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  align-items: center;
+}
+.join-btn {
+  border: none;
+  background-color: #7bdd4c;
+  color: #2b2b2b;
+  /* height: 3rem; */
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+
+  border-radius: 2rem;
 }
