@@ -6,6 +6,10 @@
     <title>Login</title>
     <script src="/js/login.js" defer type="module"></script>
     <script src="/js/index.js" defer type="module"></script>
+    <script src="https://kit.fontawesome.com/5a3334534f.js" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="../styles/login.css">
+
     <!-- --------------bootstrap------- -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -20,6 +24,11 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
+
+    <!-- for multiselect -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
    </head>
 
   <body>
@@ -40,7 +49,7 @@
               placeholder="abc@gmail.com"
             />
           </div>
-          <div class="mb-3">
+          <div class="mb-3 position-relative">
             <label for="password" class="form-label">Password</label>
             <input
               type="password"
@@ -49,6 +58,7 @@
               class="form-control"
               placeholder="enter password"
             />
+            <span class="password-toggle-icon"><i class="fas fa-eye"></i></span>
           </div>
 
           <div class="mb-3">
@@ -60,6 +70,8 @@
             <option value="Ballpool">Ballpool</option>
           </select>
         </div>
+
+      
 
           <div class="mb-3 d-grid">
             <button id="signUp" class="btn btn-success">Sign Up</button>
