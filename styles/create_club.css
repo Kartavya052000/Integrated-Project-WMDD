@@ -39,8 +39,7 @@ div .form-control:focus {
   background-color: #2b2b2b;
   color: white;
 }
-div .form-label {
-}
+
 .row {
   display: flex;
   justify-content: center;
