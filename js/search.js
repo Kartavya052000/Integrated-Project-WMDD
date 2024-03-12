@@ -37,7 +37,7 @@ const retrieveData = async (text) => {
     const q1 = query(
       collection(db, "clubs"),
       where("sportToken", ">=", searchTextLower),
-      where("sportTokenp", "<=", searchTextLower + "\uf8ff")
+      where("sportToken", "<=", searchTextLower + "\uf8ff")
     );
     
       const q2 = query(
