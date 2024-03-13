@@ -710,7 +710,7 @@ async function checkAdmin() {
           // getReq()
           document.getElementById("adminRequestTab").style.display = "block";
           document.getElementById("status_wrapper").style.display = "none";
-          document.getElementById("admin_mess").style.display = "block";
+          document.getElementById("admin_mess").style.display = "flex";
           document.getElementById("schedule_addbtn").style.display = "block";
         } else {
           document.getElementById("schedule_addbtn").style.display = "none";

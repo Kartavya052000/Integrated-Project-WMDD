@@ -1,173 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Club Details</title>
+    <!-- --------------bootstrap------- -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Club Details</title>
-  <!-- --------------bootstrap------- -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuidv4.min.js"></script>
-<!-- font awesome -->
-<script src="https://kit.fontawesome.com/6cee3e1b59.js" crossorigin="anonymous"></script>
- <script
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuidv4.min.js"></script>
+    <!-- font awesome -->
+    <script
+      src="https://kit.fontawesome.com/6cee3e1b59.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
 
-  <!-- autocomplete -->
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpN1dFF_d3RhD-ndBd3dGpapZqFAPS7O0&libraries=places&callback=initAutocomplete"></script>
+    <!-- autocomplete -->
+    <script
+      type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpN1dFF_d3RhD-ndBd3dGpapZqFAPS7O0&libraries=places&callback=initAutocomplete"
+    ></script>
 
-  <link rel="stylesheet" href="../styles/club_details.css" />
-  <script type="module" defer src="../js/index.js"></script>
-  <script type="module" defer src="../js/club_details.js"></script>
+    <link rel="stylesheet" href="../styles/club_details.css" />
+    <script type="module" defer src="../js/index.js"></script>
+    <script type="module" defer src="../js/club_details.js"></script>
 
-  <style> 
-    body{
-      color: green;
-      background-color: black;
-    }
-    .pac-container {
-      z-index: 1060;
-      position: absolute !important;
-    }
-    .add_wrapper{
-      display: flex;
-      justify-content: center;
-    }
-    .add_wrapper button {
-      background-color: black;
-      color: green;
-    }
-  </style>
-</head>
+    <style>
+      body {
+        color: green;
+        background-color: black;
+      }
+      .pac-container {
+        z-index: 1060;
+        position: absolute !important;
+      }
+      .add_wrapper {
+        display: flex;
+        justify-content: center;
+      }
+      .add_wrapper button {
+        background-color: black;
+        color: green;
+      }
+    </style>
+  </head>
 
-<body class="body">
-  <!-- this is script is only for tab shifting -->
-  <script>
-    function showTab(tabId) {
-      // Hide all tab contents
-      document.querySelectorAll(".tab-content").forEach((tab) => {
-        tab.style.display = "none";
-      });
+  <body class="body">
+    <!-- this is script is only for tab shifting -->
+    <script>
+      function showTab(tabId) {
+        // Hide all tab contents
+        document.querySelectorAll(".tab-content").forEach((tab) => {
+          tab.style.display = "none";
+        });
 
-      // Show the selected tab content
-      document.getElementById(tabId).style.display = "block";
+        // Show the selected tab content
+        document.getElementById(tabId).style.display = "block";
 
-      // Remove 'active' class from all nav links
-      document.querySelectorAll(".nav-link").forEach((link) => {
-        link.classList.remove("active");
-      });
+        // Remove 'active' class from all nav links
+        document.querySelectorAll(".nav-link").forEach((link) => {
+          link.classList.remove("active");
+        });
 
-      // Add 'active' class to the clicked nav link
-      const clickedLink = document.querySelector(`a[href="#${tabId}"]`);
-      clickedLink.classList.add("active");
-    }
-  </script>
+        // Add 'active' class to the clicked nav link
+        const clickedLink = document.querySelector(`a[href="#${tabId}"]`);
+        clickedLink.classList.add("active");
+      }
+    </script>
 
-  <s-header></s-header>
+    <s-header></s-header>
 
-  <div >
-    <h1>Club Details</h1>
-    <div class="button-wrapper">
-      <div class="status-wrapper" id="status_wrapper">
-        <button type="button" class="btn-join" id="join">Join Club</button>
-        <button type="button" class="btn btn-success" id="joined">Joined</button>
-        <button type="button" class="btn btn-warning" id="pending">Pending</button>
+    <div>
+      <h1>Club Details</h1>
+      <div class="button-wrapper">
+        <div class="status-wrapper" id="status_wrapper">
+          <button type="button" class="btn-join" id="join">Join Club</button>
+          <button type="button" class="btn btn-success" id="joined">
+            Joined
+          </button>
+          <button type="button" class="btn btn-warning" id="pending">
+            Pending
+          </button>
+        </div>
       </div>
-    </div>
-    <div class="admin-msg" id="admin_mess" style="display: none;">You are the admin</div>
-    <div class="club-details" id="clubDetails"></div>
-    <nav class="navbar">
-      <ul class="nav nav-pills club_tabs">
-        <li class="nav-item">
-          <a class="nav-link" href="#" onclick="showTab('schedule')">Schedule</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" onclick="showTab('members')" id="members_head">Members</a>
-        </li>
-        <li class="nav-item" id="adminRequestTab" style="display: none;">
-          <a class="nav-link" href="#" onclick="showTab('admin-request')" id="num_req">Request for Admin</a>
-        </li>
-      </ul>
-    </nav>
-
-    <div id="schedule" class="tab-content" style="display: block">
-      <!-- <h3>Schedule Content</h3> -->
-      <div class="add_wrapper">
-        <button class="add-schedule" id="schedule_addbtn" style="display: none;">+ Add Schedule</button>
-        <div id="users_message" style="display: none;">No Schedule Yet</div>
+      <div class="admin-msg" id="admin_mess" style="display: none">
+        You are the admin
       </div>
-      <div class="schedule_container">
-        <table class="schedule_table" style="display: none;">
-          <thead>
-            <tr>
-              <th>Event Name</th>
-              <th>Date and Time</th>
-              <th>Location</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="eventTableBody">
-            <!-- Table rows will be dynamically added here -->
-          </tbody>
-        </table>
+      <div class="club-details" id="clubDetails"></div>
+      <nav class="navbar">
+        <ul class="nav nav-pills club_tabs">
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="showTab('schedule')"
+              >Schedule</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="#"
+              onclick="showTab('members')"
+              id="members_head"
+              >Members</a
+            >
+          </li>
+          <li class="nav-item" id="adminRequestTab" style="display: none">
+            <a
+              class="nav-link"
+              href="#"
+              onclick="showTab('admin-request')"
+              id="num_req"
+              >Request for Admin</a
+            >
+          </li>
+        </ul>
+      </nav>
+
+      <div id="schedule" class="tab-content" style="display: block">
+        <!-- <h3>Schedule Content</h3> -->
+        <div class="add_wrapper">
+          <button
+            class="add-schedule"
+            id="schedule_addbtn"
+            style="display: none"
+          >
+            + Add Schedule
+          </button>
+          <div id="users_message" style="display: none">No Schedule Yet</div>
+        </div>
+        <div class="schedule_container">
+          <table class="schedule_table" style="display: none">
+            <thead>
+              <tr>
+                <th>Event Name</th>
+                <th>Date and Time</th>
+                <th>Location</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="eventTableBody">
+              <!-- Table rows will be dynamically added here -->
+            </tbody>
+          </table>
+        </div>
       </div>
+      <div id="members" class="tab-content" style="display: none">
+        <h3>Members Content</h3>
+        <!-- Members content goes here -->
+      </div>
+      <div id="admin-request" class="tab-content" style="display: none">
+        <h3>Request for Admin Content</h3>
+        <!-- Admin request content goes here -->
+      </div>
+      <!-- Button trigger modal -->
 
-    </div>
-    <div id="members" class="tab-content" style="display: none">
-      <h3>Members Content</h3>
-      <!-- Members content goes here -->
-    </div>
-    <div id="admin-request" class="tab-content" style="display: none">
-      <h3>Request for Admin Content</h3>
-      <!-- Admin request content goes here -->
-    </div>
-    <!-- Button trigger modal -->
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModalCenter"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">
+                Modal title
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <!-- <div id="editable_content"> -->
+              <form>
+                <div class="form-group">
+                  <label for="eventName">Event Name:</label>
+                  <input type="text" id="eventName" required /><br />
+                </div>
+                <div class="form-group">
+                  <label for="datetimepicker">Date and Time:</label>
+                  <input
+                    type="datetime-local"
+                    id="datetimepicker"
+                    required
+                  /><br />
+                </div>
+                <div class="form-group">
+                  <label for="location">Location:</label>
+                  <input
+                    type="text"
+                    id="location"
+                    class="form-control"
+                    required
+                  />
+                </div>
+              </form>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <!-- <div id="editable_content"> -->
-            <form>
-              <div class="form-group">
-                <label for="eventName">Event Name:</label>
-                <input type="text" id="eventName" required /><br />
-              </div>
-              <div class="form-group">
-
-                <label for="datetimepicker">Date and Time:</label>
-                <input type="datetime-local" id="datetimepicker" required /><br />
-              </div>
-              <div class="form-group">
-
-                <label for="location">Location:</label>
-                <input type="text" id="location" class="form-control" required />
-              </div>
-            </form>
-
-            <!-- </div> -->
-          </div>
-          <div class="modal-footer">
-            <button type="button" id="submit" class="btn btn-primary">Save
-              changes</button>
-            <button type="button" id="updateEvent" class="btn btn-primary">Update</button>
+              <!-- </div> -->
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="submit" class="btn btn-primary">
+                Save changes
+              </button>
+              <button type="button" id="updateEvent" class="btn btn-primary">
+                Update
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-</body>
-
+  </body>
 </html>
