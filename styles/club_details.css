@@ -37,8 +37,16 @@
     rgba(123, 221, 76, 0.2),
     rgba(43, 43, 43, 0.8)
   );
-  height: 100vh;
+  height: 100%;
   font-family: "Raleway", sans-serif;
+}
+/* navbar */
+.navbar-nav .nav-link {
+  font-weight: normal;
+  color: #2b2b2b;
+}
+.navbar-nav .nav-link:hover {
+  color: maroon;
 }
 .btn-join {
   border: none;
@@ -71,9 +79,6 @@
 .club-details img {
   border-radius: 1rem;
   width: 100%;
-
-  /* border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0; */
   flex-grow: 50%;
 }
 .club-data {
@@ -108,6 +113,9 @@ h1 {
 .nav-link:hover {
   color: #7bdd4c;
 }
+/* .nav-link:visited {
+  color: #7bdd4c;
+} */
 .admin-msg {
   border: none;
   background-color: #7bdd4c;
@@ -132,4 +140,5 @@ h1 {
   justify-content: center;
   height: 3rem;
   border-radius: 2rem;
+  margin-bottom: 10rem;
 }
