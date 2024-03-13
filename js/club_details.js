@@ -59,8 +59,10 @@ function fetchClubDetails() {
             // or show no schedule yet if nothing is available
             if (clubData.events) {
               const eventTableBody = document.getElementById("eventTableBody");
-              document.getElementsByClassName("schedule_table").style.display =
-                "block";
+              // document.getElementsByClassName("schedule_table").style.display =
+              //   "block";
+              // alert('1')
+
               eventTableBody.innerHTML = "";
               clubData.events.forEach((ite) => {
                 const listItem = document.createElement("tr");
@@ -75,6 +77,7 @@ function fetchClubDetails() {
                 eventTableBody.appendChild(listItem);
               });
             } else {
+              // alert('1')
               document.querySelector(".schedule_table").style.display = "none";
               document.getElementById("users_message").style.display = "block";
             }
@@ -95,6 +98,7 @@ function fetchClubDetails() {
                 const editButton = document.createElement("button");
                 editButton.textContent = "Edit";
                 editButton.classList.add("btn");
+                
                 editButton.addEventListener("click", async () => {
                   try {
                     document.getElementById("submit").style.display = "none";
@@ -486,7 +490,8 @@ async function allReq() {
               // Clear previous content before updating
               const adminRequestDiv = document.getElementById("admin-request");
               adminRequestDiv.innerHTML = "";
-
+// alert('1')
+// console.log(pendingRequests,"CCC")
               pendingRequests.forEach(async (pendingUid) => {
                 try {
                   // Construct a reference to the "users" collection and query for the user with the pending UID
@@ -496,8 +501,9 @@ async function allReq() {
                     where("uid", "==", pendingUid)
                   );
                   const querySnapshot = await getDocs(query2);
-
+console.log(querySnapshot,"QQQQQQ")
                   if (!querySnapshot.empty) {
+                    // alert('2')
                     // User document found, get the first document's data
                     const userData = querySnapshot.docs[0].data();
                     const username = userData.email;
@@ -517,7 +523,7 @@ async function allReq() {
                     const crossButton = document.createElement("button");
                     crossButton.textContent = "❌";
                     crossButton.classList.add("cross-button"); // Add a CSS class for styling
-
+// alert('hit')
                     // Append elements to adminRequestDiv
                     adminRequestDiv.appendChild(usernameElement);
                     adminRequestDiv.appendChild(tickButton);
@@ -708,11 +714,15 @@ async function checkAdmin() {
           console.log("Current user is the admin of the club.");
           allReq(); // intiate all req function
           // getReq()
+          // alert('1')
+          // document.getElementById("schedule_addbtn").style.display = "block";
+
           document.getElementById("adminRequestTab").style.display = "block";
           document.getElementById("status_wrapper").style.display = "none";
           document.getElementById("admin_mess").style.display = "flex";
           document.getElementById("schedule_addbtn").style.display = "block";
         } else {
+          // alert('2')
           document.getElementById("schedule_addbtn").style.display = "none";
           console.log("Current user is not the admin of the club.");
           document.getElementById("adminRequestTab").style.display = "none";
@@ -976,6 +986,11 @@ document.addEventListener("DOMContentLoaded", function () {
   initAutocomplete();
 });
 
+// modal close
+document.getElementById("close-icon").addEventListener("click", function () {
+  myModal.hide();
+
+})
 function initAutocomplete() {
   console.log("Autocomplete initialized");
   autocomplete = new google.maps.places.Autocomplete(

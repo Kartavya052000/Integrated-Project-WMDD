@@ -309,8 +309,8 @@ window.initMap = async function () {
             const contentString = `
               <div style="width:200px"  id="infoWindowContent">
               <img src="${location?.addressOfImage}" alt="${location.title}" style="width: 100%;height:100px" onerror="this.onerror=null; this.src='../kartavya/test.jpeg';">
-              <div style="font-size:1rem;font-weight:400">${location.clubName}</div>
-                <p>${location.clubDescription}</p>
+              <div style="font-size:1rem;font-weight:400;color:black">${location.clubName}</div>
+                <p style="color:black">${location.clubDescription}</p>
                 <a href="./club_details.html?id=${location.id}">View Details</a>
               </div>
             `;

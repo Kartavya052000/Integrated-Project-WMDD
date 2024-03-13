@@ -15,3 +15,11 @@ body {
 .title {
   text-align: center;
 }
+#clubs_list{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+.club_card{
+  border:2px solid green
+}

@@ -115,6 +115,13 @@ const uid = user?.uid;
     previousNotifications=[] // empty previus array here
     previousNotifications.push(...addedNotifications);
     console.log("All Notification:", previousNotifications);
+    // if(previousNotifications.length >0){
+    //   let lastElement = previousNotifications[previousNotifications.length - 1];
+
+    //   console.log(lastElement);
+    //   alert(`${lastElement.title} +${lastElement.message}`)
+    // }
+
     previousNotifications.forEach(notification => {
       const notificationElement = document.createElement('div');
       notificationElement.textContent = `${notification.title}: ${notification.message}`;
