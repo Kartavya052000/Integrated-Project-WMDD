@@ -11,7 +11,7 @@ import {
   where,
   getDocs,
   updateDoc,
-  onSnapshot
+  onSnapshot,
 } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
 
 //global
@@ -39,7 +39,9 @@ const uid = user?.uid;
 var eventId = "";
 
 // fetch the clubs
-let myModal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
+let myModal = new bootstrap.Modal(
+  document.getElementById("exampleModalCenter")
+);
 
 function fetchClubDetails() {
   if (id) {
@@ -53,11 +55,12 @@ function fetchClubDetails() {
           }
           // Events Schedule tab data for non-admin
           if (clubData.admin_id !== uid) {
-            // display schedule for non-admin users of club 
+            // display schedule for non-admin users of club
             // or show no schedule yet if nothing is available
             if (clubData.events) {
               const eventTableBody = document.getElementById("eventTableBody");
-              document.getElementsByClassName("schedule_table").style.display="block"
+              document.getElementsByClassName("schedule_table").style.display =
+                "block";
               eventTableBody.innerHTML = "";
               clubData.events.forEach((ite) => {
                 const listItem = document.createElement("tr");
@@ -66,17 +69,16 @@ function fetchClubDetails() {
                 <td>${ite.date_time}</td>
                 <td>${ite.event_location}</td>
               `;
-                let schedule_table = document.querySelector('.schedule_table')
+                let schedule_table = document.querySelector(".schedule_table");
                 var headerRow = schedule_table.rows[0];
                 headerRow.deleteCell(3);
                 eventTableBody.appendChild(listItem);
               });
             } else {
-              document.querySelector('.schedule_table').style.display = "none";
+              document.querySelector(".schedule_table").style.display = "none";
               document.getElementById("users_message").style.display = "block";
             }
-          }
-          else {
+          } else {
             // Events Schedule tab data for admin
             if (clubData.events) {
               const eventTableBody = document.getElementById("eventTableBody");
@@ -96,7 +98,8 @@ function fetchClubDetails() {
                 editButton.addEventListener("click", async () => {
                   try {
                     document.getElementById("submit").style.display = "none";
-                    document.getElementById("updateEvent").style.display = "block";
+                    document.getElementById("updateEvent").style.display =
+                      "block";
                     myModal.show();
                     const locationInput = document.getElementById("location");
 
@@ -123,7 +126,8 @@ function fetchClubDetails() {
                     let updateEvent = {
                       eventId: ite.eventId,
                       event_name: document.getElementById("eventName").value,
-                      date_time: document.getElementById("datetimepicker").value,
+                      date_time:
+                        document.getElementById("datetimepicker").value,
                       location: document.getElementById("location").value,
                     };
 
@@ -176,12 +180,15 @@ function fetchClubDetails() {
 
           const clubDetails = document.getElementById("clubDetails");
           clubDetails.innerHTML = `
-                    <div style="text-align:center">
-                        <h2>Club Name:${clubData.clubName}</h2>
-                        <img src=${clubData.addressOfImage} alt=${clubData.clubName} style="height:50%;width:50%">
-                        <p> Club Description: ${clubData.clubDescription}</p>
-                        <p>Club Address: ${clubData.clubDetails.address}</p>
-                        <p>Club Category: ${clubData.Sport}</p>
+                    <div class="club-div" >
+                       
+                        <div class="club-img"><img src=${clubData.addressOfImage} alt=${clubData.clubName}  ></div>
+                         <div class="club-data">
+                           <h2 class="club-title">  ${clubData.clubName}</h2>
+                           <p class="category"> ${clubData.Sport}</p>
+                           <p> <i class="fa-solid fa-location-dot" style="color: #bdff9e;"></i> ${clubData.clubDetails.address}</p>
+                           <p> <i class="fa-solid fa-book" style="color: #bdff9e;"></i> ${clubData.clubDescription}</p>
+                         </div>
                         </div>
                         <!-- Display other club details as needed -->
                     `;
@@ -213,7 +220,7 @@ joinButton.addEventListener("click", () => {
 //       console.log(clubDocRef);
 //       //  return
 //       // Update the club document with the UID in the pending_requests array
-      
+
 //       const updateData = {
 //         pending_requests: arrayUnion(uid),
 //       };
@@ -241,7 +248,7 @@ function handleJoin() {
     // Get the club ID from the URL
     if (clubId) {
       const clubDocRef = doc(firestore, "clubs", clubId);
-      
+
       // Fetch the club document
       getDoc(clubDocRef)
         .then((clubDoc) => {
@@ -254,7 +261,7 @@ function handleJoin() {
               const updateData = {
                 pending_requests: arrayUnion(uid),
               };
-              
+
               setDoc(clubDocRef, updateData, { merge: true })
                 .then(() => {
                   alert("Request Sent Successfully");
@@ -262,14 +269,17 @@ function handleJoin() {
                   fetchClubDetails(); // call to update the page
                 })
                 .catch((error) => {
-                  console.error("Error storing UID in pending_requests:", error);
+                  console.error(
+                    "Error storing UID in pending_requests:",
+                    error
+                  );
                 });
             } else if (clubData.clubDetails.clubType === "public") {
               // If the club is public, join the club immediately
               const updateData = {
                 approved_requests: arrayUnion(uid),
               };
-              
+
               setDoc(clubDocRef, updateData, { merge: true })
                 .then(() => {
                   alert("Joined the club successfully");
@@ -277,10 +287,16 @@ function handleJoin() {
                   fetchClubDetails(); // call to update the page
                 })
                 .catch((error) => {
-                  console.error("Error storing UID in approved_requests:", error);
+                  console.error(
+                    "Error storing UID in approved_requests:",
+                    error
+                  );
                 });
             } else {
-              console.error("Invalid club type:", clubData.clubDetails.clubType);
+              console.error(
+                "Invalid club type:",
+                clubData.clubDetails.clubType
+              );
             }
           } else {
             console.log("Club document does not exist.");
@@ -459,7 +475,7 @@ async function allReq() {
           // }
 
           // Subscribe to real-time updates for pending_requests
-          const unsubscribe = onSnapshot(clubDocRef, (snapshot  ) => {
+          const unsubscribe = onSnapshot(clubDocRef, (snapshot) => {
             if (snapshot.exists()) {
               const clubData = snapshot.data();
               const pendingRequests = clubData.pending_requests || [];
@@ -469,7 +485,7 @@ async function allReq() {
               }
               // Clear previous content before updating
               const adminRequestDiv = document.getElementById("admin-request");
-              adminRequestDiv.innerHTML = '';
+              adminRequestDiv.innerHTML = "";
 
               pendingRequests.forEach(async (pendingUid) => {
                 try {
@@ -487,7 +503,8 @@ async function allReq() {
                     const username = userData.email;
 
                     // Display the username, tick button, and cross button in HTML
-                    const adminRequestDiv = document.getElementById("admin-request");
+                    const adminRequestDiv =
+                      document.getElementById("admin-request");
 
                     // Create elements for username, tick button, and cross button
                     const usernameElement = document.createElement("p");
@@ -523,12 +540,19 @@ async function allReq() {
 
                         // Hide join button and show pending status
                         document.getElementById("join").style.display = "none";
-                        document.getElementById("pending").style.display = "block";
+                        document.getElementById("pending").style.display =
+                          "block";
 
                         // Send notification
-                        SendNotification(pendingUid, clubData.clubName, "Your request has been accepted");
+                        SendNotification(
+                          pendingUid,
+                          clubData.clubName,
+                          "Your request has been accepted"
+                        );
 
-                        console.log(`${username} has been approved to join the club.`);
+                        console.log(
+                          `${username} has been approved to join the club.`
+                        );
                       } catch (error) {
                         console.error("Error updating club document:", error);
                       }
@@ -548,9 +572,15 @@ async function allReq() {
                         });
 
                         // Send notification
-                        SendNotification(pendingUid, clubData.clubName, "Your request has been declined");
+                        SendNotification(
+                          pendingUid,
+                          clubData.clubName,
+                          "Your request has been declined"
+                        );
 
-                        console.log(`${username} has been rejected to join the club.`);
+                        console.log(
+                          `${username} has been rejected to join the club.`
+                        );
                       } catch (error) {
                         console.error("Error updating club document:", error);
                       }
@@ -564,7 +594,6 @@ async function allReq() {
               });
             }
           });
-
         } else {
           console.log("Club document does not exist.");
         }
@@ -600,52 +629,55 @@ async function checkAdmin() {
         // const approvedRequests = clubData.approved_requests || [];
         const membersDiv = document.getElementById("members");
         membersDiv.innerHTML = ""; // Clear previous content
-     // Subscribe to real-time updates for approved_requests
-    const approvedRequests = clubData.approved_requests || [];
+        // Subscribe to real-time updates for approved_requests
+        const approvedRequests = clubData.approved_requests || [];
 
-const unsubscribeApprovedRequests = onSnapshot(clubDocRef, (snapshot  ) => {
-  if (snapshot.exists()) {
-    const clubData = snapshot.data();
-    const approvedRequests = clubData.approved_requests || [];
+        const unsubscribeApprovedRequests = onSnapshot(
+          clubDocRef,
+          (snapshot) => {
+            if (snapshot.exists()) {
+              const clubData = snapshot.data();
+              const approvedRequests = clubData.approved_requests || [];
 
-    // Clear previous content before updating
-    const membersDiv = document.getElementById("members");
-    membersDiv.innerHTML = ""; // Clear previous content
+              // Clear previous content before updating
+              const membersDiv = document.getElementById("members");
+              membersDiv.innerHTML = ""; // Clear previous content
 
-    if (approvedRequests.length > 0) {
-      const members = document.getElementById("members_head");
-      members.textContent = `Members (${approvedRequests.length})`;
-    }
+              if (approvedRequests.length > 0) {
+                const members = document.getElementById("members_head");
+                members.textContent = `Members (${approvedRequests.length})`;
+              }
 
-    approvedRequests.forEach(async (approvedUid) => {
-      try {
-        // Construct a reference to the "users" collection and query for the user with the approved UID
-        const usersCollectionRef = collection(firestore, "users");
-        const q = query(
-          usersCollectionRef,
-          where("uid", "==", approvedUid)
+              approvedRequests.forEach(async (approvedUid) => {
+                try {
+                  // Construct a reference to the "users" collection and query for the user with the approved UID
+                  const usersCollectionRef = collection(firestore, "users");
+                  const q = query(
+                    usersCollectionRef,
+                    where("uid", "==", approvedUid)
+                  );
+                  const querySnapshot = await getDocs(q);
+
+                  if (!querySnapshot.empty) {
+                    // User document found, get the first document's data
+                    const userData = querySnapshot.docs[0].data();
+                    const username = userData.email;
+
+                    // Display the username in the "Members Content" section
+                    const usernameElement = document.createElement("p");
+                    usernameElement.textContent = username;
+                    membersDiv.appendChild(usernameElement);
+                  }
+                } catch (error) {
+                  console.error("Error fetching user document:", error);
+                }
+              });
+            }
+          }
         );
-        const querySnapshot = await getDocs(q);
 
-        if (!querySnapshot.empty) {
-          // User document found, get the first document's data
-          const userData = querySnapshot.docs[0].data();
-          const username = userData.email;
-
-          // Display the username in the "Members Content" section
-          const usernameElement = document.createElement("p");
-          usernameElement.textContent = username;
-          membersDiv.appendChild(usernameElement);
-        }
-      } catch (error) {
-        console.error("Error fetching user document:", error);
-      }
-    });
-  }
-});
-
-// Don't forget to unsubscribe when it's no longer needed
-// unsubscribeApprovedRequests();
+        // Don't forget to unsubscribe when it's no longer needed
+        // unsubscribeApprovedRequests();
 
         // Check if the user has a pending request
         if (pendingRequests.includes(uid)) {
@@ -680,7 +712,6 @@ const unsubscribeApprovedRequests = onSnapshot(clubDocRef, (snapshot  ) => {
           document.getElementById("status_wrapper").style.display = "none";
           document.getElementById("admin_mess").style.display = "block";
           document.getElementById("schedule_addbtn").style.display = "block";
-
         } else {
           document.getElementById("schedule_addbtn").style.display = "none";
           console.log("Current user is not the admin of the club.");
@@ -729,7 +760,7 @@ document.getElementById("updateEvent").addEventListener("click", async (e) => {
       date_time: date_time,
       event_location: location,
     };
-    console.log(updatedEvent, "UU")
+    console.log(updatedEvent, "UU");
     // return
     // Find the index of the event to be updated in the events array
     let index = clubData.events.findIndex((event) => event.eventId === eventId);
@@ -754,7 +785,6 @@ document.getElementById("updateEvent").addEventListener("click", async (e) => {
     fetchClubDetails();
   }
 });
-
 
 // submit to add the schedule
 document.getElementById("submit").addEventListener("click", async () => {
@@ -781,16 +811,15 @@ document.getElementById("submit").addEventListener("click", async () => {
   document.getElementById("location").value = "";
 });
 
-
 // function to handle Notifications
- const SendNotification = (user_id,clubName,message) =>{
+const SendNotification = (user_id, clubName, message) => {
   const userDocRef = doc(firestore, "users", user_id);
   console.log(userDocRef);
   //  return
   let obj = {
-    title:clubName,
-    message:message
-  }
+    title: clubName,
+    message: message,
+  };
   console.log(obj);
   // Update the club document with the UID in the pending_requests array
   const updateData = {
@@ -807,8 +836,8 @@ document.getElementById("submit").addEventListener("click", async () => {
     .catch((error) => {
       console.error("Error storing UID in pending_requests:", error);
     });
- }
- let prevreq=[]
+};
+let prevreq = [];
 //  function to get real-time request
 // const getReq =  async () =>{
 //   if (uid) {
@@ -817,12 +846,12 @@ document.getElementById("submit").addEventListener("click", async () => {
 //       const uid = user.uid;
 //       const clubDocRef = doc(firestore, "clubs", clubId);
 //       let previousNotifications = []; // Use let instead of const to allow reassignment
-      
+
 //        const unsubscribe = onSnapshot(clubDocRef, (doc) => {
 //         if (doc.exists()) {
 //           const clubData = doc.data();
 //           const currentrequests = clubData.pending_requests || [];
-      
+
 //           // Compare previous and current notifications arrays to detect added notifications
 //           const addrequests = currentrequests.filter(req => !prevreq.includes(req));
 //           // Add new notifications to previousNotifications array
@@ -833,14 +862,14 @@ document.getElementById("submit").addEventListener("click", async () => {
 //             try {
 //               // Construct a reference to the "users" collection and query for the user with the pending UID
 //               const usersCollectionRef = collection(firestore, "users");
-      
+
 //               const query2 = query(
 //                 usersCollectionRef,
 //                 where("uid", "==", pendingUid)
 //               );
-      
+
 //               const querySnapshot = await getDocs(query2);
-      
+
 //               if (!querySnapshot.empty) {
 //                 // User document found, get the first document's data
 //                 const userData = querySnapshot.docs[0].data();
@@ -850,15 +879,15 @@ document.getElementById("submit").addEventListener("click", async () => {
 //                 // Display the username, tick button, and cross button in HTML
 //                 const adminRequestDiv =
 //                   document.getElementById("admin-request");
-      
+
 //                 // Create elements for username, tick button, and cross button
 //                 const usernameElement = document.createElement("p");
 //                 usernameElement.textContent = `${username} wants to join your club.`;
-      
+
 //                 const tickButton = document.createElement("button");
 //                 tickButton.textContent = "✔️";
 //                 tickButton.classList.add("tick-button"); // Add a CSS class for styling
-      
+
 //                 const crossButton = document.createElement("button");
 //                 crossButton.textContent = "❌";
 //                 crossButton.classList.add("cross-button"); // Add a CSS class for styling
@@ -867,7 +896,7 @@ document.getElementById("submit").addEventListener("click", async () => {
 //                 adminRequestDiv.appendChild(usernameElement);
 //                 adminRequestDiv.appendChild(tickButton);
 //                 adminRequestDiv.appendChild(crossButton);
-      
+
 //                 // Add event listeners for tick and cross buttons if needed
 //                 // Add event listeners for tick and cross buttons
 //                 tickButton.addEventListener("click", async () => {
@@ -894,7 +923,7 @@ document.getElementById("submit").addEventListener("click", async () => {
 //                     console.error("Error updating club document:", error);
 //                   }
 //                 });
-      
+
 //                 crossButton.addEventListener("click", async () => {
 //                   // Handle cross button click event
 //                   console.log("crossButton is clicked");
@@ -911,7 +940,7 @@ document.getElementById("submit").addEventListener("click", async () => {
 //                     });
 //                     console.log("inside try after")
 //                     SendNotification(pendingUid,clubData.clubName,"Your user has been successfully accepted")
-      
+
 //                     // alert("Pending request has been rejected.");
 //                     console.log(
 //                       `${username} has been rejected to join the club.`
@@ -937,9 +966,9 @@ document.getElementById("submit").addEventListener("click", async () => {
 //   } else {
 //     console.log("No UID found in localStorage.");
 //   }
- 
+
 // }
-//implementing autocomplete 
+//implementing autocomplete
 var autocomplete;
 let clubLocation;
 // Manual initialization after the script has loaded
@@ -967,7 +996,3 @@ function onPlaceChanged() {
   const longitude = location.lng();
   clubLocation = { Latitude: latitude, Longitude: longitude };
 }
-
-
-
-
