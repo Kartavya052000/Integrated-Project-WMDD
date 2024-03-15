@@ -76,14 +76,13 @@
 .club-details img {
   border-radius: 1rem;
   width: 100%;
-  flex-grow: 50%;
 }
 .club-data {
   width: 100%;
 }
 .club-div {
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   padding: 1rem;
   align-items: center;
   gap: 3rem;
@@ -142,9 +141,30 @@ h1 {
   margin-bottom: 10rem;
 }
 
-.modal-content{
+.modal-content {
   color: black;
 }
-.schedule_table, .btn{
+.schedule_table,
+.btn {
   color: white !important;
+}
+@media only screen and (max-width: 900px) {
+  .club-details img {
+    border-radius: 1rem;
+    width: 70%;
+    margin: auto;
+  }
+  .club-data {
+    width: 100%;
+  }
+  .club-div {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    padding: 1rem;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    gap: 3rem;
+    text-transform: capitalize;
+  }
 }
