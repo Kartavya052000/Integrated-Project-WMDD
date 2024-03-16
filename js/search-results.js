@@ -62,8 +62,10 @@ const displaySearchResults = (res) => {
                               <!-- Add more details as needed -->
                             </div>
                         </div>`;
+                        
     });
     searchResultsContainer.innerHTML = htmlcontent;
+    
   } else {
     searchResultsContainer.innerHTML = "No results found";
   }
