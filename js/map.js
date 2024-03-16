@@ -132,145 +132,145 @@ window.initMap = async function () {
     //     ],
     //   },
     // ],
-    styles:[
+    styles: [
       {
-          "featureType": "all",
-          "elementType": "geometry",
-          "stylers": [
-              {
-                  "color": "#202c3e"
-              }
-          ]
+        "featureType": "all",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#202c3e"
+          }
+        ]
       },
       {
-          "featureType": "all",
-          "elementType": "labels.text.fill",
-          "stylers": [
-              {
-                  "gamma": 0.01
-              },
-              {
-                  "lightness": 20
-              },
-              {
-                  "weight": "1.39"
-              },
-              {
-                  "color": "#ffffff"
-              }
-          ]
+        "featureType": "all",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "gamma": 0.01
+          },
+          {
+            "lightness": 20
+          },
+          {
+            "weight": "1.39"
+          },
+          {
+            "color": "#ffffff"
+          }
+        ]
       },
       {
-          "featureType": "all",
-          "elementType": "labels.text.stroke",
-          "stylers": [
-              {
-                  "weight": "0.96"
-              },
-              {
-                  "saturation": "9"
-              },
-              {
-                  "visibility": "on"
-              },
-              {
-                  "color": "#000000"
-              }
-          ]
+        "featureType": "all",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "weight": "0.96"
+          },
+          {
+            "saturation": "9"
+          },
+          {
+            "visibility": "on"
+          },
+          {
+            "color": "#000000"
+          }
+        ]
       },
       {
-          "featureType": "all",
-          "elementType": "labels.icon",
-          "stylers": [
-              {
-                  "visibility": "off"
-              }
-          ]
+        "featureType": "all",
+        "elementType": "labels.icon",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
       },
       {
-          "featureType": "landscape",
-          "elementType": "geometry",
-          "stylers": [
-              {
-                  "lightness": 30
-              },
-              {
-                  "saturation": "9"
-              },
-              {
-                  "color": "#29446b"
-              }
-          ]
+        "featureType": "landscape",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "lightness": 30
+          },
+          {
+            "saturation": "9"
+          },
+          {
+            "color": "#29446b"
+          }
+        ]
       },
       {
-          "featureType": "poi",
-          "elementType": "geometry",
-          "stylers": [
-              {
-                  "saturation": 20
-              }
-          ]
+        "featureType": "poi",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "saturation": 20
+          }
+        ]
       },
       {
-          "featureType": "poi.park",
-          "elementType": "geometry",
-          "stylers": [
-              {
-                  "lightness": 20
-              },
-              {
-                  "saturation": -20
-              }
-          ]
+        "featureType": "poi.park",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "lightness": 20
+          },
+          {
+            "saturation": -20
+          }
+        ]
       },
       {
-          "featureType": "road",
-          "elementType": "geometry",
-          "stylers": [
-              {
-                  "lightness": 10
-              },
-              {
-                  "saturation": -30
-              }
-          ]
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "lightness": 10
+          },
+          {
+            "saturation": -30
+          }
+        ]
       },
       {
-          "featureType": "road",
-          "elementType": "geometry.fill",
-          "stylers": [
-              {
-                  "color": "#193a55"
-              }
-          ]
+        "featureType": "road",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#193a55"
+          }
+        ]
       },
       {
-          "featureType": "road",
-          "elementType": "geometry.stroke",
-          "stylers": [
-              {
-                  "saturation": 25
-              },
-              {
-                  "lightness": 25
-              },
-              {
-                  "weight": "0.01"
-              }
-          ]
+        "featureType": "road",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "saturation": 25
+          },
+          {
+            "lightness": 25
+          },
+          {
+            "weight": "0.01"
+          }
+        ]
       },
       {
-          "featureType": "water",
-          "elementType": "all",
-          "stylers": [
-              {
-                  "lightness": -20
-              }
-          ]
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [
+          {
+            "lightness": -20
+          }
+        ]
       }
-  ]
+    ]
   });
-  
+
 
   // Try HTML5 geolocation
   if (navigator.geolocation) {
@@ -307,12 +307,62 @@ window.initMap = async function () {
             }, location.clubName, map);
 
             const contentString = `
-              <div style="width:200px"  id="infoWindowContent">
-              <img src="${location?.addressOfImage}" alt="${location.title}" style="width: 100%;height:100px" onerror="this.onerror=null; this.src='../kartavya/test.jpeg';">
-              <div style="font-size:1rem;font-weight:400;color:black">${location.clubName}</div>
-                <p style="color:black">${location.clubDescription}</p>
-                <a href="./club_details.html?id=${location.id}">View Details</a>
-              </div>
+            <div
+            style="
+              width: 200px;
+              background-color: #7bdd4c;
+              padding: 6px;
+              border-radius: 14px;
+              display: flex;
+            "
+            id="infoWindowContent"
+          >
+            <img
+              src="${location?.addressOfImage}"
+              alt="${location.title}"
+              style="border-radius: 14px; width: 75px; height: 70px"
+              onerror="this.onerror=null; this.src='../kartavya/test.jpeg';"
+            />
+  
+            <div style="margin: 0 10px">
+              <p
+                style="
+                  font-size: 1rem;
+                  color: black;
+                  margin: 0;
+                  text-transform: capitalize;
+                "
+              >
+                ${location.clubName}
+              </p>
+              <p
+                style="
+                  color: black;
+                  font-size: 12px;
+                  margin: 0;
+                  margin-bottom: 6px;
+                "
+              >
+                ${location.Sport}
+              </p>
+              <p style="color: black; font-size: 12px; margin: 0">
+                <i class="fa-solid fa-location-dot" style="padding-right: 5px"></i
+                >${location.clubDetails.address}
+              </p>
+              <a
+                href="./club_details.html?id=${location.id}"
+                style="
+                  background-color: black;
+                  text-decoration: none;
+                  font-size: 12px;
+                  border-radius: 14px;
+                  padding: 2px 10px;
+                  color: green;
+                "
+                >View Details</a
+              >
+            </div>
+          </div>
             `;
 
             const infowindow = new google.maps.InfoWindow({
@@ -328,30 +378,30 @@ window.initMap = async function () {
 
             // });
 
-            
+
             google.maps.event.addListener(infowindow, "domready", function () {
-            
+
 
               const infoWindowContent =
                 document.getElementById("infoWindowContent");
 
-              
 
-               // Mouseout event listener for content
-     // Mouseout event listener for info window
-    infowindow.addListener("mouseout", function (event) {
-        // Check if the mouse is outside both the marker and info window
-        if (!isMouseInside(marker, event)) {
-            infowindow.close();
-        }
-    });
-        
+
+              // Mouseout event listener for content
+              // Mouseout event listener for info window
+              infowindow.addListener("mouseout", function (event) {
+                // Check if the mouse is outside both the marker and info window
+                if (!isMouseInside(marker, event)) {
+                  infowindow.close();
+                }
+              });
+
             });
             // Function to check if the mouse is inside the marker
-function isMouseInside(marker, event) {
-  const bounds = marker.getBounds();
-  return bounds.contains(event.toElement || event.relatedTarget);
-}
+            function isMouseInside(marker, event) {
+              const bounds = marker.getBounds();
+              return bounds.contains(event.toElement || event.relatedTarget);
+            }
           });
         }
       },
