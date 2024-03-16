@@ -43,9 +43,11 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <link rel="stylesheet" href="/styles/index.css" />
     <link rel="manifest" href="../app.webmanifest" />
-    <script src="../js/index.js" type="module"></script>
+    <script src="../js/index.js" type="module" defer></script>
   </head>
   <script>
     (async () => {
@@ -66,8 +68,54 @@
   </script>
   <body>
     <s-header></s-header>
-    <div id="notifications-dummy"></div>
+    <!-- <div id="notifications-dummy"></div> -->
 
+    <!-- <header>
+      <div class="logo">
+        <a href="/" class="logo-link">
+          <img src="/assests/images/sportscrush_logo.png" alt="Logo" class="logo">
+      </a>
+      </div>
+      <div class="right-head-wrap">
+        <nav>
+          <div class="icon" id="bell"> <img src="/assests/images/notifications.png" alt=""> </div>
+          <div class="notifications" id="box" style="display: none;">
+              <h2>Notifications - <span id="count">2</span></h2>
+            
+           
+          </div>
+      </nav>
+        <img src="/assests/images/list2.png" alt="Logo" class="logo" id="menu">
+
+      </div>
+    </header> -->
+    <!-- <div class="sidebar">
+      <div class="sidebar-child">
+        <a class="icon-wrap" id="manageclubs">
+        Manage Clubs
+        </a>
+      </div>
+      <div class="sidebar-child">
+        <a class="icon-wrap" id="myclubs">  
+      My Clubs
+        </a>
+      </div>
+      <div class="sidebar-child">
+        <a class="icon-wrap">
+       Create Club
+        </a>
+      </div>
+      <div class="sidebar-child">
+        <a class="icon-wrap">
+       Logout
+        </a>
+      </div>
+      <div class="sidebar-child">
+        <a class="icon-wrap" href="login.html">
+       Login
+        </a>
+      </div>
+    </div> -->
     <div class="search-container">
       <div class="h2-wrap">
         <h2>Empowering communities <br />through sports</h2>
