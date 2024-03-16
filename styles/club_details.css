@@ -106,6 +106,7 @@ h1 {
 }
 .nav-link {
   color: #ccc;
+  font-size: 1.5rem;
   font-weight: bold;
 }
 .nav-link:hover {
@@ -144,44 +145,49 @@ h1 {
 .modal-content {
   color: black;
 }
-.schedule_table,
-.btn {
+.schedule_table {
   color: white !important;
 }
 /* Event table */
 
+.schedule_container {
+  border: #7bdd4c 1px solid;
+  border-radius: 2rem;
+  text-transform: capitalize;
+  margin: 0 1rem 2rem 1rem;
+  background-color: #2b2b2b;
+}
 table {
-  /* display: flex;
-  flex-direction: column; */
+  display: flex;
+  /*flex-direction: column; */
+  justify-content: center;
+  font-size: 1.5rem;
   align-items: center;
-  border: #7bdd4c 1px solid;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* display: grid; */
+  padding: 5%;
+  /* grid-template-columns: repeat(4, 1fr); */
 }
-table thead tr th {
-  /* padding: 1rem 4rem; */
-  border: #7bdd4c 1px solid;
-  text-align: right;
+
+.btn {
+  border: none;
+  background-color: #7bdd4c;
+  color: #2b2b2b;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  border-radius: 2rem;
 }
-thead {
-  width: 100%;
-  /* grid-column: 1/5;
-  grid-row: 1/2; */
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
-thead tr {
-  grid-column: 1/5;
-}
-tbody {
-  width: 100%;
-  grid-column: 1/5;
+
+tbody tr {
+  border-bottom: 1px gray solid;
+  text-align: left;
+  width: 100vw;
 }
 
 table tbody td {
-  text-align: right;
-  padding: 1rem 1rem;
-  border: #7bdd4c 1px solid;
+  padding: 1rem 2rem;
 }
 @media only screen and (max-width: 900px) {
   .club-details img {
