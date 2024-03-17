@@ -14,6 +14,7 @@
     <script type="module" src="/js/search.js"></script>
     <!-- -----map ------ -->
     <script type="module" defer src="/js/map.js"></script>
+    <!-- <script type="module" src="/js/myclubs_details.js"></script> -->
 
     <!-- --------------bootstrap------- -->
     <link
@@ -54,8 +55,7 @@
   </script>
   <body>
     <s-header></s-header>
-    
-     
+
     <div class="main">
       <section class="search">
         <div id="notifications-dummy"></div>
@@ -116,86 +116,57 @@
       </section>
       <section class="recommendation-section">
         <h3 class="category">Recommendations</h3>
-        
+        <div class="recommendations" id="recommendations">
+          <!-- <div
+            class="card"
+            style="
+              width: 260px;
+              border-radius: 20px;
+              background-color: black;
+              border: 1px solid green;
+            "
+          >
+            <img
+              src="https://picsum.photos/300/181"
+              alt=""
+              style="
+                border-top-left-radius: 20px;
+                border-top-right-radius: 20px;
+              "
+            />
+            <div
+              class="btn-h3-wrap"
+              style="
+                display: flex;
+                margin: 10px;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <div class="h3-p-wrap">
+                <h3 style="color: green; font-size: 18px">RCB</h3>
+                <p style="font-size: 14px; margin: 0">Cricket</p>
+              </div>
+              <button
+                class="join-btn"
+                style="
+                  height: 30px;
+                  width: 70px;
+                  font-size: 14px;
+                  border-radius: 20px;
+                  border-color: transparent;
+                  background-color: green;
+                  font-weight: 500;
+                  line-height: normal;
+                "
+              >
+                Join
+              </button>
+            </div>
+          </div> -->
+        </div>
       </section>
     </div>
-    <!-- <div id="notifications-dummy"></div> -->
-
-    <!-- <div class="search-container"> -->
-    <!-- <div class="h2-wrap">
-        <h2>Empowering communities <br />through sports</h2>
-      </div> -->
-
-    <!-- <form id="searchForm" action="/search-results.html" method="GET">
-        <div class="dropdown">
-          <div class="search-div">
-            <input
-              class="form-control"
-              type="search"
-              id="search"
-              placeholder="Search club or sports"
-              aria-label="Search"
-              autocomplete="off"
-            />
-            <button id="cutButton" type="button">X</button>
-          </div>
-          <ul
-            id="suggestions"
-            class="dropdown-menu"
-            aria-labelledby="dropdownMenuButton"
-          ></ul>
-        </div>
-      </form> -->
-    <!-- <div id="result"></div> -->
-    <!-- </div> -->
-    <!-- <h3 style="text-align: center; margin-bottom: 50px">
-      Look for clubs near you
-    </h3> -->
-    <!-- <div id="map">
-      <div id="overlay">Please allow location access</div>
-    </div> -->
-
-    <section class="cards">
-      <div class="card-1">
-        <img src="https://picsum.photos/300/181" alt="" />
-        <div class="btn-h3-wrap">
-          <div class="h3-p-wrap">
-            <h3>RCB</h3>
-            <p>Cricket</p>
-          </div>
-          <button class="join-btn">Join</button>
-        </div>
-      </div>
-      <div class="card-2">
-        <img src="https://picsum.photos/300/182" alt="" />
-        <div class="btn-h3-wrap">
-          <div class="h3-p-wrap">
-            <h3>Man Uni</h3>
-            <p>Football</p>
-          </div>
-          <button class="join-btn">Join</button>
-        </div>
-      </div>
-      <div class="card-3">
-        <img src="https://picsum.photos/300/183" alt="" />
-        <div class="btn-h3-wrap">
-          <div class="h3-p-wrap">
-            <h3>MI</h3>
-            <p>Basketball</p>
-          </div>
-          <button class="join-btn">Join</button>
-        </div>
-      </div>
-      <div class="card-4">
-        <img src="https://picsum.photos/300/184" alt="" />
-        <div class="btn-h3-wrap">
-          <div class="h3-p-wrap">
-            <h3>CSK</h3>
-            <p>Cricket</p>
-          </div>
-          <button class="join-btn">Join</button>
-        </div>
-      </div>
-    </section>
+    
   </body>
 </html>
