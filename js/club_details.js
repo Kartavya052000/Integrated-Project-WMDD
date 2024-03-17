@@ -79,7 +79,7 @@ function fetchClubDetails() {
             } else {
               // alert('1')
               document.querySelector(".schedule_table").style.display = "none";
-              document.getElementById("users_message").style.display = "block";
+              document.getElementById("users_message").style.display = "flex";
             }
           } else {
             // Events Schedule tab data for admin
@@ -98,7 +98,7 @@ function fetchClubDetails() {
                 const editButton = document.createElement("button");
                 editButton.textContent = "Edit";
                 editButton.classList.add("btn");
-                
+
                 editButton.addEventListener("click", async () => {
                   try {
                     document.getElementById("submit").style.display = "none";
@@ -490,8 +490,8 @@ async function allReq() {
               // Clear previous content before updating
               const adminRequestDiv = document.getElementById("admin-request");
               adminRequestDiv.innerHTML = "";
-// alert('1')
-// console.log(pendingRequests,"CCC")
+              // alert('1')
+              // console.log(pendingRequests,"CCC")
               pendingRequests.forEach(async (pendingUid) => {
                 try {
                   // Construct a reference to the "users" collection and query for the user with the pending UID
@@ -501,7 +501,7 @@ async function allReq() {
                     where("uid", "==", pendingUid)
                   );
                   const querySnapshot = await getDocs(query2);
-console.log(querySnapshot,"QQQQQQ")
+                  console.log(querySnapshot, "QQQQQQ");
                   if (!querySnapshot.empty) {
                     // alert('2')
                     // User document found, get the first document's data
@@ -523,7 +523,7 @@ console.log(querySnapshot,"QQQQQQ")
                     const crossButton = document.createElement("button");
                     crossButton.textContent = "❌";
                     crossButton.classList.add("cross-button"); // Add a CSS class for styling
-// alert('hit')
+                    // alert('hit')
                     // Append elements to adminRequestDiv
                     adminRequestDiv.appendChild(usernameElement);
                     adminRequestDiv.appendChild(tickButton);
@@ -701,7 +701,7 @@ async function checkAdmin() {
           document.getElementById("status_wrapper").style.display = "block";
           document.getElementById("join").style.display = "none";
           document.getElementById("pending").style.display = "none";
-          document.getElementById("joined").style.display = "block";
+          document.getElementById("joined").style.display = "flex";
           return; // Exit function early since user has already joined
         }
 
@@ -717,10 +717,10 @@ async function checkAdmin() {
           // alert('1')
           // document.getElementById("schedule_addbtn").style.display = "block";
 
-          document.getElementById("adminRequestTab").style.display = "block";
+          document.getElementById("adminRequestTab").style.display = "flex";
           document.getElementById("status_wrapper").style.display = "none";
           document.getElementById("admin_mess").style.display = "flex";
-          document.getElementById("schedule_addbtn").style.display = "block";
+          document.getElementById("schedule_addbtn").style.display = "flex";
         } else {
           // alert('2')
           document.getElementById("schedule_addbtn").style.display = "none";
@@ -989,8 +989,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // modal close
 document.getElementById("close-icon").addEventListener("click", function () {
   myModal.hide();
-
-})
+});
 function initAutocomplete() {
   console.log("Autocomplete initialized");
   autocomplete = new google.maps.places.Autocomplete(
