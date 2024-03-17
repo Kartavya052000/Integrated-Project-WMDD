@@ -129,19 +129,39 @@ const type = urlParams.get("type");
 
 if (type == 'self') {
   document.getElementById("titlehead").textContent = "My Clubs";
+  let createBtn=document.querySelector(".create-new");
+  console.log(createBtn);
+  createBtn.style.display="none";
   myClubs(uid)
     .then((clubs) => {
       console.log("User's clubs:", clubs);
+      
       // Display clubs on the page
       if (clubs.length > 0) {
-
+        
         clubs.forEach((club) => {
+          
           const clubElement = document.createElement('div');
-          clubElement.classList.add('club');
+          // clubElement.classList.add('club');
+          clubElement.classList.add('club_card');
+          
           clubElement.innerHTML = `
-                <h3>${club.clubName}</h3>
-                <p>Description: ${club.clubDescription}</p>
-                <p>Location: ${club.clubDetails.address}</p>
+          <img src="${club.addressOfImage}">
+                    <div>
+                      <div id="clubcs">
+                        <h3>${club.clubName}</h3>
+                        <p>${club.Sport}</p>
+                      </div>
+                      <div class="icon-para">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <p>Location: ${club.clubDetails.address}</p>
+                      </div>
+                      <div class="icon-para">
+                        <i class="fa-regular fa-note-sticky"></i>
+                        <p>Description: ${club.clubDescription}</p>
+                      </div>
+                    </div>
+
                 <!-- Add more details as needed -->
             `;
           clubElement.addEventListener('click', function () {
@@ -208,9 +228,21 @@ else {
           const clubElement = document.createElement('div');
           clubElement.classList.add('club_card');
           clubElement.innerHTML = `
-                    <h3>${club.clubName}</h3>
-                    <p>Description: ${club.clubDescription}</p>
-                    <p>Location: ${club.clubDetails.address}</p>
+                    <img src="${club.addressOfImage}">
+                    <div>
+                      <div id="clubcs">
+                        <h3>${club.clubName}</h3>
+                        <p>${club.Sport}</p>
+                      </div>
+                      <div class="icon-para">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <p>Location: ${club.clubDetails.address}</p>
+                      </div>
+                      <div class="icon-para">
+                        <i class="fa-regular fa-note-sticky"></i>
+                        <p>Description: ${club.clubDescription}</p>
+                      </div>
+                    </div>
                 `;
           clubElement.addEventListener('click', function () {
             window.location.href = `./club_details.html?id=${club.id}`;

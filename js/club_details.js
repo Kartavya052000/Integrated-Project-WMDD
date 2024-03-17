@@ -553,6 +553,7 @@ async function allReq() {
                         SendNotification(
                           pendingUid,
                           clubData.clubName,
+                          clubData.addressOfImage,
                           "Your request has been accepted"
                         );
 
@@ -581,6 +582,7 @@ async function allReq() {
                         SendNotification(
                           pendingUid,
                           clubData.clubName,
+                          clubData.addressOfImage,
                           "Your request has been declined"
                         );
 
@@ -822,12 +824,13 @@ document.getElementById("submit").addEventListener("click", async () => {
 });
 
 // function to handle Notifications
-const SendNotification = (user_id, clubName, message) => {
+const SendNotification = (user_id, clubName,clubImg, message) => {
   const userDocRef = doc(firestore, "users", user_id);
   console.log(userDocRef);
   //  return
   let obj = {
     title: clubName,
+    img:clubImg,
     message: message,
   };
   console.log(obj);

@@ -1,0 +1,49 @@
+body{
+background: #2B2B2B;
+
+}
+img{
+    max-width: 100%;
+    height: auto;
+}
+p{
+    color: white;
+}
+.container{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    height: 100vh;
+}
+.field-wrap{
+    display: flex;
+    flex-flow: column nowrap;
+}
+.field-wrap input {
+    border-radius: 10px;
+border: 1px solid  #7BDD4C;
+background:  #2B2B2B;
+padding: 10px 50px;
+color: white;
+}
+select{
+    border-radius: 10px;
+border: 1px solid  #7BDD4C;
+background:  #2B2B2B;
+padding: 10px 77px;   
+color: white;
+}
+label {
+    color: white;
+}
+ button{
+    background: #7BDD4C;
+    padding: 10px 62px; 
+    border-radius: 25px;
+}
+a{
+    color: #7BDD4C;
+
+}

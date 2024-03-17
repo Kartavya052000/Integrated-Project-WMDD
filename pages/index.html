@@ -4,26 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
-    <style>
-      #map {
-        height: 400px;
-        width: 100%;
-        position: relative;
-      }
-      #overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        font-size: 24px;
-      }
-    </style>
+
+    <script
+      src="https://kit.fontawesome.com/5a3334534f.js"
+      crossorigin="anonymous"
+    ></script>
+
     <!-- ------search------ -->
     <script type="module" src="/js/search.js"></script>
     <!-- -----map ------ -->
@@ -43,9 +29,11 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <link rel="stylesheet" href="/styles/index.css" />
     <link rel="manifest" href="../app.webmanifest" />
-    <script src="../js/index.js" type="module"></script>
+    <script src="../js/index.js" type="module" defer></script>
   </head>
   <script>
     (async () => {
@@ -66,16 +54,80 @@
   </script>
   <body>
     <s-header></s-header>
-    <div id="notifications-dummy"></div>
+    
+     
+    <div class="main">
+      <section class="search">
+        <div id="notifications-dummy"></div>
+        <h2>Empowering Communities <br />Through Sports</h2>
+        <div class="search-bar">
+          <form id="searchForm" action="/search-results.html" method="GET">
+            <div class="dropdown">
+              <div class="search-div">
+                <i class="fas fa-search input-icon"></i>
+                <input
+                  class="form-control"
+                  type="search"
+                  id="search"
+                  placeholder="Search club or sports"
+                  aria-label="Search"
+                  autocomplete="off"
+                />
+                <button id="cutButton" type="button">X</button>
+              </div>
+              <ul
+                id="suggestions"
+                class="dropdown-menu"
+                aria-labelledby="dropdownMenuButton"
+              ></ul>
+            </div>
+          </form>
+          <div id="result"></div>
+        </div>
+      </section>
+      <section class="category-section">
+        <h3 class="category">Category</h3>
+        <div class="category-image-container">
+          <img
+            alt="category1"
+            id="category1"
+            src="https://media.istockphoto.com/id/1222830050/photo/this-match-is-ours.jpg?s=612x612&w=is&k=20&c=gLFeMdNljyefIDXMndeTSdvJ70UzFMsMjz43ZBpGD-U="
+          />
+          <img
+            alt="category2"
+            src="https://media.istockphoto.com/id/1222830050/photo/this-match-is-ours.jpg?s=612x612&w=is&k=20&c=gLFeMdNljyefIDXMndeTSdvJ70UzFMsMjz43ZBpGD-U="
+          />
+          <img
+            alt="category3"
+            src="https://media.istockphoto.com/id/1222830050/photo/this-match-is-ours.jpg?s=612x612&w=is&k=20&c=gLFeMdNljyefIDXMndeTSdvJ70UzFMsMjz43ZBpGD-U="
+          />
+          <img
+            alt="category4"
+            id="category4"
+            src="https://media.istockphoto.com/id/1222830050/photo/this-match-is-ours.jpg?s=612x612&w=is&k=20&c=gLFeMdNljyefIDXMndeTSdvJ70UzFMsMjz43ZBpGD-U="
+          />
+        </div>
+      </section>
+      <section class="map-section">
+        <h3 class="category">Look for clubs near you</h3>
+        <div id="map">
+          <div id="overlay-map-msg">Please allow location access</div>
+        </div>
+      </section>
+      <section class="recommendation-section">
+        <h3 class="category">Recommendations</h3>
+        
+      </section>
+    </div>
+    <!-- <div id="notifications-dummy"></div> -->
 
-    <div class="search-container">
-      <div class="h2-wrap">
+    <!-- <div class="search-container"> -->
+    <!-- <div class="h2-wrap">
         <h2>Empowering communities <br />through sports</h2>
-      </div>
+      </div> -->
 
-      <form id="searchForm" action="/search-results.html" method="GET">
+    <!-- <form id="searchForm" action="/search-results.html" method="GET">
         <div class="dropdown">
-          <!-- <label for="search">Search club or sports<input type="text" id="search"></label>  -->
           <div class="search-div">
             <input
               class="form-control"
@@ -93,15 +145,15 @@
             aria-labelledby="dropdownMenuButton"
           ></ul>
         </div>
-      </form>
-      <div id="result"></div>
-    </div>
-    <h3 style="text-align: center; margin-bottom: 50px">
+      </form> -->
+    <!-- <div id="result"></div> -->
+    <!-- </div> -->
+    <!-- <h3 style="text-align: center; margin-bottom: 50px">
       Look for clubs near you
-    </h3>
-    <div id="map">
+    </h3> -->
+    <!-- <div id="map">
       <div id="overlay">Please allow location access</div>
-    </div>
+    </div> -->
 
     <section class="cards">
       <div class="card-1">

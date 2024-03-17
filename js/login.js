@@ -38,55 +38,59 @@ let provider = new GoogleAuthProvider(app);
 let firestore = getFirestore();
 
 // SignUp
-document.getElementById("signUp").addEventListener("click", function () {
-  var email = document.getElementById("email").value;
-  var password = document.getElementById("password").value;
+// document.getElementById("signUp").addEventListener("click", function () {
+//   var email = document.getElementById("email").value;
+//   var password = document.getElementById("password").value;
+//   var username = document.getElementById("username").value;
 
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      alert("User created!");
-      localStorage.setItem("user", JSON.stringify(user));
-      // Save user information in Firestore collection'
-      var sportsSelect = document.getElementById("sports").value;
-      const userInfo = {
-        uid: user.uid,
-        email: user.email,
-        sports_interest: sportsSelect,
-        club_requests: {
-          pending_requests: [],
-          approved_requests: [],
-          declined_requests: [],
-        },
-        // Add other user information as needed
-      };
+//   createUserWithEmailAndPassword(auth, email, password)
+//     .then((userCredential) => {
+//       const user = userCredential.user;
+//       localStorage.setItem("user", JSON.stringify(user));
+//       // Save user information in Firestore collection'
+//       var sportsSelect = document.getElementById("sports").value;
+//       const userInfo = {
+//         uid: user.uid,
+//         email: user.email,
+//         username:username,
+//         sports_interest: sportsSelect,
+//         club_requests: {
+//           pending_requests: [],
+//           approved_requests: [],
+//           declined_requests: [],
+//         },
+//         // Add other user information as needed
+//       };
+// console.log(userInfo,"usr")
+// // return
+//       // Firestore collection reference
+//       const usersCollection = collection(firestore, "users");
 
-      // Firestore collection reference
-      const usersCollection = collection(firestore, "users");
+//       // Add user document to the collection
+//       setDoc(doc(usersCollection, user.uid), userInfo)
+//         .then(() => {
+//           console.log("User information saved successfully");
+//       alert("User created!");
+//       window.location.href = `./index.html`;
 
-      // Add user document to the collection
-      setDoc(doc(usersCollection, user.uid), userInfo)
-        .then(() => {
-          console.log("User information saved successfully");
-        })
-        .catch((error) => {
-          console.error("Error saving user information:", error);
-        });
-    })
-    .catch((error) => {
-      console.error("Error creating user:", error);
-      alert(error.code, error.message);
-    });
-});
+//         })
+//         .catch((error) => {
+//           console.error("Error saving user information:", error);
+//         });
+//     })
+//     .catch((error) => {
+//       console.error("Error creating user:", error);
+//       alert(error.code, error.message);
+//     });
+// });
 
 // Login
 document.getElementById("login").addEventListener("click", function () {
   var email = document.getElementById("email").value;
   var password = document.getElementById("password").value;
   //remove required attribute from interests
-  var sportsSelect = document.getElementById("sports");
-  sportsSelect.removeAttribute("required");
-
+  // var sportsSelect = document.getElementById("sports");
+  // sportsSelect.removeAttribute("required");
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;

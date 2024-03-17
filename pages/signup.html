@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup page</title>
+    <link rel="stylesheet" href="/styles/signup.css">
+    <script defer src="/js/login.js" type="module"></script>
+</head>
+<body>
+    <div class="container">
+    <img src="/assests/images/sportscrush_logo.png" alt="">
+    <p>Create an account</p>
+    <div class="field-wrap">
+        <label for="email" class="form-label">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          class="form-control"
+          placeholder="username"
+          required
+        />
+    </div>
+    <div class="field-wrap">
+   
+    <label for="email" class="form-label">Email</label>
+    <input
+      type="text"
+      id="email"
+      name="email"
+      class="form-control"
+      placeholder="abc@gmail.com"
+      required
+    />
+    </div>
+    <div class="field-wrap">
+
+    <label for="password" class="form-label">Password</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      class="form-control"
+      placeholder="enter password"
+      required
+    />
+    </div>
+    <div class="field-wrap">
+        <label for="sports">Choose your interest:</label>
+        <select name="sports" id="sports" required>
+          <option value="Cricket">Cricket</option>
+          <option value="Badminton">Badminton</option>
+          <option value="Hockey">Hockey</option>
+          <option value="Ballpool">Ballpool</option>
+        </select>
+    </div>
+    <button id="signUp">Signup</button>
+    <p>have am account? <a href="login.html">Login</a></p>
+
+</div>
+    
+</body>
+</html>

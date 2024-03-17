@@ -10,6 +10,7 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="/styles/index.css" />
 
     <!-- BOOTSTRAP CSS -->
     <link
@@ -28,12 +29,15 @@
     <link rel="stylesheet" href="../styles/myclubs.css" />
     <script src="/js/index.js" type="module" defer></script>
     <script src="/js/myclubs_details.js" type="module"></script>
+
+    <script src='https://kit.fontawesome.com/9d4304342b.js' crossorigin='anonymous'></script>
   </head>
   <body>
     <s-header></s-header>
     <h1 class="title" id="titlehead"></h1>
 
     <div class="content_wrapper">
+      <div class="create-new"><a href="create_club.html"><h3>Create New +</h3></a></div>
       <div id="clubs_list"></div>
       <!-- Div to contain dynamically generated club elements -->
     </div>
