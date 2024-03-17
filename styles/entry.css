@@ -1,0 +1,25 @@
+
+
+body{
+background: #2B2B2B;
+}
+p{
+    color: white;
+}
+.logo-wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-flow: column nowrap;   
+}
+.button-wrap{
+    display: flex;
+    flex-flow: column nowrap;
+    gap: .5rem;
+}
+.button-wrap button{
+    background: #7BDD4C;
+    padding: 10px 62px; 
+    border-radius: 25px;
+}

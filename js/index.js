@@ -13,6 +13,16 @@ import {
   updateDoc,
   onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
+let auth = getAuth();
+
 //global
 const firebaseConfig = {
   apiKey: "AIzaSyD2wZz5FE67IV7278ezzTiQfm0tP8Okmus",
@@ -80,10 +90,19 @@ class sHeader extends HTMLElement {
        
       
      </div>
+     <div>
+       <a href="myprofile.html" class="name-wrap">
+         <div class="circle">
+           <div class="letter">K</div>
+         </div>
+         <span>Hi,Kartavya</span>
+       </a>
+     </div>
  </nav>
    <img src="/assests/images/list2.png" alt="Logo" class="logo" id="menu">
 
  </div>
+
 </header>
 <div class="sidebar">
 <div class="sidebar-child">
@@ -101,18 +120,13 @@ My Clubs
  Create Club
   </a>
 </div>
-<div class="sidebar-child">
+<div class="sidebar-child" id="logout">
   <a class="icon-wrap">
  Logout
   </a>
 </div>
-<div class="sidebar-child">
-  <a class="icon-wrap" href="login.html">
- Login
-  </a>
-</div>
-</div>
-`
+
+</div>`
   }
 }
 
@@ -244,4 +258,16 @@ const uid = user?.uid;
   }
 });
 
+// logout -function
+document.getElementById("logout").addEventListener("click", function () {
+  signOut(auth)
+    .then(() => {
+      localStorage.removeItem("user");
+      alert("logout");
+      window.location.href='./enrty.html';
+    })
+    .catch((error) => {
+      alert("logout error:", error);
+    });
+});
 
