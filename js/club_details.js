@@ -68,8 +68,8 @@ function fetchClubDetails() {
                 const listItem = document.createElement("tr");
                 listItem.innerHTML = `
                 <td>${ite.event_name}</td>
-                <td>${ite.date_time}</td>
-                <td>${ite.event_location}</td>
+                <td><i class="fa-solid fa-clock" style="color: #63E6BE;"></i> ${ite.date_time}</td>
+                <td><i class="fa-solid fa-location-dot" style="color: #7bdd4c;"></i> ${ite.event_location}</td>
               `;
                 let schedule_table = document.querySelector(".schedule_table");
                 var headerRow = schedule_table.rows[0];
@@ -79,7 +79,7 @@ function fetchClubDetails() {
             } else {
               // alert('1')
               document.querySelector(".schedule_table").style.display = "none";
-              document.getElementById("users_message").style.display = "block";
+              document.getElementById("users_message").style.display = "flex";
             }
           } else {
             // Events Schedule tab data for admin
@@ -91,14 +91,14 @@ function fetchClubDetails() {
                 listItem.innerHTML = `
                 <td>${ite.event_name}</td>
                 <td>${ite.date_time}</td>
-                <td>${ite.event_location}</td>
+                <td><i class="fa-solid fa-location-dot" style="color: #7bdd4c;"></i>   ${ite.event_location}</td>
               `;
 
                 const eventEditButton = document.createElement("td");
                 const editButton = document.createElement("button");
                 editButton.textContent = "Edit";
                 editButton.classList.add("btn");
-                
+
                 editButton.addEventListener("click", async () => {
                   try {
                     document.getElementById("submit").style.display = "none";
@@ -490,8 +490,8 @@ async function allReq() {
               // Clear previous content before updating
               const adminRequestDiv = document.getElementById("admin-request");
               adminRequestDiv.innerHTML = "";
-// alert('1')
-// console.log(pendingRequests,"CCC")
+              // alert('1')
+              // console.log(pendingRequests,"CCC")
               pendingRequests.forEach(async (pendingUid) => {
                 try {
                   // Construct a reference to the "users" collection and query for the user with the pending UID
@@ -501,7 +501,7 @@ async function allReq() {
                     where("uid", "==", pendingUid)
                   );
                   const querySnapshot = await getDocs(query2);
-console.log(querySnapshot,"QQQQQQ")
+                  console.log(querySnapshot, "QQQQQQ");
                   if (!querySnapshot.empty) {
                     // alert('2')
                     // User document found, get the first document's data
@@ -523,7 +523,7 @@ console.log(querySnapshot,"QQQQQQ")
                     const crossButton = document.createElement("button");
                     crossButton.textContent = "❌";
                     crossButton.classList.add("cross-button"); // Add a CSS class for styling
-// alert('hit')
+                    // alert('hit')
                     // Append elements to adminRequestDiv
                     adminRequestDiv.appendChild(usernameElement);
                     adminRequestDiv.appendChild(tickButton);
@@ -673,7 +673,7 @@ async function checkAdmin() {
 
                     // Display the username in the "Members Content" section
                     const usernameElement = document.createElement("p");
-                    usernameElement.textContent = username;
+                    usernameElement.textContent = `<div><i class="fa-solid fa-user" style="color: #63E6BE;"></i></div>${username}`;
                     membersDiv.appendChild(usernameElement);
                   }
                 } catch (error) {
@@ -703,7 +703,7 @@ async function checkAdmin() {
           document.getElementById("status_wrapper").style.display = "block";
           document.getElementById("join").style.display = "none";
           document.getElementById("pending").style.display = "none";
-          document.getElementById("joined").style.display = "block";
+          document.getElementById("joined").style.display = "flex";
           return; // Exit function early since user has already joined
         }
 
@@ -719,10 +719,10 @@ async function checkAdmin() {
           // alert('1')
           // document.getElementById("schedule_addbtn").style.display = "block";
 
-          document.getElementById("adminRequestTab").style.display = "block";
+          document.getElementById("adminRequestTab").style.display = "flex";
           document.getElementById("status_wrapper").style.display = "none";
           document.getElementById("admin_mess").style.display = "flex";
-          document.getElementById("schedule_addbtn").style.display = "block";
+          document.getElementById("schedule_addbtn").style.display = "flex";
         } else {
           // alert('2')
           document.getElementById("schedule_addbtn").style.display = "none";
@@ -824,13 +824,13 @@ document.getElementById("submit").addEventListener("click", async () => {
 });
 
 // function to handle Notifications
-const SendNotification = (user_id, clubName,clubImg, message) => {
+const SendNotification = (user_id, clubName, clubImg, message) => {
   const userDocRef = doc(firestore, "users", user_id);
   console.log(userDocRef);
   //  return
   let obj = {
     title: clubName,
-    img:clubImg,
+    img: clubImg,
     message: message,
   };
   console.log(obj);
@@ -992,8 +992,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // modal close
 document.getElementById("close-icon").addEventListener("click", function () {
   myModal.hide();
-
-})
+});
 function initAutocomplete() {
   console.log("Autocomplete initialized");
   autocomplete = new google.maps.places.Autocomplete(

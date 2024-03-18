@@ -91,6 +91,8 @@ class sHeader extends HTMLElement {
       
      </div>
      <div>
+     <a href="login.html" class="name-wrap">lohin</a>
+     <a href="signup.html" class="name-wrap">signup</a>
        <a href="myprofile.html" class="name-wrap">
          <div class="circle">
            <div class="letter">K</div>
@@ -192,6 +194,83 @@ document.addEventListener('DOMContentLoaded', function() {
           down = true;
       }
   });
+
+const clubsList = document.getElementById('recommendations');
+  recommendedClubs(uid)
+    .then((clubs) => {
+      // Display clubs on the page
+      if (clubs.length > 0) {
+        clubs.forEach((club) => {
+          
+          const clubElement = document.createElement('div');
+          clubElement.classList.add('club_card');
+          clubElement.innerHTML = `
+          <div
+            class="card"
+            style="
+              width: 260px;
+              border-radius: 20px;
+              background-color: black;
+              border: 1px solid green;
+            "
+          >
+            <img
+              src="${club?.addressOfImage}
+              alt=""
+              style="
+                border-top-left-radius: 20px;
+                border-top-right-radius: 20px;
+              "
+            />
+            <div
+              class="btn-h3-wrap"
+              style="
+                display: flex;
+                margin: 10px;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <div class="h3-p-wrap">
+                <h3 style="color: green; font-size: 18px"> ${club.clubName}</h3>
+                <p style="font-size: 14px; margin: 0">${club.Sport}</p>
+              </div>
+              <button
+                class="join-btn"
+                style="
+                  height: 30px;
+                  width: 70px;
+                  font-size: 14px;
+                  border-radius: 20px;
+                  border-color: transparent;
+                  background-color: green;
+                  font-weight: 500;
+                  line-height: normal;
+                "
+              >
+                Join
+              </button>
+            </div>
+          </div>
+              `;
+          clubElement.addEventListener('click', function () {
+            window.location.href = `./club_details.html?id=${club.id}`;
+          });
+          clubsList.appendChild(clubElement);
+        });
+      } else {
+        const clubElement = document.createElement('div');
+        clubElement.classList.add('club_card');
+        clubElement.innerHTML = `
+              <h3>No Clubs  to Show</h3>
+          `;
+        clubsList.appendChild(clubElement);
+      }
+
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 });
 
 
@@ -270,4 +349,41 @@ document.getElementById("logout").addEventListener("click", function () {
       alert("logout error:", error);
     });
 });
+
+
+const recommendedClubs = async (uid) => {
+  try {
+    const userCollection = collection(getFirestore(), "users");
+    const userDocRef = doc(userCollection, uid);
+
+    const docSnapshot = await getDoc(userDocRef);
+
+    if (docSnapshot.exists()) {
+      const userData = docSnapshot.data();
+
+      //show clubs with sport equal to current users interested sport 
+      const clubsQuery = query(collection(firestore, 'clubs'), where('Sport', '==', userData.sports_interest));
+
+      const clubsSnapshot = await getDocs(clubsQuery);
+
+      const clubs = [];
+
+      clubsSnapshot.forEach((doc) => {
+        const clubData = doc.data();
+        clubs.push({
+          id: doc.id,
+          ...clubData
+        });
+      });
+      console.log(clubs,"@@@");
+      return clubs;
+    } else {
+      console.log("User document does not exist");
+      return [];
+    }
+  } catch (error) {
+    console.error("Error fetching recommended clubs:", error);
+    return [];
+  }
+}
 

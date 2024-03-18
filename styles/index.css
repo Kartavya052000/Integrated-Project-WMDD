@@ -1,7 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200&display=swap");
 
-
-
 body {
   margin: 0;
   padding: 0;
@@ -67,7 +65,7 @@ input[type="search"]::placeholder {
   color: #c2c2c2;
 }
 
-.category::after {
+/* .category::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -75,7 +73,7 @@ input[type="search"]::placeholder {
   right: 0;
   height: 1px;
   background-color: #c2c2c2;
-}
+} */
 
 .category-section {
   padding: 0 0 1rem 0;
@@ -123,12 +121,13 @@ input[type="search"]::placeholder {
   font-size: 24px;
 }
 
-.recommendation-section{
+.recommendation-section {
   padding: 0 0 1rem 0;
   margin: 1rem;
 }
 
-.gm-style-iw, .gm-style-iw-c{
+.gm-style-iw,
+.gm-style-iw-c {
   background-color: green;
   padding: 0;
 }
@@ -311,7 +310,7 @@ header {
   justify-content: space-between;
   padding-top: 14px;
 }
-.letter{
+.letter {
   color: black;
   font-weight: bold;
 }
@@ -374,7 +373,6 @@ header {
   .btn-h3-wrap {
     grid-row: 3/4;
   }
- 
 }
 
 /* css for notifications */
@@ -386,30 +384,30 @@ body {
   color: #fff;
   font-family: "Manrope", sans-serif;
 }
-a{
+a {
   text-decoration: none;
 }
-.name-wrap{
+.name-wrap {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: .5rem;
-  background-color:#7BDD4C ;
-    border-radius: 50px;
-    font-size: 15px;
-    padding: 5px 10px;
-    color: black;
+  gap: 0.5rem;
+  background-color: #7bdd4c;
+  border-radius: 50px;
+  font-size: 15px;
+  padding: 5px 10px;
+  color: black;
 }
-.circle{
+.circle {
   align-items: center;
-    background-color: #D9D9D9;
-    border-radius: 50%;
-    color: #fff;
-    display: flex;
-    font-size: 20px;
-    height: 40px;
-    justify-content: center;
-    width: 40px;
+  background-color: #d9d9d9;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  font-size: 20px;
+  height: 40px;
+  justify-content: center;
+  width: 40px;
 }
 nav {
   display: flex;
@@ -455,10 +453,10 @@ nav {
   top: 63px;
   right: -94px;
   border-radius: 5px 0px 5px 5px;
-  background: #D9D9D9;
+  background: #d9d9d9;
   color: black;
 
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .notifications h2 {
   font-size: 14px;
