@@ -68,8 +68,8 @@ function fetchClubDetails() {
                 const listItem = document.createElement("tr");
                 listItem.innerHTML = `
                 <td>${ite.event_name}</td>
-                <td>${ite.date_time}</td>
-                <td>${ite.event_location}</td>
+                <td><i class="fa-solid fa-clock" style="color: #63E6BE;"></i> ${ite.date_time}</td>
+                <td><i class="fa-solid fa-location-dot" style="color: #7bdd4c;"></i> ${ite.event_location}</td>
               `;
                 let schedule_table = document.querySelector(".schedule_table");
                 var headerRow = schedule_table.rows[0];
@@ -91,7 +91,7 @@ function fetchClubDetails() {
                 listItem.innerHTML = `
                 <td>${ite.event_name}</td>
                 <td>${ite.date_time}</td>
-                <td>${ite.event_location}</td>
+                <td><i class="fa-solid fa-location-dot" style="color: #7bdd4c;"></i>   ${ite.event_location}</td>
               `;
 
                 const eventEditButton = document.createElement("td");
@@ -673,7 +673,7 @@ async function checkAdmin() {
 
                     // Display the username in the "Members Content" section
                     const usernameElement = document.createElement("p");
-                    usernameElement.textContent = username;
+                    usernameElement.textContent = `<div><i class="fa-solid fa-user" style="color: #63E6BE;"></i></div>${username}`;
                     membersDiv.appendChild(usernameElement);
                   }
                 } catch (error) {
@@ -824,13 +824,13 @@ document.getElementById("submit").addEventListener("click", async () => {
 });
 
 // function to handle Notifications
-const SendNotification = (user_id, clubName,clubImg, message) => {
+const SendNotification = (user_id, clubName, clubImg, message) => {
   const userDocRef = doc(firestore, "users", user_id);
   console.log(userDocRef);
   //  return
   let obj = {
     title: clubName,
-    img:clubImg,
+    img: clubImg,
     message: message,
   };
   console.log(obj);
