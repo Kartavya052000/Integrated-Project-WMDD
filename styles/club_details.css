@@ -208,6 +208,11 @@ table tbody td {
   justify-content: center;
   font-size: 1.5rem;
   align-items: center;
+  padding: 2rem;
+}
+
+#members p {
+  margin-bottom: 0;
 }
 @media only screen and (max-width: 900px) {
   .club-details img {
