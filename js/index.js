@@ -264,7 +264,7 @@ document.getElementById("logout").addEventListener("click", function () {
     .then(() => {
       localStorage.removeItem("user");
       alert("logout");
-      window.location.href='./enrty.html';
+      window.location.href='./entry.html';
     })
     .catch((error) => {
       alert("logout error:", error);
