@@ -73,7 +73,7 @@ function fetchClubDetails() {
               `;
                 let schedule_table = document.querySelector(".schedule_table");
                 var headerRow = schedule_table.rows[0];
-                headerRow.deleteCell(3);
+                // headerRow.deleteCell(3);
                 eventTableBody.appendChild(listItem);
               });
             } else {
