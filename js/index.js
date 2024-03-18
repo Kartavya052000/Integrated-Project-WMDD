@@ -91,8 +91,7 @@ class sHeader extends HTMLElement {
       
      </div>
      <div>
-     <a href="login.html" class="name-wrap">lohin</a>
-     <a href="signup.html" class="name-wrap">signup</a>
+   
        <a href="myprofile.html" class="name-wrap">
          <div class="circle">
            <div class="letter">K</div>
