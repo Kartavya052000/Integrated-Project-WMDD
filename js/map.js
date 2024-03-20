@@ -473,10 +473,10 @@ function addMarker(category, position, title, map) {
   var marker = new google.maps.Marker({
     position: position,
     map: map,
-    // icon: {
-    //   url: icon,
-    //   scaledSize: size
-    // },
+    icon: {
+      url: "../assests/images/icons/commonMapIcon.png",
+      // scaledSize: size
+    },
     title: title
   });
   return marker;
