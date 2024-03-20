@@ -214,7 +214,7 @@ const clubsList = document.getElementById('recommendations');
             "
           >
             <img
-              src="${club?.addressOfImage}
+            src="${club.addressOfImage}"
               alt=""
               style="
                 border-top-left-radius: 20px;
@@ -359,22 +359,34 @@ const recommendedClubs = async (uid) => {
 
     if (docSnapshot.exists()) {
       const userData = docSnapshot.data();
-
+      console.log("User's sports interest:", userData.sports_interest);
       //show clubs with sport equal to current users interested sport 
-      const clubsQuery = query(collection(firestore, 'clubs'), where('Sport', '==', userData.sports_interest));
-
+      const clubsQuery = query(collection(firestore, 'clubs'), where('sportToken', '==', userData.sports_interest));
+      console.log("Clubs query:", clubsQuery);
       const clubsSnapshot = await getDocs(clubsQuery);
+      console.log("Clubs snapshot documents:", clubsSnapshot.docs);
 
+      const clubJson=JSON.stringify(clubsSnapshot);
       const clubs = [];
+      // console.log(clubJson)
+      // clubsSnapshot.forEach((doc) => {
+      //   const clubData = doc.data();
+      //   const clubJson = JSON.stringify(clubData);
+      //   clubs.push(JSON.parse(clubJson)); // Optional: If you need to work with the JSON objects in JavaScript format instead of strings
+      // });
+      
 
+      console.log("on line number 369")
       clubsSnapshot.forEach((doc) => {
         const clubData = doc.data();
+        console.log(clubData);
         clubs.push({
           id: doc.id,
           ...clubData
         });
       });
-      console.log(clubs,"@@@");
+      console.log("Converted clubs data:", clubs);
+      console.log(clubs,"clubs");
       return clubs;
     } else {
       console.log("User document does not exist");

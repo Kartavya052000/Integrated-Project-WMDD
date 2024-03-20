@@ -495,3 +495,6 @@ nav {
   /* color: #aaa; */
   font-size: 12px;
 }
+#recommendations{
+  display: flex;
+}
