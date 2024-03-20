@@ -1,25 +1,29 @@
-
-
-body{
-background: #2B2B2B;
+body {
+  background: #2b2b2b;
+  font-family: "Raleway", sans-serif;
 }
-p{
-    color: white;
+p {
+  color: white;
 }
-.logo-wrap{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    flex-flow: column nowrap;   
+.logo-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-flow: column nowrap;
 }
-.button-wrap{
-    display: flex;
-    flex-flow: column nowrap;
-    gap: .5rem;
+.button-wrap {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 0.5rem;
 }
-.button-wrap button{
-    background: #7BDD4C;
-    padding: 10px 62px; 
-    border-radius: 25px;
+.button-wrap button {
+  background: #7bdd4c;
+  padding: 10px 62px;
+  border-radius: 25px;
+  border: none;
+}
+.button-wrap button a {
+  text-decoration: none;
+  color: black;
 }
