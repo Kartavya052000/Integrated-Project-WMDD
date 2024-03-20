@@ -59,9 +59,7 @@ function fetchClubDetails() {
             // or show no schedule yet if nothing is available
             if (clubData.events) {
               const eventTableBody = document.getElementById("eventTableBody");
-              // document.getElementsByClassName("schedule_table").style.display =
-              //   "block";
-              // alert('1')
+            
 
               eventTableBody.innerHTML = "";
               clubData.events.forEach((ite) => {
@@ -317,146 +315,7 @@ function handleJoin() {
   }
 }
 
-// display request to admin
-// async function allReq() {
-//   if (uid) {
-//     if (clubId) {
-//       const clubDocRef = doc(firestore, "clubs", clubId);
 
-//       try {
-//         // Fetch the club document
-//         const clubDocSnap = await getDoc(clubDocRef);
-
-//         if (clubDocSnap && clubDocSnap.exists()) {
-//           // Get the pending requests array from the club document
-//           const clubData = clubDocSnap.data();
-//           console.log(clubData, "CC");
-//           const pendingRequests = clubData.pending_requests || [];
-//           // const approvedRequests = clubData.approved_requests || [];
-
-//           console.log(pendingRequests.length, "PPP");
-//           if (pendingRequests.length > 0) {
-//             const numReqLink = document.getElementById("num_req");
-//             numReqLink.textContent = `Request for Admin (${pendingRequests.length})`;
-//           }
-//           // Iterate over pending requests and display a message for each user
-//           pendingRequests.forEach(async (pendingUid) => {
-//             try {
-//               // Construct a reference to the "users" collection and query for the user with the pending UID
-//               const usersCollectionRef = collection(firestore, "users");
-
-//               const query2 = query(
-//                 usersCollectionRef,
-//                 where("uid", "==", pendingUid)
-//               );
-
-//               const querySnapshot = await getDocs(query2);
-
-//               if (!querySnapshot.empty) {
-//                 // User document found, get the first document's data
-//                 const userData = querySnapshot.docs[0].data();
-//                 const username = userData.email;
-//                 console.log(`${username} wants to join your club.`);
-//                 // Display the username in HTML
-//                 // Display the username, tick button, and cross button in HTML
-//                 const adminRequestDiv =
-//                   document.getElementById("admin-request");
-
-//                 // Create elements for username, tick button, and cross button
-//                 const usernameElement = document.createElement("p");
-//                 usernameElement.textContent = `${username} wants to join your club.`;
-
-//                 const tickButton = document.createElement("button");
-//                 tickButton.textContent = "✔️";
-//                 tickButton.classList.add("tick-button"); // Add a CSS class for styling
-
-//                 const crossButton = document.createElement("button");
-//                 crossButton.textContent = "❌";
-//                 crossButton.classList.add("cross-button"); // Add a CSS class for styling
-//                 console.log(adminRequestDiv);
-//                 // Append elements to adminRequestDiv
-//                 adminRequestDiv.appendChild(usernameElement);
-//                 adminRequestDiv.appendChild(tickButton);
-//                 adminRequestDiv.appendChild(crossButton);
-
-//                 // Add event listeners for tick and cross buttons if needed
-//                 // Add event listeners for tick and cross buttons
-//                 tickButton.addEventListener("click", async () => {
-//                   try {
-//                     // Update the document in the 'clubs' collection to move UID from pending_requests to approved_requests
-//                     await updateDoc(doc(firestore, "clubs", clubId), {
-//                       pending_requests: arrayRemove(pendingUid),
-//                       approved_requests: arrayUnion(pendingUid),
-//                     });
-//                     // Update the user's document to add the approved club ID to the 'approvedClubs' array
-//                     await updateDoc(doc(firestore, "users", pendingUid), {
-//                       pending_clubs: arrayRemove(clubId),
-//                       approvedClubs: arrayUnion(clubId),
-//                     });
-//                     // alert("Pending request has been accepted.");
-//                     document.getElementById("join").style.display = "none";
-//                     // document.getElementById("joined").style.display = "none";
-//                     document.getElementById("pending").style.display = "block";
-//                     SendNotification(pendingUid,clubData.clubName,"Your request has been Declined")
-//                     console.log(
-//                       `${username} has been approved to join the club.`
-//                     );
-//                   } catch (error) {
-//                     console.error("Error updating club document:", error);
-//                   }
-//                 });
-
-//                 crossButton.addEventListener("click", async () => {
-//                   // Handle cross button click event
-//                   console.log("crossButton is clicked");
-//                   try {
-//                     // Update the document in the 'clubs' collection to move UID from pending_requests to approved_requests
-//                     await updateDoc(doc(firestore, "clubs", clubId), {
-//                       pending_requests: arrayRemove(pendingUid),
-//                       // approved_requests: arrayUnion(pendingUid),
-//                     });
-//                     // Update the user's document to add the approved club ID to the 'approvedClubs' array
-//                     await updateDoc(doc(firestore, "users", pendingUid), {
-//                       pending_clubs: arrayRemove(clubId),
-//                       declined_requests: arrayUnion(clubId),
-//                     });
-//                     console.log("inside try after")
-//                     SendNotification(pendingUid,clubData.clubName,"Your user has been successfully accepted")
-
-//                     // alert("Pending request has been rejected.");
-//                     console.log(
-//                       `${username} has been rejected to join the club.`
-//                     );
-//                   } catch (error) {
-//                     console.error("Error updating club document:", error);
-//                   }
-//                 });
-//               } else {
-//                 console.log(`User with UID ${pendingUid} not found.`);
-//               }
-//             } catch (error) {
-//               console.error("Error fetching user document:", error);
-//             }
-//           });
-//         } else {
-//           console.log("Club document does not exist.");
-//         }
-//       } catch (error) {
-//         if (error.code === "permission-denied") {
-//           console.error("Firestore permission denied error:", error);
-//           // Handle permission-denied error
-//         } else {
-//           console.error("Firestore error:", error);
-//           // Handle other errors
-//         }
-//       }
-//     } else {
-//       console.log("No club ID provided in the URL.");
-//     }
-//   } else {
-//     console.log("No UID found in localStorage.");
-//   }
-// }
 async function allReq() {
   if (uid) {
     if (clubId) {
@@ -517,17 +376,26 @@ async function allReq() {
                     usernameElement.textContent = `${username} wants to join your club.`;
 
                     const tickButton = document.createElement("button");
-                    tickButton.textContent = "✔️";
+                    tickButton.classList.add("btn");
+
+                    tickButton.textContent = "Accept";
                     tickButton.classList.add("tick-button"); // Add a CSS class for styling
 
                     const crossButton = document.createElement("button");
-                    crossButton.textContent = "❌";
+                    crossButton.classList.add("btn");
+
+                    crossButton.textContent = "Decline";
                     crossButton.classList.add("cross-button"); // Add a CSS class for styling
+                    const btnwrap = document.createElement("div");
+                    btnwrap.classList.add("btn-wrap");
+
+                    btnwrap.appendChild(tickButton)
+                    btnwrap.appendChild(crossButton)
+
                     // alert('hit')
                     // Append elements to adminRequestDiv
                     adminRequestDiv.appendChild(usernameElement);
-                    adminRequestDiv.appendChild(tickButton);
-                    adminRequestDiv.appendChild(crossButton);
+                    adminRequestDiv.appendChild(btnwrap);
 
                     // Add event listeners for tick and cross buttons
                     tickButton.addEventListener("click", async () => {
@@ -672,8 +540,9 @@ async function checkAdmin() {
                     const username = userData.email;
 
                     // Display the username in the "Members Content" section
-                    const usernameElement = document.createElement("p");
-                    usernameElement.textContent = ` ${username}`;
+                    const usernameElement = document.createElement("div");
+                    usernameElement.innerHTML = `<div><i class="fa-solid fa-user" style="color: #63E6BE;"></i></div>${username}`;
+                    
                     membersDiv.appendChild(usernameElement);
                   }
                 } catch (error) {
@@ -851,136 +720,7 @@ const SendNotification = (user_id, clubName, clubImg, message) => {
     });
 };
 let prevreq = [];
-//  function to get real-time request
-// const getReq =  async () =>{
-//   if (uid) {
-//     if (clubId) {
-//       let user = JSON.parse(localStorage.getItem("user"));
-//       const uid = user.uid;
-//       const clubDocRef = doc(firestore, "clubs", clubId);
-//       let previousNotifications = []; // Use let instead of const to allow reassignment
 
-//        const unsubscribe = onSnapshot(clubDocRef, (doc) => {
-//         if (doc.exists()) {
-//           const clubData = doc.data();
-//           const currentrequests = clubData.pending_requests || [];
-
-//           // Compare previous and current notifications arrays to detect added notifications
-//           const addrequests = currentrequests.filter(req => !prevreq.includes(req));
-//           // Add new notifications to previousNotifications array
-//           prevreq=[] // empty previus array here
-//           prevreq.push(...addrequests);
-//           console.log("All req:", prevreq);
-//           prevreq.forEach(async (pendingUid) => {
-//             try {
-//               // Construct a reference to the "users" collection and query for the user with the pending UID
-//               const usersCollectionRef = collection(firestore, "users");
-
-//               const query2 = query(
-//                 usersCollectionRef,
-//                 where("uid", "==", pendingUid)
-//               );
-
-//               const querySnapshot = await getDocs(query2);
-
-//               if (!querySnapshot.empty) {
-//                 // User document found, get the first document's data
-//                 const userData = querySnapshot.docs[0].data();
-//                 const username = userData.email;
-//                 console.log(`${username} wants to join your club.`);
-//                 // Display the username in HTML
-//                 // Display the username, tick button, and cross button in HTML
-//                 const adminRequestDiv =
-//                   document.getElementById("admin-request");
-
-//                 // Create elements for username, tick button, and cross button
-//                 const usernameElement = document.createElement("p");
-//                 usernameElement.textContent = `${username} wants to join your club.`;
-
-//                 const tickButton = document.createElement("button");
-//                 tickButton.textContent = "✔️";
-//                 tickButton.classList.add("tick-button"); // Add a CSS class for styling
-
-//                 const crossButton = document.createElement("button");
-//                 crossButton.textContent = "❌";
-//                 crossButton.classList.add("cross-button"); // Add a CSS class for styling
-//                 console.log(adminRequestDiv);
-//                 // Append elements to adminRequestDiv
-//                 adminRequestDiv.appendChild(usernameElement);
-//                 adminRequestDiv.appendChild(tickButton);
-//                 adminRequestDiv.appendChild(crossButton);
-
-//                 // Add event listeners for tick and cross buttons if needed
-//                 // Add event listeners for tick and cross buttons
-//                 tickButton.addEventListener("click", async () => {
-//                   try {
-//                     // Update the document in the 'clubs' collection to move UID from pending_requests to approved_requests
-//                     await updateDoc(doc(firestore, "clubs", clubId), {
-//                       pending_requests: arrayRemove(pendingUid),
-//                       approved_requests: arrayUnion(pendingUid),
-//                     });
-//                     // Update the user's document to add the approved club ID to the 'approvedClubs' array
-//                     await updateDoc(doc(firestore, "users", pendingUid), {
-//                       pending_clubs: arrayRemove(clubId),
-//                       approvedClubs: arrayUnion(clubId),
-//                     });
-//                     // alert("Pending request has been accepted.");
-//                     document.getElementById("join").style.display = "none";
-//                     // document.getElementById("joined").style.display = "none";
-//                     document.getElementById("pending").style.display = "block";
-//                     SendNotification(pendingUid,clubData.clubName,"Your request has been Declined")
-//                     console.log(
-//                       `${username} has been approved to join the club.`
-//                     );
-//                   } catch (error) {
-//                     console.error("Error updating club document:", error);
-//                   }
-//                 });
-
-//                 crossButton.addEventListener("click", async () => {
-//                   // Handle cross button click event
-//                   console.log("crossButton is clicked");
-//                   try {
-//                     // Update the document in the 'clubs' collection to move UID from pending_requests to approved_requests
-//                     await updateDoc(doc(firestore, "clubs", clubId), {
-//                       pending_requests: arrayRemove(pendingUid),
-//                       // approved_requests: arrayUnion(pendingUid),
-//                     });
-//                     // Update the user's document to add the approved club ID to the 'approvedClubs' array
-//                     await updateDoc(doc(firestore, "users", pendingUid), {
-//                       pending_clubs: arrayRemove(clubId),
-//                       declined_requests: arrayUnion(clubId),
-//                     });
-//                     console.log("inside try after")
-//                     SendNotification(pendingUid,clubData.clubName,"Your user has been successfully accepted")
-
-//                     // alert("Pending request has been rejected.");
-//                     console.log(
-//                       `${username} has been rejected to join the club.`
-//                     );
-//                   } catch (error) {
-//                     console.error("Error updating club document:", error);
-//                   }
-//                 });
-//               } else {
-//                 console.log(`User with UID ${pendingUid} not found.`);
-//               }
-//             } catch (error) {
-//               console.error("Error fetching user document:", error);
-//             }
-//           });
-//         } else {
-//           console.log("User document not found.");
-//         }
-//       });
-//     } else {
-//       console.log("No club ID provided in the URL.");
-//     }
-//   } else {
-//     console.log("No UID found in localStorage.");
-//   }
-
-// }
 //implementing autocomplete
 var autocomplete;
 let clubLocation;

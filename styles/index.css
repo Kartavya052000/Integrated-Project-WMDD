@@ -15,8 +15,8 @@ img {
 .search {
   margin: 1rem;
   border-radius: 5px;
-  height: 200px;
-  padding: 1rem 0 1rem 0;
+  /* height: 200px; */
+  padding: 2rem 0 2rem 0;
 }
 
 h2 {
@@ -49,7 +49,7 @@ input[type="search"]::placeholder {
 .input-icon {
   position: absolute;
   left: 12px;
-  top: 50%;
+  top: 85%;
   transform: translateY(-149%);
   color: #7bdd4c;
   pointer-events: none;
@@ -64,6 +64,50 @@ input[type="search"]::placeholder {
   text-align: left;
   position: relative;
   color: #c2c2c2;
+}
+
+/* .category */
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  padding: 0;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .3s ease;
+  /* background-color: green; change here */
+}
+
+.overlay a:hover {
+color:white
+}
+
+.container:hover img {
+  opacity: 0.3;
+}
+
+.container:hover .overlay {
+  opacity: 1;
+}
+
+.container .iconCategory {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
 }
 
 /* .category::after {
@@ -88,6 +132,14 @@ input[type="search"]::placeholder {
 
 .category-image-container img {
   border-radius: 1rem;
+#category1 ,.overlay1{
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+#category4, .overlay4 {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 .map-section {
@@ -126,6 +178,45 @@ input[type="search"]::placeholder {
 .gm-style-iw-c {
   background-color: green;
   padding: 0;
+}
+
+.search-div {
+  position: relative;
+}
+
+/* search bar home page css */
+.clear-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #7bdd4c;
+}
+
+.dropdown-menu.show {
+  display: block;
+  width: 100%;
+  background-color: #2f2f2f;
+  /* border: 1px solid #7bdd4c; */
+  border-radius: 20px;
+}
+
+.dropdown-menu.show li{
+  padding-left: 10px;
+  padding-right: 10px;
+  color: white;
+}
+.dropdown-item{
+  color: white;
+}
+
+.dropdown-item:focus, .dropdown-item:hover{
+  /* font-weight: bold; */
+  background-color: #2f2f2f;
+  color: white;
 }
 
 /* * {
@@ -414,7 +505,7 @@ nav {
   position: relative;
   /* border-bottom: 1px solid #495057; */
 }
-.icon {
+nav .icon {
   cursor: pointer;
   margin-right: 50px;
   line-height: 60px;

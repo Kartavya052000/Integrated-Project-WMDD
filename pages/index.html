@@ -73,7 +73,9 @@
                   aria-label="Search"
                   autocomplete="off"
                 />
-                <button id="cutButton" type="button">X</button>
+                <button class="clear-button" id="cutButton" type="button">
+                  X
+                </button>
               </div>
               <ul
                 id="suggestions"
@@ -88,24 +90,56 @@
       <section class="category-section">
         <h3 class="category">Category</h3>
         <div class="category-image-container">
-          <img
-            alt="category1"
-            id="category1"
-            src="https://media.istockphoto.com/id/1222830050/photo/this-match-is-ours.jpg?s=612x612&w=is&k=20&c=gLFeMdNljyefIDXMndeTSdvJ70UzFMsMjz43ZBpGD-U="
-          />
-          <img
+          <div class="container">
+            <img
+              alt="category1"
+              id="category1"
+              src="../assests/images/category/category1.webp"
+            />
+            <div class="overlay overlay1">
+              <a href="#" class="iconCategory" title="User Profile">
+                <!-- <i class="fa fa-user"></i> -->
+                <p>Swimming</p>
+              </a>
+            </div>
+          </div>
+          <div class="container">
+            <img
             alt="category2"
-            src="https://media.istockphoto.com/id/1222830050/photo/this-match-is-ours.jpg?s=612x612&w=is&k=20&c=gLFeMdNljyefIDXMndeTSdvJ70UzFMsMjz43ZBpGD-U="
+            src="../assests/images/category/photo-1484482340112-e1e2682b4856.webp"
           />
-          <img
+            <div class="overlay">
+              <a href="#" class="iconCategory" title="User Profile">
+                <!-- <i class="fa fa-user"></i> -->
+                <p>Football</p>
+              </a>
+            </div>
+          </div>
+          <div class="container">
+            <img
             alt="category3"
-            src="https://media.istockphoto.com/id/1222830050/photo/this-match-is-ours.jpg?s=612x612&w=is&k=20&c=gLFeMdNljyefIDXMndeTSdvJ70UzFMsMjz43ZBpGD-U="
+            src="../assests/images/category/category3.webp"
           />
-          <img
+            <div class="overlay">
+              <a href="#" class="iconCategory" title="User Profile">
+                <!-- <i class="fa fa-user"></i> -->
+                <p>Cricket</p>
+              </a>
+            </div>
+          </div>
+          <div class="container">
+            <img
             alt="category4"
             id="category4"
-            src="https://media.istockphoto.com/id/1222830050/photo/this-match-is-ours.jpg?s=612x612&w=is&k=20&c=gLFeMdNljyefIDXMndeTSdvJ70UzFMsMjz43ZBpGD-U="
+            src="../assests/images/category/category4.webp"
           />
+            <div class="overlay overlay4">
+              <a href="#" class="iconCategory" title="User Profile">
+                <!-- <i class="fa fa-user"></i> -->
+                <p>Baseball</p>
+              </a>
+            </div>
+          </div>
         </div>
       </section>
       <section class="map-section">
@@ -117,53 +151,7 @@
       <section class="recommendation-section">
         <h3 class="category">Recommendations</h3>
         <div class="recommendations" id="recommendations">
-          <!-- <div
-            class="card"
-            style="
-              width: 260px;
-              border-radius: 20px;
-              background-color: black;
-              border: 1px solid green;
-            "
-          >
-            <img
-              src="https://picsum.photos/300/181"
-              alt=""
-              style="
-                border-top-left-radius: 20px;
-                border-top-right-radius: 20px;
-              "
-            />
-            <div
-              class="btn-h3-wrap"
-              style="
-                display: flex;
-                margin: 10px;
-                justify-content: space-between;
-                align-items: center;
-              "
-            >
-              <div class="h3-p-wrap">
-                <h3 style="color: green; font-size: 18px">RCB</h3>
-                <p style="font-size: 14px; margin: 0">Cricket</p>
-              </div>
-              <button
-                class="join-btn"
-                style="
-                  height: 30px;
-                  width: 70px;
-                  font-size: 14px;
-                  border-radius: 20px;
-                  border-color: transparent;
-                  background-color: green;
-                  font-weight: 500;
-                  line-height: normal;
-                "
-              >
-                Join
-              </button>
-            </div>
-          </div> -->
+          
         </div>
       </section>
     </div>
