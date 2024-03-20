@@ -299,7 +299,7 @@ window.initMap = async function () {
         // Add other markers here
         if (val) {
           val.forEach((location) => {
-            console.log(location);
+            // console.log(location);
 
             const marker = addMarker(location.Sport, {
               lat: location.clubDetails.lat,
