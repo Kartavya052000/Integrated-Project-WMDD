@@ -1,14 +1,20 @@
 body {
-  background-color: rgb(43, 43, 43);
+  background-color: rgb(0, 0, 0);
   font-family: "Raleway", sans-serif;
   /* background-image: radial-gradient(#9ac686 1%, #2b2b2b 90%); */
   background-repeat: no-repeat;
-  background-image: linear-gradient(
+  /* background-image: linear-gradient(
     to bottom right,
     rgba(123, 221, 76, 0.2),
     rgba(43, 43, 43, 0.4)
-  );
+  ); */
   height: 100vh;
+}
+
+img{
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 h1 {
@@ -36,7 +42,7 @@ h5 {
 /* Style the container for search results */
 #searchResults {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   /* justify-content: center;
   align-items: center; */
   padding: 5%;
@@ -45,10 +51,34 @@ h5 {
 
 /* Style individual result items */
 #searchResults div {
-  padding: 5px;
+  /* padding: 5px; */
 
-  border-radius: 10px;
+  border-radius: 2rem;
 }
 .card {
   border: #7bdd4c solid 1px;
+  border:2px solid green;
+  display: grid;
+  grid-template-columns: 10% 1fr 10%;
+  grid-template-rows: 1fr auto;
+  border-radius: 2rem;
+}
+.card img{
+  grid-column: 1/-1;
+  border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+}
+.card .card-body{
+  grid-column: 2/3;
+}
+
+@media screen and (min-width:760px) {
+  #searchResults {
+        grid-template-columns:repeat(2, 1fr);
+    }
+}
+@media screen and (min-width:1100px) {
+  #searchResults {
+    grid-template-columns:repeat(3, 1fr);
+}
 }

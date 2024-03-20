@@ -55,6 +55,7 @@ const displaySearchResults = (res) => {
     res.forEach((club) => {
       // Construct HTML for displaying each search result as a card
       htmlcontent += `<div class="card">
+                             <img src="${club.addressOfImage}">
                             <div class="card-body">
                               <h5 class="card-title">Club Name: ${club.clubName}</h5>
                               <p class="card-text">Category: ${club.Sport}</p>
