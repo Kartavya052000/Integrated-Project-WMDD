@@ -261,7 +261,7 @@ const clubsList = document.getElementById('recommendations');
         const clubElement = document.createElement('div');
         clubElement.classList.add('club_card');
         clubElement.innerHTML = `
-              <h3>No Clubs  to Show</h3>
+              <p id="noClubsMessage">No Clubs  to Show</p>
           `;
         clubsList.appendChild(clubElement);
       }
