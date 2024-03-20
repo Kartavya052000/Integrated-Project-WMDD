@@ -475,7 +475,7 @@ function addMarker(category, position, title, map) {
     map: map,
     icon: {
       url: "../assests/images/icons/commonMapIcon.png",
-      // scaledSize: size
+      scaledSize: size
     },
     title: title
   });
