@@ -75,6 +75,7 @@ input[type="search"]::placeholder {
 
 .overlay {
   position: absolute;
+  border-radius: 1rem;
   top: 0;
   bottom: 0;
   left: 0;
@@ -82,7 +83,7 @@ input[type="search"]::placeholder {
   height: 100%;
   width: 100%;
   opacity: 0;
-  transition: .3s ease;
+  transition: 0.3s ease;
   background-color: green; /* change here */
 }
 
@@ -101,33 +102,17 @@ input[type="search"]::placeholder {
   text-align: center;
 }
 
-.category::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background-color: #c2c2c2;
-}
-
 .category-section {
   padding: 0 0 1rem 0;
   margin: 1rem;
 }
 .category-image-container {
   display: grid;
+  gap: 1rem;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
-
-#category1 ,.overlay1{
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
-}
-
-#category4, .overlay4 {
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+.category-image-container img {
+  border-radius: 1rem;
 }
 
 .map-section {
@@ -397,11 +382,26 @@ header {
   right: 0;
   width: 100%;
   transition: all 0.5s ease 0s;
+  background-color: #2b2b2b;
+  border: 1px solid #7bdd4c;
+  cursor: pointer;
+  border-radius: 1rem;
+  margin-top: 1rem;
 }
-
-@media screen and (min-width: 768px) {
-  .show {
+.show a {
+  color: white;
+  text-transform: capitalize;
+}
+@media screen and (max-width: 768px) {
+  .category::after {
+    content: "";
+    position: absolute;
+    top: 50%;
     width: 40%;
+    left: 60%;
+    right: 0;
+    height: 1px;
+    background-color: #c2c2c2;
   }
 }
 @media screen and (min-width: 1000px) {
@@ -546,6 +546,6 @@ nav .icon {
   /* color: #aaa; */
   font-size: 12px;
 }
-#recommendations{
+#recommendations {
   display: flex;
 }
