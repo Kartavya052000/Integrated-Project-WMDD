@@ -154,6 +154,10 @@ h1 {
   display: flex;
   gap: 1rem;
 }
+.btn-wrap{
+  display: flex;
+  gap: 1rem;
+}
 .schedule_container {
   text-transform: capitalize;
   border-top-right-radius: 0;
@@ -221,7 +225,8 @@ table tbody td {
   margin: 0 6rem;
 
   display: flex;
-
+flex-flow: column nowrap;
+gap: 1rem;
   justify-content: space-around;
   font-size: 1.5rem;
   align-items: center;

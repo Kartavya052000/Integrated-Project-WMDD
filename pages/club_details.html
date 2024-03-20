@@ -43,7 +43,7 @@
     ></script>
 
     <link rel="stylesheet" href="../styles/club_details.css" />
-    <script type="module" defer src="../js/index.js"></script>
+    <script type="module" defer src="/js/index.js"></script>
     <script type="module" defer src="../js/club_details.js"></script>
 
     <style>
@@ -64,30 +64,31 @@
         color: green;
       }
     </style>
+       <script>
+        function showTab(tabId) {
+          // Hide all tab contents
+          document.querySelectorAll(".tab-content").forEach((tab) => {
+            tab.style.display = "none";
+          });
+  
+          // Show the selected tab content
+          document.getElementById(tabId).style.display = "flex";
+  
+          // Remove 'active' class from all nav links
+          document.querySelectorAll(".nav-link").forEach((link) => {
+            link.classList.remove("active");
+          });
+  
+          // Add 'active' class to the clicked nav link
+          const clickedLink = document.querySelector(`a[href="#${tabId}"]`);
+          clickedLink.classList.add("active");
+        }
+      </script>
   </head>
 
   <body class="body">
     <!-- this is script is only for tab shifting -->
-    <script>
-      function showTab(tabId) {
-        // Hide all tab contents
-        document.querySelectorAll(".tab-content").forEach((tab) => {
-          tab.style.display = "none";
-        });
-
-        // Show the selected tab content
-        document.getElementById(tabId).style.display = "flex";
-
-        // Remove 'active' class from all nav links
-        document.querySelectorAll(".nav-link").forEach((link) => {
-          link.classList.remove("active");
-        });
-
-        // Add 'active' class to the clicked nav link
-        const clickedLink = document.querySelector(`a[href="#${tabId}"]`);
-        clickedLink.classList.add("active");
-      }
-    </script>
+ 
 
     <s-header></s-header>
 

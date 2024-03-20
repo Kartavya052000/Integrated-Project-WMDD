@@ -387,7 +387,7 @@ async function allReq() {
                     crossButton.textContent = "Decline";
                     crossButton.classList.add("cross-button"); // Add a CSS class for styling
                     const btnwrap = document.createElement("div");
-                    crossButton.classList.add("btn-wrap");
+                    btnwrap.classList.add("btn-wrap");
 
                     btnwrap.appendChild(tickButton)
                     btnwrap.appendChild(crossButton)
