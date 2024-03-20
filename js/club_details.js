@@ -673,7 +673,7 @@ async function checkAdmin() {
 
                     // Display the username in the "Members Content" section
                     const usernameElement = document.createElement("p");
-                    usernameElement.textContent = `<div><i class="fa-solid fa-user" style="color: #63E6BE;"></i></div>${username}`;
+                    usernameElement.textContent = ` ${username}`;
                     membersDiv.appendChild(usernameElement);
                   }
                 } catch (error) {

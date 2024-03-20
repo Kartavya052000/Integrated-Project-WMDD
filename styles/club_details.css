@@ -198,6 +198,14 @@ tbody tr:last-child {
   border-bottom: none;
   text-align: left;
 }
+#members {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+  font-size: 0.75rem;
+  margin: 0rem 6rem 2rem 6rem;
+}
 
 table tbody td {
   padding: 2rem 2rem;
@@ -206,7 +214,6 @@ table tbody td {
 
 #members {
   border: #7bdd4c 1px solid;
-  border-radius: 2rem;
 
   display: flex;
 
@@ -326,6 +333,12 @@ table tbody td {
   }
   .club-data {
     text-align: left;
+  }
+  #members {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    font-size: 0.75rem;
+    margin: 0rem 1rem 2rem 1rem;
   }
 
   .club-div {
