@@ -76,7 +76,7 @@ input[type="search"]::placeholder {
 
 .overlay {
   position: absolute;
-  border-radius: 1rem;
+
   top: 0;
   bottom: 0;
   left: 0;
@@ -128,14 +128,11 @@ input[type="search"]::placeholder {
   margin: 1rem;
 }
 .category-image-container {
-  /* gap: 1rem; */
   display: grid;
-  gap: 1rem;
+
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
-/* .category-image-container img {
-  border-radius: 1rem;} */
 #category1,
 .overlay1 {
   border-top-left-radius: 20px;
@@ -165,6 +162,7 @@ input[type="search"]::placeholder {
   position: absolute;
   top: 0;
   left: 0;
+
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
