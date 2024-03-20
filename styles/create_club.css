@@ -43,7 +43,10 @@ div .form-control-1:focus {
   background-color: #2b2b2b;
   color: white;
 }
-
+.form-div{
+  margin: auto;
+    width: 700px;
+}
 .row-1 {
   display: flex;
   justify-content: center;
