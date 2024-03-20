@@ -85,7 +85,6 @@ input[type="search"]::placeholder {
   width: 100%;
   opacity: 0;
   transition: 0.3s ease;
-  background-color: green; /* change here */
   transition: 0.3s ease;
   /* background-color: green; change here */
 }
@@ -129,7 +128,6 @@ input[type="search"]::placeholder {
 }
 .category-image-container {
   display: grid;
-
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
