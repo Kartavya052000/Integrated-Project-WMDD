@@ -73,7 +73,9 @@
                   aria-label="Search"
                   autocomplete="off"
                 />
-                <button id="cutButton" type="button">X</button>
+                <button class="clear-button" id="cutButton" type="button">
+                  X
+                </button>
               </div>
               <ul
                 id="suggestions"
@@ -88,24 +90,59 @@
       <section class="category-section">
         <h3 class="category">Category</h3>
         <div class="category-image-container">
-          <img
-            alt="category1"
-            id="category1"
-            src="https://media.istockphoto.com/id/1222830050/photo/this-match-is-ours.jpg?s=612x612&w=is&k=20&c=gLFeMdNljyefIDXMndeTSdvJ70UzFMsMjz43ZBpGD-U="
-          />
-          <img
+          <div class="container">
+            <img
+              alt="category1"
+              id="category1"
+              src="https://media.istockphoto.com/id/1222830050/photo/this-match-is-ours.jpg?s=612x612&w=is&k=20&c=gLFeMdNljyefIDXMndeTSdvJ70UzFMsMjz43ZBpGD-U="
+            />
+            <div class="overlay overlay1">
+              <a href="#" class="icon" title="User Profile">
+                <i class="fa fa-user"></i>
+                <p>Cricket</p>
+              </a>
+            </div>
+          </div>
+          <div class="container">
+            <img
             alt="category2"
             src="https://media.istockphoto.com/id/1222830050/photo/this-match-is-ours.jpg?s=612x612&w=is&k=20&c=gLFeMdNljyefIDXMndeTSdvJ70UzFMsMjz43ZBpGD-U="
           />
-          <img
+            <div class="overlay">
+              <a href="#" class="icon" title="User Profile">
+                <i class="fa fa-user"></i>
+                <p>Baseball</p>
+              </a>
+            </div>
+          </div>
+          <div class="container">
+            <img
             alt="category3"
             src="https://media.istockphoto.com/id/1222830050/photo/this-match-is-ours.jpg?s=612x612&w=is&k=20&c=gLFeMdNljyefIDXMndeTSdvJ70UzFMsMjz43ZBpGD-U="
           />
-          <img
+            <div class="overlay">
+              <a href="#" class="icon" title="User Profile">
+                <i class="fa fa-user"></i>
+                <p>Badminton</p>
+              </a>
+            </div>
+          </div>
+          <div class="container">
+            <img
             alt="category4"
             id="category4"
             src="https://media.istockphoto.com/id/1222830050/photo/this-match-is-ours.jpg?s=612x612&w=is&k=20&c=gLFeMdNljyefIDXMndeTSdvJ70UzFMsMjz43ZBpGD-U="
           />
+            <div class="overlay overlay4">
+              <a href="#" class="icon" title="User Profile">
+                <i class="fa fa-user"></i>
+                <p>Tennis</p>
+              </a>
+            </div>
+          </div>
+          
+          
+          
         </div>
       </section>
       <section class="map-section">
@@ -167,6 +204,5 @@
         </div>
       </section>
     </div>
-    
   </body>
 </html>
