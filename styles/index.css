@@ -15,8 +15,8 @@ img {
 .search {
   margin: 1rem;
   border-radius: 5px;
-  height: 200px;
-  padding: 1rem 0 1rem 0;
+  /* height: 200px; */
+  padding: 2rem 0 2rem 0;
 }
 
 h2 {
@@ -48,7 +48,7 @@ input[type="search"]::placeholder {
 .input-icon {
   position: absolute;
   left: 12px;
-  top: 50%;
+  top: 85%;
   transform: translateY(-149%);
   color: #7bdd4c;
   pointer-events: none;
@@ -65,7 +65,43 @@ input[type="search"]::placeholder {
   color: #c2c2c2;
 }
 
-/* .category::after {
+/* .category */
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  padding: 0;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .3s ease;
+  background-color: green; /* change here */
+}
+
+.container:hover .overlay {
+  opacity: 1;
+}
+
+.container .icon {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.category::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -73,7 +109,7 @@ input[type="search"]::placeholder {
   right: 0;
   height: 1px;
   background-color: #c2c2c2;
-} */
+}
 
 .category-section {
   padding: 0 0 1rem 0;
@@ -84,12 +120,12 @@ input[type="search"]::placeholder {
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
-#category1 {
+#category1 ,.overlay1{
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
 }
 
-#category4 {
+#category4, .overlay4 {
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 }
@@ -130,6 +166,21 @@ input[type="search"]::placeholder {
 .gm-style-iw-c {
   background-color: green;
   padding: 0;
+}
+
+.search-div {
+  position: relative;
+}
+
+.clear-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #7bdd4c;
 }
 
 /* * {
@@ -416,7 +467,7 @@ nav {
   position: relative;
   /* border-bottom: 1px solid #495057; */
 }
-.icon {
+nav .icon {
   cursor: pointer;
   margin-right: 50px;
   line-height: 60px;
