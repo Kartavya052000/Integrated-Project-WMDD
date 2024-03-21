@@ -220,6 +220,7 @@ const sidebar = document.querySelector(".sidebar")
 document.addEventListener('DOMContentLoaded', function() {
   var down = false;
   var bell = document.getElementById('bell');
+  var bellon = document.getElementById('bellon');
   var box = document.getElementById('box');
 
   bell.addEventListener('click', function() {
@@ -236,7 +237,20 @@ document.addEventListener('DOMContentLoaded', function() {
           down = true;
       }
   });
-
+  bellon.addEventListener('click', function() {
+    // alert('1')
+      if (down) {
+          box.style.height = '0px';
+          box.style.opacity = '0';
+          box.style.display = 'none';
+          down = false;
+      } else {
+          box.style.height = 'auto';
+          box.style.opacity = '1';
+          box.style.display = 'block';
+          down = true;
+      }
+  });
 const clubsList = document.getElementById('recommendations');
   recommendedClubs(uid)
     .then((clubs) => {
@@ -351,16 +365,19 @@ const uid = user?.uid;
       bellOn.style.display="none"
       bellzero.style.display="block"
       counter.innerHTML= 0
-      previousNotifications.forEach(notification => {
-        const notificationElement = document.createElement('div');
-        notificationElement.classList.add('notifications-item'); // Add the class 'notification'
-    
-        const textElement = document.createElement('div');
-        textElement.classList.add('no-notification'); // Add the class 'text'
-        textElement.innerHTML="No Notifications"
-    
-        document.getElementById('box').appendChild(notificationElement);
-    });
+      const notificationElement = document.createElement('div');
+      notificationElement.classList.add('notifications-item'); // Add the class 'notification'
+  
+      const textElement = document.createElement('div');
+      textElement.classList.add('text'); // Add the class 'text'
+  
+      const titleElement = document.createElement('h4');
+      titleElement.innerHTML = "No Notifications"
+      textElement.appendChild(titleElement);
+  
+      notificationElement.appendChild(textElement); // Append textElement to notificationElement
+  
+      document.getElementById('box').appendChild(notificationElement);
 
     }else{
       bellzero.style.display="none"
