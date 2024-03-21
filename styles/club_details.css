@@ -77,7 +77,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   justify-content: center;
-  padding: 5rem;
+  padding: 2rem;
   gap: 3rem;
   text-transform: capitalize;
 }

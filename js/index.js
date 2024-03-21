@@ -76,7 +76,11 @@ const firestore = getFirestore(app);
 // }
 class sHeader extends HTMLElement {
   connectedCallback() {
- this.innerHTML=`<header>
+ this.innerHTML=`
+ <header>
+ <div id="offline-message">
+    <p>No internet connection. Please check your network settings and try again.</p>
+  </div>
  <div class="logo">
    <a href="index.html" class="logo-link">
      <img src="/assests/images/sportscrush_logo.png" alt="Logo" class="logo">
@@ -85,10 +89,9 @@ class sHeader extends HTMLElement {
  <div class="right-head-wrap">
    <nav>
      <div class="icon" id="bell"> <img src="/assests/images/notifications.png" alt=""> </div>
+     <div class="icon" id="bellon" style="display:none"> <img src="/assests/images/bell-on.png" alt=""> </div>
      <div class="notifications" id="box" style="display: none;">
          <h2>Notifications - <span id="count">2</span></h2>
-       
-      
      </div>
      <div>
    
@@ -96,7 +99,7 @@ class sHeader extends HTMLElement {
          <div class="circle">
            <div class="letter">K</div>
          </div>
-         <span>Hi,Kartavya</span>
+         <span class="name" id="nameval">Hi,</span>
        </a>
      </div>
  </nav>
@@ -130,17 +133,57 @@ My Clubs
 </div>`
   }
 }
+window.addEventListener('load', function() {
+  function updateOnlineStatus(event) {
+    var offlineMessage = document.getElementById('offline-message');
+    if (!navigator.onLine) {
+      offlineMessage.style.display = 'flex';
+    } else {
+      offlineMessage.style.display = 'none';
+
+      // alert("you are online")
+    }
+  }
+
+  window.addEventListener('online',  updateOnlineStatus);
+  window.addEventListener('offline', updateOnlineStatus);
+
+  updateOnlineStatus(); // Check status on page load
+});
 
 
 customElements.define("s-header", sHeader);
 // Wrap the event listener attachment in DOMContentLoaded to ensure the element exists in the DOM
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function  () {
   // Navigation to myclubs_details.html with type admin
+
+  // name on header
+  let name = document.getElementById('nameval')
+  let localval=JSON.parse(localStorage.getItem("user"))
+  const userCollection = collection(getFirestore(), "users");
+  const userDocRef = doc(userCollection, localval.uid);
+
+  const docSnapshot = await getDoc(userDocRef);
+
+  if (docSnapshot.exists()) {
+    const userData = docSnapshot.data();
+console.log(userData,"UU")
+if(userData.username){
+  // console.log(localval,"localval")
+  name.innerHTML+=userData.username
+    }else{
+      name.innerHTML+="User"
+
+    }
+  }
+  
+
+
+
   const myClubsLink = document.getElementById('myclubs');
-  console.log(myClubsLink,"================================");
   const managaeCLubLink = document.getElementById('manageclubs');
   const recommendationsLink = document.getElementById('recommendations');
-console.log(managaeCLubLink,"MMMMMMM")
+  
   if (myClubsLink) {
     myClubsLink.addEventListener('click', function (event) {
       event.preventDefault(); // Prevent default behavior of the anchor tag
@@ -169,7 +212,7 @@ const sidebar = document.querySelector(".sidebar")
 
     addContentBtn.addEventListener('click', function () {
         
-            sidebar.classList.toggle("show")
+            sidebar.classList.toggle("show-sidebar")
       
  
 });
@@ -298,7 +341,21 @@ const uid = user?.uid;
     // Add new notifications to previousNotifications array
     previousNotifications=[] // empty previus array here
     previousNotifications.push(...addedNotifications);
-    console.log("All Notification:", previousNotifications);
+    console.log("All Notification:", previousNotifications.length);
+    let bellOn= document.getElementById('bellon')
+    let bellzero= document.getElementById('bell')
+
+    if(previousNotifications.length ==0){
+   
+      bellOn.style.display="none"
+      bellzero.style.display="block"
+
+    }else{
+      bellzero.style.display="none"
+      bellOn.style.display="block"
+
+     
+    }
     // if(previousNotifications.length >0){
     //   let lastElement = previousNotifications[previousNotifications.length - 1];
 
@@ -359,12 +416,9 @@ const recommendedClubs = async (uid) => {
 
     if (docSnapshot.exists()) {
       const userData = docSnapshot.data();
-      console.log("User's sports interest:", userData.sports_interest);
       //show clubs with sport equal to current users interested sport 
       const clubsQuery = query(collection(firestore, 'clubs'), where('sportToken', '==', userData.sports_interest));
-      console.log("Clubs query:", clubsQuery);
       const clubsSnapshot = await getDocs(clubsQuery);
-      console.log("Clubs snapshot documents:", clubsSnapshot.docs);
 
       const clubJson=JSON.stringify(clubsSnapshot);
       const clubs = [];
@@ -376,17 +430,13 @@ const recommendedClubs = async (uid) => {
       // });
       
 
-      console.log("on line number 369")
       clubsSnapshot.forEach((doc) => {
         const clubData = doc.data();
-        console.log(clubData);
         clubs.push({
           id: doc.id,
           ...clubData
         });
       });
-      console.log("Converted clubs data:", clubs);
-      console.log(clubs,"clubs");
       return clubs;
     } else {
       console.log("User document does not exist");

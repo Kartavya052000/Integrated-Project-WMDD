@@ -53,8 +53,9 @@ const displaySearchResults = (res) => {
   if (res.length > 0) {
     let htmlcontent = "";
     res.forEach((club) => {
+      console.log(club)
       // Construct HTML for displaying each search result as a card
-      htmlcontent += `<div class="card">
+      htmlcontent += `<div class="card" data-club-id="${club.id}">
                              <img src="${club.addressOfImage}">
                             <div class="card-body">
                               <h5 class="card-title">Club Name: ${club.clubName}</h5>
@@ -66,6 +67,12 @@ const displaySearchResults = (res) => {
                         
     });
     searchResultsContainer.innerHTML = htmlcontent;
+    document.querySelectorAll('.card').forEach((card) => {
+      card.addEventListener('click', () => {
+          const clubId = card.getAttribute('data-club-id');
+          window.location.href = `./club_details.html?id=${clubId}`;
+      });
+  });
     
   } else {
     searchResultsContainer.innerHTML = "No results found";
