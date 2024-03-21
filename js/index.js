@@ -11,7 +11,7 @@ import {
   where,
   getDocs,
   updateDoc,
-  onSnapshot
+  onSnapshot,
 } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
 import {
   getAuth,
@@ -41,20 +41,20 @@ const firestore = getFirestore(app);
 //     this.innerHTML = `<nav class="navbar navbar-light" style="background-color: #7BDD4C;">
 //     <div class="container-fluid">
 //         <a class="navbar-brand" href="index.html">SportsCrush</a>
-        
+
 //         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 //             <span class="navbar-toggler-icon"></span>
 //         </button>
 //         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 //             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              
+
 //             <li class="nav-item">
 //             <a class="nav-link" href="login.html">Login</a>
 //         </li>
 //                 <li class="nav-item">
 //                     <a class="nav-link" href="create_club.html">Create Club</a>
 //                 </li>
-               
+
 //                 <li class="nav-item">
 //                     <a class="nav-link" href="myprofile.html">My Profile</a>
 //                 </li>
@@ -76,7 +76,7 @@ const firestore = getFirestore(app);
 // }
 class sHeader extends HTMLElement {
   connectedCallback() {
- this.innerHTML=`
+    this.innerHTML = `
  <header>
  <div id="offline-message">
     <p>No internet connection. Please check your network settings and try again.</p>
@@ -94,7 +94,7 @@ class sHeader extends HTMLElement {
          <h2>Notifications - <span id="count"></span></h2>
      </div>
      <div>
-   
+    
        <a href="myprofile.html" class="name-wrap">
          <div class="circle">
            <div class="letter">K</div>
@@ -109,57 +109,56 @@ class sHeader extends HTMLElement {
 
 </header>
 <div class="sidebar">
-<div class="sidebar-child">
+<div class="sidebar-child"><i class="fa-solid fa-users"></i>
   <a class="icon-wrap" id="manageclubs">
   Manage Clubs
   </a>
 </div>
-<div class="sidebar-child">
+<div class="sidebar-child"><i class="fa-solid fa-baseball-bat-ball"></i>
   <a class="icon-wrap" id="myclubs">  
 My Clubs
   </a>
 </div>
-<div class="sidebar-child">
+<div class="sidebar-child"><i class="fa-solid fa-plus"></i>
   <a class="icon-wrap" href="create_club.html">
  Create Club
   </a>
 </div>
-<div class="sidebar-child" id="logout">
+<div class="sidebar-child" id="logout"><i class="fa-solid fa-right-from-bracket"></i>
   <a class="icon-wrap">
  Logout
   </a>
 </div>
 
-</div>`
+</div>`;
   }
 }
-window.addEventListener('load', function() {
+window.addEventListener("load", function () {
   function updateOnlineStatus(event) {
-    var offlineMessage = document.getElementById('offline-message');
+    var offlineMessage = document.getElementById("offline-message");
     if (!navigator.onLine) {
-      offlineMessage.style.display = 'flex';
+      offlineMessage.style.display = "flex";
     } else {
-      offlineMessage.style.display = 'none';
+      offlineMessage.style.display = "none";
 
       // alert("you are online")
     }
   }
 
-  window.addEventListener('online',  updateOnlineStatus);
-  window.addEventListener('offline', updateOnlineStatus);
+  window.addEventListener("online", updateOnlineStatus);
+  window.addEventListener("offline", updateOnlineStatus);
 
   updateOnlineStatus(); // Check status on page load
 });
 
-
 customElements.define("s-header", sHeader);
 // Wrap the event listener attachment in DOMContentLoaded to ensure the element exists in the DOM
-document.addEventListener('DOMContentLoaded', async function  () {
+document.addEventListener("DOMContentLoaded", async function () {
   // Navigation to myclubs_details.html with type admin
 
   // name on header
-  let name = document.getElementById('nameval')
-  let localval=JSON.parse(localStorage.getItem("user"))
+  let name = document.getElementById("nameval");
+  let localval = JSON.parse(localStorage.getItem("user"));
   const userCollection = collection(getFirestore(), "users");
   const userDocRef = doc(userCollection, localval.uid);
 
@@ -167,85 +166,76 @@ document.addEventListener('DOMContentLoaded', async function  () {
 
   if (docSnapshot.exists()) {
     const userData = docSnapshot.data();
-console.log(userData,"UU")
-if(userData.username){
-  // console.log(localval,"localval")
-  name.innerHTML+=userData.username
-    }else{
-      name.innerHTML+="User"
-
+    console.log(userData, "UU");
+    if (userData.username) {
+      // console.log(localval,"localval")
+      name.innerHTML += userData.username;
+    } else {
+      name.innerHTML += "User";
     }
   }
-  
 
+  const myClubsLink = document.getElementById("myclubs");
+  const managaeCLubLink = document.getElementById("manageclubs");
+  const recommendationsLink = document.getElementById("recommendations");
 
-
-  const myClubsLink = document.getElementById('myclubs');
-  const managaeCLubLink = document.getElementById('manageclubs');
-  const recommendationsLink = document.getElementById('recommendations');
-  
   if (myClubsLink) {
-    myClubsLink.addEventListener('click', function (event) {
+    myClubsLink.addEventListener("click", function (event) {
       event.preventDefault(); // Prevent default behavior of the anchor tag
-      window.location.href = './myclubs_details.html?type=self'; // Navigate to myclubs_details.html with type=admin
+      window.location.href = "./myclubs_details.html?type=self"; // Navigate to myclubs_details.html with type=admin
     });
   }
   if (managaeCLubLink) {
-    managaeCLubLink.addEventListener('click', function (event) {
+    managaeCLubLink.addEventListener("click", function (event) {
       // alert('1')
       event.preventDefault(); // Prevent default behavior of the anchor tag
-      window.location.href = './myclubs_details.html?type=admin'; // Navigate to myclubs_details.html with type=admin
+      window.location.href = "./myclubs_details.html?type=admin"; // Navigate to myclubs_details.html with type=admin
     });
   }
   if (recommendationsLink) {
-    recommendationsLink.addEventListener('click', function (event) {
-      event.preventDefault(); 
-      window.location.href = './myclubs_details.html?type=recommendations';
+    recommendationsLink.addEventListener("click", function (event) {
+      event.preventDefault();
+      window.location.href = "./myclubs_details.html?type=recommendations";
     });
   }
 });
 
 // Hamburger conversion
-const addContentBtn = document.getElementById('menu');
-const sidebar = document.querySelector(".sidebar")
+const addContentBtn = document.getElementById("menu");
+const sidebar = document.querySelector(".sidebar");
 
-
-    addContentBtn.addEventListener('click', function () {
-        
-            sidebar.classList.toggle("show-sidebar")
-      
- 
+addContentBtn.addEventListener("click", function () {
+  sidebar.classList.toggle("show-sidebar");
 });
 // notification-dropdown
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function () {
   var down = false;
-  var bell = document.getElementById('bell');
-  var box = document.getElementById('box');
+  var bell = document.getElementById("bell");
+  var box = document.getElementById("box");
 
-  bell.addEventListener('click', function() {
+  bell.addEventListener("click", function () {
     // alert('1')
-      if (down) {
-          box.style.height = '0px';
-          box.style.opacity = '0';
-          box.style.display = 'none';
-          down = false;
-      } else {
-          box.style.height = 'auto';
-          box.style.opacity = '1';
-          box.style.display = 'block';
-          down = true;
-      }
+    if (down) {
+      box.style.height = "0px";
+      box.style.opacity = "0";
+      box.style.display = "none";
+      down = false;
+    } else {
+      box.style.height = "auto";
+      box.style.opacity = "1";
+      box.style.display = "block";
+      down = true;
+    }
   });
 
-const clubsList = document.getElementById('recommendations');
+  const clubsList = document.getElementById("recommendations");
   recommendedClubs(uid)
     .then((clubs) => {
       // Display clubs on the page
       if (clubs.length > 0) {
         clubs.forEach((club) => {
-          
-          const clubElement = document.createElement('div');
-          clubElement.classList.add('club_card');
+          const clubElement = document.createElement("div");
+          clubElement.classList.add("club_card");
           clubElement.innerHTML = `
           <div
             class="card"
@@ -295,107 +285,95 @@ const clubsList = document.getElementById('recommendations');
             </div>
           </div>
               `;
-          clubElement.addEventListener('click', function () {
+          clubElement.addEventListener("click", function () {
             window.location.href = `./club_details.html?id=${club.id}`;
           });
           clubsList.appendChild(clubElement);
         });
       } else {
-        const clubElement = document.createElement('div');
-        clubElement.classList.add('club_card');
+        const clubElement = document.createElement("div");
+        clubElement.classList.add("club_card");
         clubElement.innerHTML = `
               <p id="noClubsMessage">No Clubs  to Show</p>
           `;
         clubsList.appendChild(clubElement);
       }
-
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 });
 
-
-
-
 // Function to send notification to a user
- // Listen for new notifications in real-time
- // Get the UID from localStorage if it exists
+// Listen for new notifications in real-time
+// Get the UID from localStorage if it exists
 let user = JSON.parse(localStorage.getItem("user"));
 const uid = user?.uid;
- const userDocRef = doc(firestore, "users", uid); // Replace userId with the actual user ID
- let previousNotifications = []; // Use let instead of const to allow reassignment
-
+const userDocRef = doc(firestore, "users", uid); // Replace userId with the actual user ID
+let previousNotifications = []; // Use let instead of const to allow reassignment
 
 //  real-time-notifications feature
- const unsubscribe = onSnapshot(userDocRef, (doc) => {
+const unsubscribe = onSnapshot(userDocRef, (doc) => {
   if (doc.exists()) {
     const userData = doc.data();
     const currentNotifications = userData.notifications || [];
 
     // Compare previous and current notifications arrays to detect added notifications
-    const addedNotifications = currentNotifications.filter(notification => !previousNotifications.includes(notification));
-
-  
+    const addedNotifications = currentNotifications.filter(
+      (notification) => !previousNotifications.includes(notification)
+    );
 
     // Add new notifications to previousNotifications array
-    previousNotifications=[] // empty previus array here
+    previousNotifications = []; // empty previus array here
     previousNotifications.push(...addedNotifications);
     console.log("All Notification:", previousNotifications.length);
-    let bellOn= document.getElementById('bellon')
-    let bellzero= document.getElementById('bell')
-    let counter =document.getElementById("count")
+    let bellOn = document.getElementById("bellon");
+    let bellzero = document.getElementById("bell");
+    let counter = document.getElementById("count");
 
-    if(previousNotifications.length ==0){
-   
-      bellOn.style.display="none"
-      bellzero.style.display="block"
-      counter.innerHTML= 0
-      previousNotifications.forEach(notification => {
-        const notificationElement = document.createElement('div');
-        notificationElement.classList.add('notifications-item'); // Add the class 'notification'
-    
-        const textElement = document.createElement('div');
-        textElement.classList.add('no-notification'); // Add the class 'text'
-        textElement.innerHTML="No Notifications"
-    
-        document.getElementById('box').appendChild(notificationElement);
-    });
+    if (previousNotifications.length == 0) {
+      bellOn.style.display = "none";
+      bellzero.style.display = "block";
+      counter.innerHTML = 0;
+      previousNotifications.forEach((notification) => {
+        const notificationElement = document.createElement("div");
+        notificationElement.classList.add("notifications-item"); // Add the class 'notification'
 
-    }else{
-      bellzero.style.display="none"
-      bellOn.style.display="block"
-      counter.innerHTML= previousNotifications.length
-      previousNotifications.forEach(notification => {
-        const notificationElement = document.createElement('div');
-        notificationElement.classList.add('notifications-item'); // Add the class 'notification'
-    
-        const textElement = document.createElement('div');
-        textElement.classList.add('text'); // Add the class 'text'
-    
-        const titleElement = document.createElement('h4');
+        const textElement = document.createElement("div");
+        textElement.classList.add("no-notification"); // Add the class 'text'
+        textElement.innerHTML = "No Notifications";
+
+        document.getElementById("box").appendChild(notificationElement);
+      });
+    } else {
+      bellzero.style.display = "none";
+      bellOn.style.display = "block";
+      counter.innerHTML = previousNotifications.length;
+      previousNotifications.forEach((notification) => {
+        const notificationElement = document.createElement("div");
+        notificationElement.classList.add("notifications-item"); // Add the class 'notification'
+
+        const textElement = document.createElement("div");
+        textElement.classList.add("text"); // Add the class 'text'
+
+        const titleElement = document.createElement("h4");
         titleElement.textContent = notification.title;
-    
-        const messageElement = document.createElement('p');
+
+        const messageElement = document.createElement("p");
         messageElement.textContent = notification.message;
-        
-        const imgElement = document.createElement('img');
+
+        const imgElement = document.createElement("img");
         imgElement.src = notification.img;
         notificationElement.appendChild(imgElement);
-    
+
         textElement.appendChild(titleElement);
         textElement.appendChild(messageElement);
-    
+
         notificationElement.appendChild(textElement); // Append textElement to notificationElement
-    
-        document.getElementById('box').appendChild(notificationElement);
-    });
-     
+
+        document.getElementById("box").appendChild(notificationElement);
+      });
     }
-
-
-   
-  
   } else {
     console.log("User document not found.");
   }
@@ -407,13 +385,12 @@ document.getElementById("logout").addEventListener("click", function () {
     .then(() => {
       localStorage.removeItem("user");
       alert("logout");
-      window.location.href='./entry.html';
+      window.location.href = "./entry.html";
     })
     .catch((error) => {
       alert("logout error:", error);
     });
 });
-
 
 const recommendedClubs = async (uid) => {
   try {
@@ -424,11 +401,14 @@ const recommendedClubs = async (uid) => {
 
     if (docSnapshot.exists()) {
       const userData = docSnapshot.data();
-      //show clubs with sport equal to current users interested sport 
-      const clubsQuery = query(collection(firestore, 'clubs'), where('sportToken', '==', userData.sports_interest));
+      //show clubs with sport equal to current users interested sport
+      const clubsQuery = query(
+        collection(firestore, "clubs"),
+        where("sportToken", "==", userData.sports_interest)
+      );
       const clubsSnapshot = await getDocs(clubsQuery);
 
-      const clubJson=JSON.stringify(clubsSnapshot);
+      const clubJson = JSON.stringify(clubsSnapshot);
       const clubs = [];
       // console.log(clubJson)
       // clubsSnapshot.forEach((doc) => {
@@ -436,13 +416,12 @@ const recommendedClubs = async (uid) => {
       //   const clubJson = JSON.stringify(clubData);
       //   clubs.push(JSON.parse(clubJson)); // Optional: If you need to work with the JSON objects in JavaScript format instead of strings
       // });
-      
 
       clubsSnapshot.forEach((doc) => {
         const clubData = doc.data();
         clubs.push({
           id: doc.id,
-          ...clubData
+          ...clubData,
         });
       });
       return clubs;
@@ -454,5 +433,4 @@ const recommendedClubs = async (uid) => {
     console.error("Error fetching recommended clubs:", error);
     return [];
   }
-}
-
+};

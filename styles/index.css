@@ -428,9 +428,37 @@ header {
 .sidebar-child {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-around;
-  width: 100%;
+  justify-content: space-between;
+  width: 50%;
+  align-items: center;
+  /* gap: 0.1rem; */
 }
+.sidebar-child i {
+  padding: 0.75rem;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  color: black;
+  background-color: white;
+}
+.sidebar-child a {
+  cursor: pointer;
+  color: white;
+}
+
+.sidebar-child a:hover {
+  color: black;
+  font-weight: bold;
+}
+.sidebar-child:hover {
+  background-color: #7bdd4c;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+
+  padding-right: 0.5rem;
+
+  transition: all 0.3s ease;
+}
+
 .show {
   right: 0;
   width: 100%;
@@ -446,7 +474,6 @@ header {
   background-color: #2b2b2b;
   /* border: 1px solid #7bdd4c; */
   border-radius: 1rem;
-  
 }
 
 .show a {
@@ -608,7 +635,7 @@ nav .icon {
 /* offline mode css */
 #offline-message {
   display: none;
-  background-color: rgb(0,0,0,0.8);
+  background-color: rgb(0, 0, 0, 0.8);
   color: #ffffff;
   text-align: center;
   padding: 10px;
