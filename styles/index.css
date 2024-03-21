@@ -24,7 +24,7 @@ header {
 header img {
   cursor: pointer;
 }
-header img:hover {
+.ham:hover {
   background-color: white;
   border-radius: 0.5rem;
   padding: 0.25rem;

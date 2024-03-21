@@ -103,7 +103,7 @@ class sHeader extends HTMLElement {
        </a>
      </div>
  </nav>
-   <img src="/assests/images/list2.png" alt="Logo" class="logo" id="menu">
+   <img src="/assests/images/list2.png" alt="Logo" class="logo ham" id="menu">
 
  </div>
 
