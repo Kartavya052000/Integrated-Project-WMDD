@@ -91,7 +91,7 @@ class sHeader extends HTMLElement {
      <div class="icon" id="bell"> <img src="/assests/images/notifications.png" alt=""> </div>
      <div class="icon" id="bellon" style="display:none"> <img src="/assests/images/bell-on.png" alt=""> </div>
      <div class="notifications" id="box" style="display: none;">
-         <h2>Notifications - <span id="count">2</span></h2>
+         <h2>Notifications - <span id="count"></span></h2>
      </div>
      <div>
    
@@ -344,49 +344,57 @@ const uid = user?.uid;
     console.log("All Notification:", previousNotifications.length);
     let bellOn= document.getElementById('bellon')
     let bellzero= document.getElementById('bell')
+    let counter =document.getElementById("count")
 
     if(previousNotifications.length ==0){
    
       bellOn.style.display="none"
       bellzero.style.display="block"
+      counter.innerHTML= 0
+      previousNotifications.forEach(notification => {
+        const notificationElement = document.createElement('div');
+        notificationElement.classList.add('notifications-item'); // Add the class 'notification'
+    
+        const textElement = document.createElement('div');
+        textElement.classList.add('no-notification'); // Add the class 'text'
+        textElement.innerHTML="No Notifications"
+    
+        document.getElementById('box').appendChild(notificationElement);
+    });
 
     }else{
       bellzero.style.display="none"
       bellOn.style.display="block"
-
+      counter.innerHTML= previousNotifications.length
+      previousNotifications.forEach(notification => {
+        const notificationElement = document.createElement('div');
+        notificationElement.classList.add('notifications-item'); // Add the class 'notification'
+    
+        const textElement = document.createElement('div');
+        textElement.classList.add('text'); // Add the class 'text'
+    
+        const titleElement = document.createElement('h4');
+        titleElement.textContent = notification.title;
+    
+        const messageElement = document.createElement('p');
+        messageElement.textContent = notification.message;
+        
+        const imgElement = document.createElement('img');
+        imgElement.src = notification.img;
+        notificationElement.appendChild(imgElement);
+    
+        textElement.appendChild(titleElement);
+        textElement.appendChild(messageElement);
+    
+        notificationElement.appendChild(textElement); // Append textElement to notificationElement
+    
+        document.getElementById('box').appendChild(notificationElement);
+    });
      
     }
-    // if(previousNotifications.length >0){
-    //   let lastElement = previousNotifications[previousNotifications.length - 1];
 
-    //   console.log(lastElement);
-    //   alert(`${lastElement.title} +${lastElement.message}`)
-    // }
 
-    previousNotifications.forEach(notification => {
-      const notificationElement = document.createElement('div');
-      notificationElement.classList.add('notifications-item'); // Add the class 'notification'
-  
-      const textElement = document.createElement('div');
-      textElement.classList.add('text'); // Add the class 'text'
-  
-      const titleElement = document.createElement('h4');
-      titleElement.textContent = notification.title;
-  
-      const messageElement = document.createElement('p');
-      messageElement.textContent = notification.message;
-      
-      const imgElement = document.createElement('img');
-      imgElement.src = notification.img;
-      notificationElement.appendChild(imgElement);
-  
-      textElement.appendChild(titleElement);
-      textElement.appendChild(messageElement);
-  
-      notificationElement.appendChild(textElement); // Append textElement to notificationElement
-  
-      document.getElementById('box').appendChild(notificationElement);
-  });
+   
   
   } else {
     console.log("User document not found.");
