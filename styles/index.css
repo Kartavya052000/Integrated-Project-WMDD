@@ -18,11 +18,28 @@ img {
   /* height: 200px; */
   padding: 2rem 0 2rem 0;
 }
+header {
+  padding: 0 1rem 0;
+}
+header img {
+  cursor: pointer;
+}
+header img:hover {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+  color: black;
+  transition: all 0.3s ease;
+}
 
 h2 {
   font-style: italic;
   font-weight: bold;
   color: white;
+  font-size: 2.5rem;
+  width: 80%;
+  margin: auto;
+  font-family: "Quantico", sans-serif;
 }
 
 #search {
@@ -43,6 +60,8 @@ input[type="search"]::placeholder {
 
 .search-div {
   position: relative;
+  width: 80%;
+  margin: auto;
   /* display: flex; */
 }
 
