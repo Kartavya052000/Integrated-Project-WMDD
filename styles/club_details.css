@@ -150,11 +150,11 @@ h1 {
   display: flex;
 }
 /* Event table */
-#members div{
+#members div {
   display: flex;
   gap: 1rem;
 }
-.btn-wrap{
+.btn-wrap {
   display: flex;
   gap: 1rem;
 }
@@ -219,29 +219,30 @@ table tbody td {
 }
 /* members area */
 
-#members ,#admin-request {
+#members,
+#admin-request {
   border: #7bdd4c 1px solid;
   /* border-radius: 2rem; */
   margin: 0 6rem;
 
   display: flex;
-flex-flow: column nowrap;
-gap: 1rem;
+  flex-flow: column nowrap;
+  gap: 1rem;
   justify-content: space-around;
   font-size: 1.5rem;
   align-items: center;
   padding: 2rem;
 }
 
-.btn-wrap{
+.btn-wrap {
   display: flex;
   gap: 1rem;
 }
-.modal-content{
+.modal-content {
   background-color: black;
   color: green;
 }
-.form-group{
+.form-group {
   display: flex;
   flex-flow: column nowrap;
 }
@@ -250,21 +251,20 @@ gap: 1rem;
   border: 1px solid #7bdd4c;
   color: white;
 }
-tbody{
-      width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-flow: column nowrap;
-}
-.club_tabs{
+tbody {
   width: 100%;
-    justify-content: space-around;
-
+  display: flex;
+  justify-content: center;
+  flex-flow: column nowrap;
+}
+.club_tabs {
+  width: 100%;
+  justify-content: space-around;
 }
 .modal-header button {
   background: black;
-    border: none;
-    color: white;
+  border: none;
+  color: white;
 }
 #members p {
   margin-bottom: 0;
