@@ -109,18 +109,18 @@ class sHeader extends HTMLElement {
 
 </header>
 <div class="sidebar">
-<div class="sidebar-child"><i class="fa-solid fa-users"></i>
-  <a class="icon-wrap" id="manageclubs">
+<div class="sidebar-child" id="manageclubs"><i class="fa-solid fa-users"></i>
+  <a class="icon-wrap" >
   Manage Clubs
   </a>
 </div>
-<div class="sidebar-child"><i class="fa-solid fa-baseball-bat-ball"></i>
-  <a class="icon-wrap" id="myclubs">  
+<div class="sidebar-child" id="myclubs"><i class="fa-solid fa-baseball-bat-ball"></i>
+  <a class="icon-wrap" >  
 My Clubs
   </a>
 </div>
-<div class="sidebar-child"><i class="fa-solid fa-plus"></i>
-  <a class="icon-wrap" href="create_club.html">
+<div class="sidebar-child" id="create-club"><i class="fa-solid fa-plus"></i>
+  <a class="icon-wrap" >
  Create Club
   </a>
 </div>
@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const myClubsLink = document.getElementById("myclubs");
   const managaeCLubLink = document.getElementById("manageclubs");
   const recommendationsLink = document.getElementById("recommendations");
-
+  const createClubLink = document.getElementById("create-club");
   if (myClubsLink) {
     myClubsLink.addEventListener("click", function (event) {
       event.preventDefault(); // Prevent default behavior of the anchor tag
@@ -196,6 +196,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     recommendationsLink.addEventListener("click", function (event) {
       event.preventDefault();
       window.location.href = "./myclubs_details.html?type=recommendations";
+    });
+  }
+  if (createClubLink) {
+    createClubLink.addEventListener("click", function (event) {
+      event.preventDefault();
+      window.location.href = "./create_club.html";
     });
   }
 });
