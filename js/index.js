@@ -97,7 +97,7 @@ class sHeader extends HTMLElement {
     
        <a href="myprofile.html" class="name-wrap">
          <div class="circle">
-           <div class="letter">K</div>
+           <div class="letter" id="letter">K</div>
          </div>
          <span class="name" id="nameval">Hi,</span>
        </a>
@@ -158,6 +158,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // name on header
   let name = document.getElementById("nameval");
+  let nameletter = document.getElementById("letter");
+
   let localval = JSON.parse(localStorage.getItem("user"));
   const userCollection = collection(getFirestore(), "users");
   const userDocRef = doc(userCollection, localval.uid);
@@ -170,6 +172,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     if (userData.username) {
       // console.log(localval,"localval")
       name.innerHTML += userData.username;
+      nameletter.innerHTML = userData.username[0]
     } else {
       name.innerHTML += "User";
     }
