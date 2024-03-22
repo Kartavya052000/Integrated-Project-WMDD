@@ -331,7 +331,7 @@ let user = JSON.parse(localStorage.getItem("user"));
 const uid = user?.uid;
 const userDocRef = doc(firestore, "users", uid); // Replace userId with the actual user ID
 let previousNotifications = []; // Use let instead of const to allow reassignment
-
+let notificationmessage = 0
 //  real-time-notifications feature
 const unsubscribe = onSnapshot(userDocRef, (doc) => {
   if (doc.exists()) {
@@ -361,9 +361,12 @@ const unsubscribe = onSnapshot(userDocRef, (doc) => {
   
       const textElement = document.createElement('div');
       textElement.classList.add('text'); // Add the class 'text'
-  
-      const titleElement = document.createElement('h4');
-      titleElement.innerHTML = "No Notifications"
+  if(notificationmessage ==0){
+    const titleElement = document.createElement('h4');
+    titleElement.innerHTML = "No Notifications"
+  }
+      
+      notificationmessage =1
       textElement.appendChild(titleElement);
   
       notificationElement.appendChild(textElement); // Append textElement to notificationElement

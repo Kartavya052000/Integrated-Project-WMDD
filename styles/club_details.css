@@ -275,7 +275,9 @@ tbody {
 
     margin: auto;
   }
-
+#pending,#joined{
+  height: 2.5rem;
+}
   .club-details {
     border: 1px #7bdd4c solid;
     margin: 2rem 1rem;
@@ -349,7 +351,7 @@ tbody {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 0.5rem;
+    height: 2.5rem;
     font-size: 0.75rem;
     border-radius: 10px;
   }

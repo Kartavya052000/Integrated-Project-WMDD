@@ -219,6 +219,7 @@ import {
         admin_id: user.uid,
       });
       alert("Club Store Successfully Added");
+      window.location.href = "./index.html"; // Navigate to myclubs_details.html with type=admin
       console.log("Club created successfully with ID: ", clubDocRef.id);
     } catch (error) {
       console.error("Error creating club: ", error);

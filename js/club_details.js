@@ -268,6 +268,9 @@ function handleJoin() {
                 .then(() => {
                   alert("Request Sent Successfully");
                   console.log("UID stored in pending_requests successfully.");
+                  document.getElementById("join").style.display = "none";
+                  document.getElementById("joined").style.display = "none";
+                  document.getElementById("pending").style.display = "block"
                   fetchClubDetails(); // call to update the page
                 })
                 .catch((error) => {
