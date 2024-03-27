@@ -80,13 +80,15 @@
   padding: 2rem;
   gap: 3rem;
   text-transform: capitalize;
+  align-items: center;
 }
 .category {
-  color: #ccc;
+  color: rgb(141, 137, 137);
 }
 .club-title {
   margin-bottom: 0;
   color: #bdff9e;
+  margin-left: 0;
 }
 h1 {
   text-align: center;
@@ -219,6 +221,10 @@ table tbody td {
 }
 /* members area */
 
+#eventTableBody tr{
+  display: flex;
+  justify-content: space-evenly;
+}
 #members,
 #admin-request {
   border: #7bdd4c 1px solid;

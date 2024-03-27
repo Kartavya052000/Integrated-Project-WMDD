@@ -186,10 +186,10 @@ function fetchClubDetails() {
                        
                         <div class="club-img"><img src=${clubData.addressOfImage} alt=${clubData.clubName}  ></div>
                          <div class="club-data">
-                           <h2 class="club-title">  ${clubData.clubName}</h2>
-                           <p class="category"> ${clubData.Sport}</p>
-                           <p> <i class="fa-solid fa-location-dot" style="color: #bdff9e;"></i> ${clubData.clubDetails.address}</p>
-                           <p> <i class="fa-solid fa-book" style="color: #bdff9e;"></i> ${clubData.clubDescription}</p>
+                           <h2 class="club-title">${clubData.clubName}</h2>
+                           <p class="category">${clubData.Sport}</p>
+                           <p> <i class="fa-solid fa-location-dot" style="color: #bdff9e;"></i>  ${clubData.clubDetails.address}</p>
+                           <p> <i class="fa-solid fa-book" style="color: #bdff9e;"></i>  ${clubData.clubDescription}</p>
                          </div>
                         </div>
                         <!-- Display other club details as needed -->
