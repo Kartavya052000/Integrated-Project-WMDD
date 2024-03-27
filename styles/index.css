@@ -488,6 +488,7 @@ header {
   border: 1px solid #7bdd4c;
   border-radius: 1rem;
   /* filter: blur(2px); */
+  backdrop-filter: blur(9px);
 }
 
 .show-sidebar {
