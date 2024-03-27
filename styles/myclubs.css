@@ -50,6 +50,9 @@ padding: .5rem .75rem;
     grid-template-rows: 1fr auto;
     border-radius: 2rem;
 }
+.club_card h3{
+  grid-column: 2/3;
+}
 .club_card img{
   grid-column: 1/-1;
   grid-row: 1/2;
