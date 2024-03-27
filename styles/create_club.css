@@ -72,6 +72,9 @@ div .form-control-1:focus {
   margin-bottom: 0.25rem;
   color: rgb(220, 220, 220);
   font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
 }
 .label-div input {
   border-radius: 5px;
@@ -98,6 +101,8 @@ input[type="file"] {
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+  font-weight: bold;
+  justify-content: center;
 }
 
 .upload-label:hover {
