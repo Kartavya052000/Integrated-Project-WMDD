@@ -266,7 +266,14 @@ function handleJoin() {
 
               setDoc(clubDocRef, updateData, { merge: true })
                 .then(() => {
-                  alert("Request Sent Successfully");
+                  // alert("Request Sent Successfully");
+                    Swal.fire({
+                      title: "Request Sent!",
+                      text: "request sent succesfully!",
+                      icon: "success",
+                      showConfirmButton: false, // Prevents the default "OK" button from being shown
+                      timer: 2000 // Set a timer for 2 seconds (adjust as needed)
+                    })
                   console.log("UID stored in pending_requests successfully.");
                   document.getElementById("join").style.display = "none";
                   document.getElementById("joined").style.display = "none";
@@ -288,6 +295,7 @@ function handleJoin() {
               setDoc(clubDocRef, updateData, { merge: true })
                 .then(() => {
                   alert("Joined the club successfully");
+                  
                   console.log("UID stored in approved_requests successfully.");
                   fetchClubDetails(); // call to update the page
                 })
@@ -663,7 +671,14 @@ document.getElementById("updateEvent").addEventListener("click", async (e) => {
     myModal.hide();
 
     // Display an alert to indicate that the event has been updated
-    alert("Event updated!");
+    // alert("Event updated!");
+    Swal.fire({
+      title: "Event updated!",
+      text: "event updated succesfully!",
+      icon: "success",
+      showConfirmButton: false, // Prevents the default "OK" button from being shown
+      timer: 2000 // Set a timer for 2 seconds (adjust as needed)
+    })
 
     // Fetch the updated club details to refresh the UI
     fetchClubDetails();
@@ -687,7 +702,14 @@ document.getElementById("submit").addEventListener("click", async () => {
     events: arrayUnion(schedule),
   });
 
-  alert("event saved!");
+  Swal.fire({
+    title: "Event Saved!",
+    text: "event saved succesfully!",
+    icon: "success",
+    showConfirmButton: false, // Prevents the default "OK" button from being shown
+    timer: 2000 // Set a timer for 2 seconds (adjust as needed)
+  })
+  
   myModal.hide();
   fetchClubDetails();
   document.getElementById("eventName").value = "";
@@ -713,7 +735,14 @@ const SendNotification = (user_id, clubName, clubImg, message) => {
 
   setDoc(userDocRef, updateData, { merge: true })
     .then(async () => {
-      alert("Notification Sent Successfully");
+      // alert("Notification Sent Successfully");
+      Swal.fire({
+        title: "Notification Sent Successfully",
+        text: "notification sent succesfully!",
+        icon: "success",
+        showConfirmButton: false, // Prevents the default "OK" button from being shown
+        timer: 2000 // Set a timer for 2 seconds (adjust as needed)
+      })
       // console.log("UID stored in pending_requests successfully.");
 
       // fetchClubDetails(); // call to update the page
