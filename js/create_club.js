@@ -218,8 +218,16 @@ import {
         clubDetails: clubDetails,
         admin_id: user.uid,
       });
-      alert("Club Store Successfully Added");
-      window.location.href = "./index.html"; // Navigate to myclubs_details.html with type=admin
+      // alert("Club Store Successfully Added");
+      Swal.fire({
+        title: "Club Created!",
+        text: "club created successfully!",
+        icon: "success",
+        // showConfirmButton: false, // Prevents the default "OK" button from being shown
+        // timer: 2000 // Set a timer for 2 seconds (adjust as needed)
+      }).then(() => {
+        window.location.href = `./index.html`; // Redirect after the animation finishes
+      });
       console.log("Club created successfully with ID: ", clubDocRef.id);
     } catch (error) {
       console.error("Error creating club: ", error);

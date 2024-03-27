@@ -70,8 +70,19 @@ console.log(userInfo,"usr")
       setDoc(doc(usersCollection, user.uid), userInfo)
         .then(() => {
           console.log("User information saved successfully");
-      alert("User created!");
-      window.location.href = `./index.html`;
+      // alert("User created!");
+      Swal.fire({
+        title: "User Created!",
+        text: "user registered succesfully!",
+        icon: "success",
+        showConfirmButton: false, // Prevents the default "OK" button from being shown
+        timer: 2000 // Set a timer for 2 seconds (adjust as needed)
+      }).then(() => {
+        window.location.href = `./index.html`; // Redirect after the animation finishes
+      });
+      
+      
+    // })
 
         })
         .catch((error) => {
