@@ -87,3 +87,24 @@ input[type="file"] {
 /* .submit-btn {
   padding: 2%;
 } */
+.label-div {
+  margin-bottom: 20px;
+}
+
+.upload-label {
+  display: inline-block;
+  background-color: #419718;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.upload-label:hover {
+  background-color: #39a705;
+}
+
+.form-control-img {
+  display: none;
+}
+
