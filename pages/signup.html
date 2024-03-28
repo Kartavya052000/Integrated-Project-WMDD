@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Signup page</title>
-    <link rel="stylesheet" href="/styles/signup.css">
+    <link rel="stylesheet" href="/styles/signup.css" />
     <script defer src="/js/signup.js" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-</head>
-<body>
+  </head>
+  <body>
     <div class="container signuptitle">
-    <img src="/assests/images/sportscrush_logo.png" alt="">
-    <p>Create an account</p>
-    <div class="field-wrap">
+      <img src="/assests/images/sportscrush_logo.png" alt="" />
+      <p>Create an account</p>
+      <div class="field-wrap">
         <label for="email" class="form-label">Username</label>
         <input
           type="text"
@@ -24,34 +23,32 @@
           required
           value="Admin"
         />
-    </div>
-    <div class="field-wrap">
-   
-    <label for="email" class="form-label">Email</label>
-    <input
-      type="text"
-      id="email"
-      name="email"
-      class="form-control"
-      placeholder="abc@gmail.com"
-      required
-      value="admin@gmail.com"
-    />
-    </div>
-    <div class="field-wrap">
-
-    <label for="password" class="form-label">Password</label>
-    <input
-      type="password"
-      id="password"
-      name="password"
-      class="form-control"
-      placeholder="enter password"
-      required
-      value="123456"
-    />
-    </div>
-    <div class="field-wrap">
+      </div>
+      <div class="field-wrap">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="text"
+          id="email"
+          name="email"
+          class="form-control"
+          placeholder="abc@gmail.com"
+          required
+          value="admin27@gmail.com"
+        />
+      </div>
+      <div class="field-wrap">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          class="form-control"
+          placeholder="enter password"
+          required
+          value="123456"
+        />
+      </div>
+      <div class="field-wrap">
         <label for="sports">Choose your interest:</label>
         <select name="sports" id="sports" required>
           <option value="cricket">Cricket</option>
@@ -59,11 +56,9 @@
           <option value="hockey">Hockey</option>
           <option value="ballpool">Ballpool</option>
         </select>
+      </div>
+      <button id="signUp">Signup</button>
+      <p>have an account? <a href="login.html">Login</a></p>
     </div>
-    <button id="signUp">Signup</button>
-    <p>have an account? <a href="login.html">Login</a></p>
-
-</div>
-    
-</body>
+  </body>
 </html>
