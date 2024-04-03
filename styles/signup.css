@@ -49,7 +49,10 @@ a {
 .signuptitle {
   position: relative;
   /* background: url("../assests/images/signup.png") no-repeat; */
-  background: url("https://img.freepik.com/free-photo/sports-tools_53876-138077.jpg?t=st=1711562955~exp=1711566555~hmac=fc5f98e2e5beced0ca8f9edcbbfea1f6a20beb80b0fc0cf3a31b4332328e8509&w=1480") no-repeat;
+  /* background: url("../assests/images/signup.png") no-repeat; */
+  /* background: url("../assests/images/signup2.jpeg") no-repeat; */
+
+  background: url("https://img.freepik.com/ free-photo/sports-tools_53876-138077.jpg?t=st=1711562955~exp=1711566555~hmac=fc5f98e2e5beced0ca8f9edcbbfea1f6a20beb80b0fc0cf3a31b4332328e8509&w=1480") no-repeat;
   /* background: url("https://media.istockphoto.com/id/637332860/photo/multi-sports-proud-players-collage-on-grand-arena.jpg?s=1024x1024&w=is&k=20&c=g26Mxplo-KjOPZjgUOp0QKmPn5RBIkAcWx0vSCel6XM=") no-repeat; */
   background-size: cover;
   color: white; /* Set text color to white for better visibility */

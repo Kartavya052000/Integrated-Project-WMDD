@@ -62,7 +62,7 @@ console.log(querySnapshot2,"Q@@aasssssssssss")
     }));
 
     const combinedResults = results1.concat(results2);
-
+console.log(combinedResults,"CCCC")
     combinedResults.sort((a, b) => {
       if (a.Sport && b.Sport) {
         return a.Sport.localeCompare(b.Sport);
@@ -72,12 +72,27 @@ console.log(querySnapshot2,"Q@@aasssssssssss")
         return 0;
       }
     });
+    console.log(combinedResults,"AAA")
+    const filteredResults = removeDuplicatesFromArray(combinedResults);
 
-    searchResults.push(...combinedResults);
+    searchResults.push(...filteredResults);
   } catch (err) {
     console.log(err);
   }
 };
+function removeDuplicatesFromArray(array) {
+  const uniqueTokens = new Set();
+  const resultArray = [];
+
+  for (const item of array) {
+      if (!uniqueTokens.has(item['x.sportToken'])) {
+          uniqueTokens.add(item['x.sportToken']);
+          resultArray.push(item);
+      }
+  }
+
+  return resultArray;
+}
 
 const showSearchResults = (res) => {
   let rest = document.getElementById("result");
