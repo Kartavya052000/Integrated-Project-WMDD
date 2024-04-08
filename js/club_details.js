@@ -71,7 +71,6 @@ function fetchClubDetails() {
               `;
                 let schedule_table = document.querySelector(".schedule_table");
                 var headerRow = schedule_table.rows[0];
-                // headerRow.deleteCell(3);
                 eventTableBody.appendChild(listItem);
               });
             } else {
@@ -89,7 +88,8 @@ function fetchClubDetails() {
                 listItem.innerHTML = `
                 <td>${ite.event_name}</td>
                 <td>${ite.date_time}</td>
-                <td><i class="fa-solid fa-location-dot" style="color: #7bdd4c;"></i>   ${ite.event_location}</td>
+                <td><i class="fa-solid fa-location-dot" style="color: #7bdd4c;"></i><td>${extractFirstTwoWords(ite.event_location)}</td>
+                </td>
               `;
 
                 const eventEditButton = document.createElement("td");
@@ -205,7 +205,10 @@ function fetchClubDetails() {
     console.log("No club ID provided in the URL.");
   }
 }
-
+function extractFirstTwoWords(str) {
+  const words = str.split(', ');
+  return words.slice(0, 1).join(', ');
+}
 fetchClubDetails(); // initiate callback
 
 let joinButton = document.getElementById("join");

@@ -68,7 +68,9 @@
       }
     </style>
        <script>
-        function showTab(tabId) {
+        function showTab(tabId,event) {
+          event.preventDefault();
+
           // Hide all tab contents
           document.querySelectorAll(".tab-content").forEach((tab) => {
             tab.style.display = "none";
@@ -117,7 +119,7 @@
       <nav class="navbar-1">
         <ul class="nav nav-pills club_tabs">
           <li class="nav-item">
-            <a class="nav-link" href="#" onclick="showTab('schedule')"
+            <a class="nav-link" href="#" onclick="showTab('schedule', event)"
               >Schedule</a
             >
           </li>
@@ -125,7 +127,7 @@
             <a
               class="nav-link"
               href="#"
-              onclick="showTab('members')"
+              onclick="showTab('members', event)"
               id="members_head"
               >Members</a
             >
@@ -134,7 +136,7 @@
             <a
               class="nav-link"
               href="#"
-              onclick="showTab('admin-request')"
+              onclick="showTab('admin-request', event)"
               id="num_req"
               >Request for Admin</a
             >
