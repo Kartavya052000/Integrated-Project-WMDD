@@ -56,7 +56,16 @@
         const active = await navigator.serviceWorker.ready;
       } else {
       }
-    })(); //async IIFE
+    })(); 
+
+  function redirectToCategory(category) {
+    console.log(category)
+    // const categoryLink = document.getElementById('categoryLink');
+    window.location.href = `./search-results.html?category=${category}`;
+    
+    // categoryLink.click();
+  }
+
   </script>
   <body>
     <s-header></s-header>
@@ -95,7 +104,7 @@
       <section class="category-section">
         <h3 class="category">Category</h3>
         <div class="category-image-container">
-          <div class="container">
+          <div class="container cursor" onclick="redirectToCategory('swimming')">
             <img
               alt="category1"
               id="category1"
@@ -105,12 +114,14 @@
               <a href="./search-results.html?category=swimming" class="iconCategory" title="User Profile">
                 <!-- <i class="fa fa-user"></i> -->
                 <p>Swimming</p>
-              </a>
             </div>
+          </a>
+
           </div>
-          <div class="container">
+          <div class="container cursor"  onclick="redirectToCategory('football')">
             <img
               alt="category2"
+              id="category2"
               src="../assests/images/category/photo-1484482340112-e1e2682b4856.webp"
             />
             <div class="overlay">
@@ -120,9 +131,10 @@
               </a>
             </div>
           </div>
-          <div class="container">
+          <div class="container cursor"  onclick="redirectToCategory('cricket')">
             <img
               alt="category3"
+              id="category3"
               src="../assests/images/category/category3.webp"
             />
             <div class="overlay">
@@ -132,7 +144,7 @@
               </a>
             </div>
           </div>
-          <div class="container">
+          <div class="container cursor"  onclick="redirectToCategory('baseball')">
             <img
               alt="category4"
               id="category4"
